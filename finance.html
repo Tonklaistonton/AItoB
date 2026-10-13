@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AItoB for Finance — ระบบ AI บัญชีและการเงินความปลอดภัยสูง | Sovereign Local AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            paper: '#090d16',
+            'paper-subtle': '#0e1524',
+            surface: '#131e33',
+            'surface-raised': '#192742',
+            border: '#203050',
+            brand: { DEFAULT: '#10b981', hover: '#059669', light: '#34d399' }
+          },
+          fontFamily: {
+            display: ['Plus Jakarta Sans', 'IBM Plex Sans Thai', 'sans-serif'],
+            sans: ['IBM Plex Sans Thai', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-paper text-slate-100 antialiased selection:bg-brand selection:text-slate-950">
+
+  <!-- Header -->
+  <header class="sticky top-4 z-40 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="bg-paper-subtle/90 backdrop-blur-md border border-border rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between shadow-lg">
+      <a href="index.html" class="flex items-center space-x-3 group">
+        <div class="w-9 h-9 rounded-xl bg-surface border border-brand/50 flex items-center justify-center text-brand">
+          <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3L27 8.5V17.5C27 23.5 22.3 27.8 16 29.5C9.7 27.8 5 23.5 5 17.5V8.5L16 3Z"/><circle cx="16" cy="16" r="3" fill="#10b981"/></svg>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-extrabold text-base text-white tracking-tight">AI<span class="text-brand">to</span>B</span>
+            <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold">FINANCE HUB</span>
+          </div>
+          <span class="text-[10px] text-slate-400 block -mt-0.5">Sovereign Financial Ledger AI</span>
+        </div>
+      </a>
+
+      <div class="flex items-center space-x-4 text-xs">
+        <a href="index.html" class="text-slate-300 hover:text-white transition">← กลับหน้าหลัก</a>
+        <a href="hr.html" class="hidden sm:inline-block text-slate-400 hover:text-white transition">แผนก HR</a>
+        <a href="legal.html" class="hidden sm:inline-block text-slate-400 hover:text-white transition">ฝ่ายจัดซื้อ/สัญญา</a>
+        <a href="index.html#roi-calculator" class="px-3 py-1.5 rounded-lg bg-brand hover:bg-brand-hover text-slate-950 font-bold transition">คำนวณ ROI</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="pt-14 pb-16 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border">
+    <div class="max-w-3xl">
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-surface border border-border text-xs text-brand-light font-mono mb-4">
+        <span>● 100% On-Premise · Air-Gapped Financial Security</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white mb-4 leading-tight font-display">
+        AI ผู้ช่วยแผนกบัญชีและการเงิน<br>
+        กระทบยอดบิลนับพันรายการในไม่กี่วินาที
+      </h1>
+      <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+        หมดปัญหางานกระทบยอดใบเสร็จซ้ำซ้อน สรุปภาษี และตรวจเทียบงบประมาณ AItoB เชื่อมต่อ ERP/SAP ภายในองค์กรโดยตรง ดึงข้อมูลจากไฟล์ Excel/PDF มาตรวจสอบรายการผิดปกติโดยไม่ต้องส่งงบการเงินขึ้น Cloud
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a href="#simulator" class="px-5 py-2.5 rounded-xl bg-brand hover:bg-brand-hover text-slate-950 font-bold text-xs transition">
+          ทดลองจำลองการกระทบยอดบิล
+        </a>
+        <a href="index.html#how-it-works" class="px-5 py-2.5 rounded-xl bg-surface hover:bg-surface-raised text-slate-200 font-semibold text-xs border border-border transition">
+          ดูสถาปัตยกรรม Hardware
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Grid -->
+  <section class="py-16 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border">
+    <h2 class="text-2xl font-bold text-white mb-8 font-display">ขีดความสามารถเฉพาะสำหรับแผนกบัญชี</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border">
+        <div class="text-brand font-mono font-bold text-lg mb-2">01. Invoice Reconciliation</div>
+        <h3 class="font-bold text-white mb-2">กระทบยอดบิล & ใบสั่งซื้อ</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          เปรียบเทียบใบแจ้งหนี้ (Invoice) กับใบสั่งซื้อ (PO) และใบรับสินค้า (GR) อัตโนมัติ ชี้เป้ายอดที่คลาดเคลื่อนหรือใบแจ้งหนี้ซ้ำซ้อนทันที
+        </p>
+      </div>
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border">
+        <div class="text-emerald-400 font-mono font-bold text-lg mb-2">02. ERP / SAP Integration</div>
+        <h3 class="font-bold text-white mb-2">เชื่อมต่อฐานข้อมูลภายในตรง</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          เชื่อมต่อกับ SAP, Oracle, Express หรือ MySQL ผ่าน Model Context Protocol (MCP) ค้นหาข้อมูลรายรับรายจ่ายได้ด้วยภาษาพูดภาษาไทย
+        </p>
+      </div>
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border">
+        <div class="text-brand-light font-mono font-bold text-lg mb-2">03. Zero Egress Guarantee</div>
+        <h3 class="font-bold text-white mb-2">ตัวเลขทางการเงินไม่หลุดสู่เน็ต</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          ตัวเลขกำไรขาดทุน รายชื่อคู่ค้า และเลขที่บัญชี ประมวลผลบน GPU ในห้องเซิร์ฟเวอร์บริษัท 100% สอดคล้องตามมาตรฐานสอบบัญชีภายนอก
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Finance Simulator -->
+  <section id="simulator" class="py-16 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="max-w-2xl mb-8">
+      <span class="text-xs font-mono text-brand uppercase">Live Interactive Test</span>
+      <h2 class="text-2xl font-bold text-white mt-1 font-display">ทดสอบระบบกระทบยอดบัญชีจำลอง (Ledger Audit)</h2>
+      <p class="text-xs text-slate-400">กดปุ่มเพื่อจำลองการประมวลผลไฟล์บัญชีขนาดใหญ่และสังเกตความเร็วของ Local Model</p>
+    </div>
+
+    <div class="bg-paper-subtle border border-border rounded-2xl p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div class="lg:col-span-5 space-y-4">
+        <div>
+          <label class="text-xs text-slate-300 block mb-1">เลือกไฟล์ข้อมูลที่ต้องการทดสอบ:</label>
+          <select id="finance-file" class="w-full bg-surface border border-border rounded-lg px-3 py-2 text-xs text-white">
+            <option value="q3">Q3_Invoice_Ledger_2026.xlsx (1,420 รายการ)</option>
+            <option value="vendor">Vendor_Payment_Batch_October.csv (850 รายการ)</option>
+            <option value="tax">Withholding_Tax_PND53_Draft.xlsx (320 รายการ)</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-slate-300 block mb-1">สิทธิ์ผู้ใช้งาน (RBAC Role):</label>
+          <div class="px-3 py-2 rounded-lg bg-surface border border-border text-xs text-brand-light font-mono">
+            Role: Senior_Accountant (สิทธิ์เข้าถึง: ผ่านการตรวจสอบ)
+          </div>
+        </div>
+        <button onclick="runFinanceAudit()" class="w-full py-3 rounded-xl bg-brand hover:bg-brand-hover text-slate-950 font-bold text-xs transition">
+          ▶ เริ่มประมวลผลกระทบยอดด้วย Local AI
+        </button>
+      </div>
+
+      <div class="lg:col-span-7 bg-black/60 border border-border rounded-xl p-5 font-mono text-xs">
+        <div class="flex justify-between pb-2 mb-3 border-b border-border text-slate-400">
+          <span>ledger-audit-worker@local-node</span>
+          <span class="text-brand">AIR-GAPPED INFERENCE</span>
+        </div>
+        <div id="finance-logs" class="space-y-2 min-h-[140px] text-slate-300">
+          <div class="text-slate-500">// รอคำสั่งประมวลผล... กดปุ่มเริ่มประมวลผลด้านซ้าย</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Runnable Module: AIZEN Account -->
+  <section id="runnable-module" class="py-12 px-4 sm:px-6 max-w-7xl mx-auto border-t border-border-subtle">
+    <div class="bg-surface border border-brand/30 rounded-2xl p-6 sm:p-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border">
+        <div>
+          <span class="inline-flex items-center gap-1.5 text-xs font-mono text-brand bg-brand/10 border border-brand/20 px-2.5 py-1 rounded-full mb-2">
+            <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+            LIVE PRODUCTION ENGINE · ai-account
+          </span>
+          <h3 class="text-xl sm:text-2xl font-bold text-white font-display">ระบบจริงพร้อมใช้งาน: AIZEN Account (Slip OCR & Ledger)</h3>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">โมดูลตรวจสลิปโอนเงินอัตโนมัติ บันทึกรายรับ-รายจ่าย พร้อม Human-in-the-Loop รันผ่าน Local Node 100%</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="http://localhost:3001" target="_blank" class="px-4 py-2 bg-brand text-paper font-semibold text-xs rounded-xl hover:bg-brand-hover transition flex items-center gap-1.5 shadow-lg">
+            <span>เปิดแอปบัญชี (Port 3001)</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 text-xs">
+        <div class="bg-paper p-4 rounded-xl border border-border">
+          <span class="text-slate-400 block mb-1">เทคโนโลยีฐานข้อมูล</span>
+          <span class="text-white font-mono font-bold text-sm block">node:sqlite (Native WAL)</span>
+          <span class="text-slate-400 block mt-2 text-[11px]">บันทึกในเครื่องความเร็วสูง ไม่ต้องติดตั้งฐานข้อมูลภายนอก</span>
+        </div>
+        <div class="bg-paper p-4 rounded-xl border border-border">
+          <span class="text-slate-400 block mb-1">การตรวจสลิปซ้ำ (Duplicate Prevention)</span>
+          <span class="text-accent-amber font-mono font-bold text-sm block">Slip Hash & Ref Check</span>
+          <span class="text-slate-400 block mt-2 text-[11px]">ตรวจจับสลิปซ้ำแบบ Real-time บล็อกการฉ้อโกง 100%</span>
+        </div>
+        <div class="bg-paper p-4 rounded-xl border border-border">
+          <span class="text-slate-400 block mb-1">คำสั่งรันในเซิร์ฟเวอร์</span>
+          <code class="text-brand font-mono block bg-black/60 p-1.5 rounded mt-1 text-[11px]">cd ai-account && node server.js</code>
+          <span class="text-slate-400 block mt-1 text-[11px]">เริ่มต้นรัน Local API และ Web UI ทันที</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 sm:px-6 max-w-7xl mx-auto border-t border-border flex justify-between text-xs text-slate-400">
+    <div>AItoB Sovereign Enterprise — Finance Edition</div>
+    <div class="space-x-4">
+      <a href="index.html" class="hover:text-white">หน้าหลัก</a>
+      <a href="hr.html" class="hover:text-white">แผนก HR</a>
+      <a href="legal.html" class="hover:text-white">ฝ่ายจัดซื้อและสัญญา</a>
+    </div>
+  </footer>
+
+  <script>
+    function runFinanceAudit() {
+      const file = document.getElementById('finance-file').value;
+      const logEl = document.getElementById('finance-logs');
+      logEl.innerHTML = `<div class="text-brand font-bold">▶ [START] โหลดข้อมูลไฟล์ ${file} เข้าสู่ Local VRAM...</div>`;
+
+      const steps = [
+        { c: 'text-cyan-400', t: '[STEP 1] อ่านและแปลงชีต Excel เป็น Normalized Schema (1.2 ms)' },
+        { c: 'text-amber-400', t: '[STEP 2] เชื่อมต่อ Local ERP SQL Database เพื่อเทียบยอด PO และ Invoice' },
+        { c: 'text-emerald-400', t: '[STEP 3] ตรวจสอบเสร็จสิ้น: 1,420 รายการ ถูกต้อง 1,419 รายการ' },
+        { c: 'bg-surface p-3 rounded border border-brand/40 text-white font-mono', t: '⚠️ ตรวจพบข้อผิดพลาด:\n• รายการ INV-8821 มียอดซ้ำซ้อนกับ INV-8819 (จำนวน ฿145,000)\n• แนะนำ: ออกใบลดหนี้ (Credit Note) ให้คู่ค้าโดยอัตโนมัติ' }
+      ];
+
+      steps.forEach((s, idx) => {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          div.className = s.c;
+          div.innerText = s.t;
+          logEl.appendChild(div);
+          if (window.anime) {
+            anime({ targets: div, opacity: [0, 1], translateX: [-8, 0], duration: 250 });
+          }
+        }, (idx + 1) * 350);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "_comment": "ตัวอย่างโครงสร้างข้อมูลเก่า — ระบบปัจจุบันใช้ SQLite ที่ data/aizen.db และสร้างให้อัตโนมัติเมื่อเปิดครั้งแรก ไฟล์นี้เก็บไว้เพื่อการย้ายข้อมูลจากระบบรุ่นก่อนเท่านั้น",
+  "config": {
+    "mode": "copilot",
+    "aiProvider": "gemini",
+    "geminiApiKey": "",
+    "geminiModel": "gemini-2.0-flash",
+    "openaiApiKey": "",
+    "openaiModel": "gpt-4o-mini",
+    "lineChannelSecret": "",
+    "lineAccessToken": "",
+    "gmailUser": "",
+    "gmailAppPassword": "",
+    "webhookDomain": "",
+    "activeDatabase": "airtable",
+    "autoSyncEnabled": false,
+    "autoSyncIntervalMinutes": 2,
+    "googleSheetUrl": "",
+    "googleSheetProductsGid": "0",
+    "googleSheetFaqsGid": "",
+    "googleSheetOrdersGid": "",
+    "airtableApiKey": "",
+    "airtableBaseId": "",
+    "airtableProductTable": "",
+    "airtableFaqTable": "",
+    "airtableOrderTable": ""
+  },
+  "knowledge": {
+    "shopName": "",
+    "openingHours": "",
+    "contactInfo": "",
+    "products": "",
+    "promotions": "",
+    "payment": "",
+    "delivery": "",
+    "persona": "สุภาพ เป็นมิตร อบอุ่น มีหางเสียง (ครับ/ค่ะ) ให้ข้อมูลสินค้าครบถ้วน และไม่กุผิดข้อมูลที่ไม่มีในระบบ"
+  },
+  "lineChats": [],
+  "emails": [],
+  "airtableData": {
+    "products": [],
+    "faqs": [],
+    "orderGuides": [],
+    "lastSync": null
+  },
+  "sheetsData": {
+    "products": [],
+    "faqs": [],
+    "orderGuides": [],
+    "lastSync": null
+  }
+}

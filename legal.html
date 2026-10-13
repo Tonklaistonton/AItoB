@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AItoB for Legal & Procurement — ระบบ AI ตรวจร่างสัญญาและจัดซื้อ | Sovereign Local AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            paper: '#090d16',
+            'paper-subtle': '#0e1524',
+            surface: '#131e33',
+            'surface-raised': '#192742',
+            border: '#203050',
+            brand: { DEFAULT: '#10b981', hover: '#059669', light: '#34d399' }
+          },
+          fontFamily: {
+            display: ['Plus Jakarta Sans', 'IBM Plex Sans Thai', 'sans-serif'],
+            sans: ['IBM Plex Sans Thai', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-paper text-slate-100 antialiased selection:bg-brand selection:text-slate-950">
+
+  <!-- Header -->
+  <header class="sticky top-4 z-40 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="bg-paper-subtle/90 backdrop-blur-md border border-border rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between shadow-lg">
+      <a href="index.html" class="flex items-center space-x-3 group">
+        <div class="w-9 h-9 rounded-xl bg-surface border border-brand/50 flex items-center justify-center text-brand">
+          <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3L27 8.5V17.5C27 23.5 22.3 27.8 16 29.5C9.7 27.8 5 23.5 5 17.5V8.5L16 3Z"/><circle cx="16" cy="16" r="3" fill="#10b981"/></svg>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-extrabold text-base text-white tracking-tight">AI<span class="text-brand">to</span>B</span>
+            <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold">LEGAL & PROCUREMENT</span>
+          </div>
+          <span class="text-[10px] text-slate-400 block -mt-0.5">Sovereign Contract Intelligence</span>
+        </div>
+      </a>
+
+      <div class="flex items-center space-x-4 text-xs">
+        <a href="index.html" class="text-slate-300 hover:text-white transition">← กลับหน้าหลัก</a>
+        <a href="finance.html" class="hidden sm:inline-block text-slate-400 hover:text-white transition">แผนกบัญชี</a>
+        <a href="hr.html" class="hidden sm:inline-block text-slate-400 hover:text-white transition">แผนก HR</a>
+        <a href="index.html#roi-calculator" class="px-3 py-1.5 rounded-lg bg-brand hover:bg-brand-hover text-slate-950 font-bold transition">คำนวณ ROI</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="pt-14 pb-16 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border">
+    <div class="max-w-3xl">
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-surface border border-border text-xs text-brand-light font-mono mb-4">
+        <span>● Zero NDA Breach · Offline Contract Parsing</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white mb-4 leading-tight font-display">
+        AI ผู้ช่วยฝ่ายกฎหมายและจัดซื้อ<br>
+        สแกนสัญญาหลายร้อยหน้า ตรวจจับจุดเสี่ยงทันที
+      </h1>
+      <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+        สัญญาคู่ค้า ข้อตกลงรักษาความลับ (NDA) และใบเสนอราคาจัดซื้อ ไม่สามารถอัปโหลดเข้า Public AI เพราะอาจถือเป็นการผิดสัญญา AItoB ประมวลผลเอกสารยาวกว่า 100 หน้าได้แบบออฟไลน์ พร้อมตรวจจับช่องโหว่ทางกฎหมายและข้อบังคับ PDPA อย่างแม่นยำ
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a href="#simulator" class="px-5 py-2.5 rounded-xl bg-brand hover:bg-brand-hover text-slate-950 font-bold text-xs transition">
+          ทดลองสแกนสัญญาคู่ค้า 68 หน้า
+        </a>
+        <a href="index.html#prototype" class="px-5 py-2.5 rounded-xl bg-surface hover:bg-surface-raised text-slate-200 font-semibold text-xs border border-border transition">
+          ดูตัวอย่าง Live Terminal
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Grid -->
+  <section class="py-16 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border">
+    <h2 class="text-2xl font-bold text-white mb-8 font-display">ฟังก์ชันหลักสำหรับฝ่ายกฎหมายและจัดซื้อ</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border">
+        <div class="text-brand font-mono font-bold text-lg mb-2">01. Clause Risk Scoring</div>
+        <h3 class="font-bold text-white mb-2">จัดระดับความเสี่ยงข้อสัญญา</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          ตรวจจับข้อกำหนดเรื่องค่าปรับ, การบอกเลิกสัญญา, และสิทธิในทรัพย์สินทางปัญญา ชี้เป้าข้อความที่เสียเปรียบคู่ค้าเป็นระดับ High, Medium, Low
+        </p>
+      </div>
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border">
+        <div class="text-emerald-400 font-mono font-bold text-lg mb-2">02. PDPA Cross-Check</div>
+        <h3 class="font-bold text-white mb-2">ตรวจความสอดคล้อง PDPA</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          ตรวจสอบมาตรา 28/29 ว่าคู่ค้ามีสิทธิ์ส่งต่อข้อมูลลูกค้าออกนอกประเทศหรือไม่ พร้อมร่างข้อสัญญาคุ้มครองข้อมูลส่วนบุคคลแก้ไขให้ทันที
+        </p>
+      </div>
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border">
+        <div class="text-brand-light font-mono font-bold text-lg mb-2">03. Vendor Bidding Compare</div>
+        <h3 class="font-bold text-white mb-2">เปรียบเทียบใบเสนอราคาจัดซื้อ</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          นำใบเสนอราคาจาก 5 เจ้ามาเทียบในตารางเดียว สรุปเงื่อนไขการรับประกัน เวลาส่งมอบ และค่าใช้จ่ายแฝง ช่วยทีมจัดซื้อต่อรองได้ดีขึ้น
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Legal Simulator -->
+  <section id="simulator" class="py-16 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="max-w-2xl mb-8">
+      <span class="text-xs font-mono text-brand uppercase">Contract Scanner Demo</span>
+      <h2 class="text-2xl font-bold text-white mt-1 font-display">ทดสอบสแกนสัญญาคู่ค้า (Contract Redline Engine)</h2>
+      <p class="text-xs text-slate-400">เลือกประเภทสัญญาและกดรันเพื่อดูการตรวจจับจุดเสี่ยงโดยโมเดลภาษาที่รันบนเครื่อง Local</p>
+    </div>
+
+    <div class="bg-paper-subtle border border-border rounded-2xl p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div class="lg:col-span-5 space-y-4">
+        <div>
+          <label class="text-xs text-slate-300 block mb-1">เลือกสัญญาที่ต้องการตรวจสอบ:</label>
+          <select id="legal-contract" class="w-full bg-surface border border-border rounded-lg px-3 py-2 text-xs text-white">
+            <option value="sla">Vendor_Master_SLA_68pages.pdf (สัญญาบริการระบบคู่ค้า)</option>
+            <option value="nda">Mutual_Non_Disclosure_Agreement.pdf (สัญญารักษาความลับ)</option>
+            <option value="procure">Tender_Procurement_Spec_Hardware.pdf (สเปกประมูลจัดซื้อ)</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-slate-300 block mb-1">โหมดการตรวจสอบ:</label>
+          <div class="px-3 py-2 rounded-lg bg-surface border border-border text-xs text-slate-200 font-mono">
+            Mode: Comprehensive Audit (PDPA + Liability + Indemnity)
+          </div>
+        </div>
+        <button onclick="runLegalAudit()" class="w-full py-3 rounded-xl bg-brand hover:bg-brand-hover text-slate-950 font-bold text-xs transition">
+          ▶ เริ่มสแกนจุดเสี่ยงข้อกฎหมาย
+        </button>
+      </div>
+
+      <div class="lg:col-span-7 bg-black/60 border border-border rounded-xl p-5 font-mono text-xs">
+        <div class="flex justify-between pb-2 mb-3 border-b border-border text-slate-400">
+          <span>contract-scanner@local-node</span>
+          <span class="text-brand">AIR-GAPPED COMPLIANCE</span>
+        </div>
+        <div id="legal-logs" class="space-y-2 min-h-[140px] text-slate-300">
+          <div class="text-slate-500">// รอคำสั่งสแกนสัญญา... กดปุ่มเริ่มสแกนด้านซ้าย</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 sm:px-6 max-w-7xl mx-auto border-t border-border flex justify-between text-xs text-slate-400">
+    <div>AItoB Sovereign Enterprise — Legal Edition</div>
+    <div class="space-x-4">
+      <a href="index.html" class="hover:text-white">หน้าหลัก</a>
+      <a href="finance.html" class="hover:text-white">แผนกบัญชี</a>
+      <a href="hr.html" class="hover:text-white">แผนก HR</a>
+    </div>
+  </footer>
+
+  <script>
+    function runLegalAudit() {
+      const contract = document.getElementById('legal-contract').value;
+      const logEl = document.getElementById('legal-logs');
+      logEl.innerHTML = `<div class="text-brand font-bold">▶ [SCANNING] โหลดไฟล์ ${contract} เข้าหน่วยความจำ Local GPU...</div>`;
+
+      const steps = [
+        { c: 'text-cyan-400', t: '[CHUNKING] แยกวิเคราะห์สัญญาเป็น 14 หมวดหมู่ 68 หน้า (ใช้เวลา 1.4 วินาที)' },
+        { c: 'text-amber-400', t: '[CROSS-CHECK] เทียบข้อกฎหมายแพ่งและพาณิชย์ และ พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA)' },
+        { c: 'bg-surface border border-rose-500/50 p-3 rounded text-rose-300', t: '🚨 พบจุดเสี่ยงระดับสูง (High Risk):\n• ข้อ 14.2: คู่ค้าขอสิทธิ์ส่งข้อมูลลูกค้าไปประมวลผลนอกราชอาณาจักรโดยไม่มีมาตรการคุ้มครองตาม PDPA ม.28/29\n• ข้อ 21.4: เพดานความรับผิดชอบ (Liability Cap) จำกัดเพียง 10% ของมูลค่าสัญญา ซึ่งต่ำกว่ามาตรฐานองค์กร' },
+        { c: 'bg-surface border border-brand/40 p-3 rounded text-emerald-300', t: '💡 คำแนะนำร่างแก้สัญญา (Redline Recommendation):\n1. เพิ่มข้อความ "การประมวลผลข้อมูลต้องอยู่ภายในประเทศไทยเท่านั้น"\n2. ปรับ Liability Cap ให้ครอบคลุมความเสียหายอันเกิดจากข้อมูลรั่วไหล 100%' }
+      ];
+
+      steps.forEach((s, idx) => {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          div.className = s.c;
+          div.innerText = s.t;
+          logEl.appendChild(div);
+          if (window.anime) {
+            anime({ targets: div, opacity: [0, 1], translateX: [-8, 0], duration: 250 });
+          }
+        }, (idx + 1) * 350);
+      });
+    }
+  </script>
+</body>
+</html>

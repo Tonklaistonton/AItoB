@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>AItoB — Private Local AI for Enterprise | Sovereign Infrastructure</title>
   <!-- Google Fonts: Plus Jakarta Sans (Display/Latin) + IBM Plex Sans Thai (Thai/Body) + JetBrains Mono (Code) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,14 +61,18 @@
     body {
       background-color: var(--color-paper);
       color: var(--color-ink);
-      font-family: 'IBM Plex Sans Thai', 'Plus Jakarta Sans', -apple-system, sans-serif;
-      letter-spacing: 0;
+      font-family: 'IBM Plex Sans Thai', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      letter-spacing: 0.01em;
       overflow-x: clip;
+      line-height: 1.6;
     }
     h1, h2, h3, h4, .font-display {
-      font-family: 'Plus Jakarta Sans', 'IBM Plex Sans Thai', sans-serif;
-      letter-spacing: normal;
+      font-family: 'IBM Plex Sans Thai', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      letter-spacing: 0.02em !important;
       font-style: normal;
+      line-height: 1.55 !important;
+      word-break: normal;
+      overflow-wrap: break-word;
     }
     .tabular-nums {
       font-variant-numeric: tabular-nums;
@@ -107,12 +114,17 @@
       </a>
 
       <!-- Desktop Section Links -->
-      <nav class="hidden md:flex items-center space-x-8 text-xs font-medium text-slate-300">
+      <nav class="hidden md:flex items-center space-x-6 text-xs font-medium text-slate-300">
         <a href="#pain-point" class="hover:text-brand transition-colors">1. Pain Point</a>
         <a href="#solution" class="hover:text-brand transition-colors">2. Solution</a>
         <a href="#how-it-works" class="hover:text-brand transition-colors">3. How It Works</a>
+        <a href="#demo-video" class="text-brand font-semibold hover:underline transition-colors flex items-center space-x-1">
+          <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <span>วิดีโอสาธิต</span>
+        </a>
         <a href="#prototype" class="hover:text-brand transition-colors">4. Live Demo & ROI</a>
-        <a href="#business" class="hover:text-brand transition-colors">5. Business & Vision</a>
+        <a href="#departments" class="hover:text-brand transition-colors">5. แยกตามแผนก</a>
+        <a href="#business" class="hover:text-brand transition-colors">6. Business</a>
       </nav>
 
       <!-- Header CTAs -->
@@ -197,7 +209,7 @@
   <section id="pain-point" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
     <div class="max-w-3xl mb-12">
       <div class="text-xs font-mono text-accent-crimson uppercase tracking-wider mb-2">Problem Statement</div>
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-display mb-4">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-display mb-4 leading-snug sm:leading-relaxed">
         องค์กรอยากเร่งสปีดด้วย AI แต่คอขวดอยู่ที่ความเสี่ยงข้อมูลและงานเดิมซ้ำซาก
       </h2>
       <p class="text-slate-400 text-sm sm:text-base">
@@ -287,7 +299,7 @@
   <section id="solution" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
     <div class="max-w-3xl mb-12">
       <div class="text-xs font-mono text-brand uppercase tracking-wider mb-2">Our Architecture</div>
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-display mb-4">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-display mb-4 leading-snug sm:leading-relaxed">
         วิเคราะห์ Pain Point และติดตั้ง Private Local AI ที่ตรงโจทย์องค์กร
       </h2>
       <p class="text-slate-400 text-sm sm:text-base">
@@ -338,7 +350,7 @@
   <section id="how-it-works" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
     <div class="max-w-3xl mb-12">
       <div class="text-xs font-mono text-accent-cyan uppercase tracking-wider mb-2">5-Layer Engineering Pipeline</div>
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-display mb-4">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-display mb-4 leading-snug sm:leading-relaxed">
         สถาปัตยกรรม 5 ขั้นตอน: Hardware สู่ Autonomous Workflow
       </h2>
       <p class="text-slate-400 text-sm sm:text-base">
@@ -382,11 +394,73 @@
     </div>
   </section>
 
+  <!-- ==================== DEMO VIDEO SECTION ==================== -->
+  <section id="demo-video" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
+    <div class="max-w-3xl mb-12">
+      <div class="text-xs font-mono text-brand uppercase tracking-wider mb-2">Video Demonstration</div>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-display mb-4 leading-snug sm:leading-relaxed">
+        วิดีโอสาธิตการทำงานจริงของระบบ Private Local AI ในองค์กร
+      </h2>
+      <p class="text-slate-400 text-sm sm:text-base">
+        รับชมวิดีโอสาธิตความเร็วและความปลอดภัยของระบบ Appliance เมื่อประมวลผลงานจริงในแต่ละแผนกแบบตัดเน็ต 100%
+      </p>
+    </div>
+
+    <!-- Video Showcase Container -->
+    <div class="bg-paper-subtle border border-border rounded-2xl p-4 sm:p-6 shadow-2xl">
+      <!-- 16:9 Video Canvas Player -->
+      <div class="relative w-full aspect-video bg-black rounded-xl overflow-hidden border border-border flex items-center justify-center group shadow-inner">
+        <!-- Interactive Video Frame / Embed -->
+        <iframe id="video-frame" src="demo-video/index.html" class="w-full h-full border-0 pointer-events-auto" allow="autoplay"></iframe>
+
+        <!-- Video Overlay Header (Floating Tag) -->
+        <div class="absolute top-4 left-4 z-20 pointer-events-none flex items-center space-x-2 bg-paper/80 backdrop-blur px-3 py-1.5 rounded-lg border border-border text-[11px] font-mono text-brand">
+          <span class="w-2 h-2 rounded-full bg-brand animate-ping"></span>
+          <span>AItoB Video Demo · HyperFrames Composition (1080p 60fps)</span>
+        </div>
+
+        <div class="absolute top-4 right-4 z-20 flex items-center space-x-2">
+          <a href="demo-video/index.html" target="_blank" class="bg-surface/90 hover:bg-surface-raised backdrop-blur px-3 py-1.5 rounded-lg border border-border text-xs text-white font-semibold flex items-center space-x-1.5 transition">
+            <svg class="w-3.5 h-3.5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            <span>เปิดเต็มจอ</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Chapter Quick Selectors -->
+      <div class="mt-6 grid grid-cols-1 sm:grid-cols-4 gap-3">
+        <button onclick="seekVideoChapter(0)" class="chapter-btn p-3 rounded-xl border border-brand bg-brand/10 text-left transition text-xs">
+          <span class="text-brand font-mono font-bold block mb-0.5">00:00 · ภาพรวม</span>
+          <span class="text-slate-200 font-semibold block">สถาปัตยกรรม Air-Gapped</span>
+          <span class="text-[11px] text-slate-400 block mt-1">Zero Data Egress 100%</span>
+        </button>
+
+        <button onclick="seekVideoChapter(5)" class="chapter-btn p-3 rounded-xl border border-border bg-surface hover:bg-surface-raised text-left transition text-xs">
+          <span class="text-accent-cyan font-mono font-bold block mb-0.5">00:05 · แผนกบัญชี</span>
+          <span class="text-slate-200 font-semibold block">กระทบยอดบิลใน 1.8 วิ</span>
+          <span class="text-[11px] text-slate-400 block mt-1">ตรวจ 1,420 ใบเสร็จเทียบ ERP</span>
+        </button>
+
+        <button onclick="seekVideoChapter(10)" class="chapter-btn p-3 rounded-xl border border-border bg-surface hover:bg-surface-raised text-left transition text-xs">
+          <span class="text-accent-amber font-mono font-bold block mb-0.5">00:10 · แผนก HR</span>
+          <span class="text-slate-200 font-semibold block">ปกป้องความลับเงินเดือน</span>
+          <span class="text-[11px] text-slate-400 block mt-1">RBAC Guard คุมสิทธิ์ 100%</span>
+        </button>
+
+        <button onclick="seekVideoChapter(15)" class="chapter-btn p-3 rounded-xl border border-border bg-surface hover:bg-surface-raised text-left transition text-xs">
+          <span class="text-accent-crimson font-mono font-bold block mb-0.5">00:15 · จัดซื้อ/สัญญา</span>
+          <span class="text-slate-200 font-semibold block">สแกนสัญญา 68 หน้า</span>
+          <span class="text-[11px] text-slate-400 block mt-1">จับจุดเสี่ยงข้อกฎหมาย PDPA</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
   <!-- ==================== 4. PROTOTYPE & ROI SIMULATOR ==================== -->
   <section id="prototype" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
     <div class="max-w-3xl mb-12">
       <div class="text-xs font-mono text-brand uppercase tracking-wider mb-2">Live Demonstration</div>
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-display mb-4">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-display mb-4 leading-snug sm:leading-relaxed">
         แสดงของจริง: AI ทำงานอย่างไร และประหยัดเวลาองค์กรได้แค่ไหน
       </h2>
       <p class="text-slate-400 text-sm sm:text-base">
@@ -500,6 +574,164 @@
           </div>
         </div>
       </div>
+
+      <!-- Real Live Applications from ai-bis Engine -->
+      <div class="mt-8 bg-paper border border-border rounded-xl p-5 sm:p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-4 border-b border-border">
+          <div>
+            <span class="text-[11px] font-mono text-brand uppercase tracking-wider block mb-0.5">Production-Ready Subsystems</span>
+            <h3 class="text-lg sm:text-xl font-bold text-white font-display">ระบบจริงที่ติดตั้งใน Local Appliance (ai-bis Suite)</h3>
+            <p class="text-xs text-slate-400 mt-0.5">โมดูลซอฟต์แวร์จริงที่พัฒนาพร้อมเชื่อมโยงฐานข้อมูล SQLite และบริการสื่อสารภายในองค์กร</p>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono text-slate-400 bg-surface px-3 py-1.5 rounded-lg border border-border">
+            <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+            <span>Air-Gapped Ready · Native SQLite</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- ai-account Card -->
+          <div class="bg-surface p-4 rounded-xl border border-border flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-mono text-cyan-400 font-bold bg-cyan-500/10 border border-cyan-500/20 px-2 py-0.5 rounded">ai-account · Port 3001</span>
+                <span class="text-[11px] text-slate-400 font-mono">Node.js + SQLite</span>
+              </div>
+              <h4 class="text-sm font-bold text-white mb-1">AIZEN Account (ระบบตรวจสลิปและบัญชีอัตโนมัติ)</h4>
+              <p class="text-xs text-slate-400 leading-relaxed mb-3">
+                ตรวจสลิปโอนเงินอัตโนมัติ (SlipOK / Vision), ตรวจจับสลิปซ้ำ (Duplicate Prevention), บันทึกรายรับ-รายจ่าย พร้อม Human-in-the-Loop สำหรับฝ่ายบัญชี
+              </p>
+            </div>
+            <div class="pt-3 border-t border-border flex items-center justify-between text-xs">
+              <code class="text-[11px] font-mono text-brand">cd ai-account && node server.js</code>
+              <a href="http://localhost:3001" target="_blank" class="font-semibold text-brand hover:underline flex items-center gap-1">
+                <span>เปิดแอปบัญชี</span>
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- ai-chat Card -->
+          <div class="bg-surface p-4 rounded-xl border border-border flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-mono text-amber-400 font-bold bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">ai-chat · Port 3000</span>
+                <span class="text-[11px] text-slate-400 font-mono">Next.js + Express</span>
+              </div>
+              <h4 class="text-sm font-bold text-white mb-1">AIZEN Responder (Unified Omni-Channel Hub)</h4>
+              <p class="text-xs text-slate-400 leading-relaxed mb-3">
+                AI ตอบแชทลูกค้าอัตโนมัติผ่าน LINE Official Account และ Gmail พร้อมระบบ Claim/Release ส่งต่องานให้แอดมินคนจริง (Human Handoff) และเชื่อมโยงฐานข้อมูล
+              </p>
+            </div>
+            <div class="pt-3 border-t border-border flex items-center justify-between text-xs">
+              <code class="text-[11px] font-mono text-brand">cd ai-chat && npm run dev</code>
+              <a href="http://localhost:3000" target="_blank" class="font-semibold text-brand hover:underline flex items-center gap-1">
+                <span>เปิดแอปแชท</span>
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== DEPARTMENT HUBS (SEPARATE WEBSITES) ==================== -->
+  <section id="departments" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
+    <div class="max-w-3xl mb-12">
+      <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-2">Dedicated Department Solutions</div>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-display mb-4 leading-snug sm:leading-relaxed">
+        เว็บไซต์เฉพาะทางแยกตามแต่ละแผนกในองค์กร
+      </h2>
+      <p class="text-slate-400 text-sm sm:text-base">
+        คลิกเข้าชมหน้าเว็บแยกเฉพาะทางของแต่ละแผนกที่ติดตั้งในระบบ Appliance พร้อมแอปพลิเคชันจริงที่เปิดใช้งานได้ทันที
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <!-- Finance Hub Card -->
+      <div class="bg-paper-subtle p-5 rounded-2xl border border-border hover:border-brand transition flex flex-col justify-between">
+        <div>
+          <div class="w-10 h-10 rounded-xl bg-surface border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <div class="text-[11px] font-mono text-emerald-400 font-bold mb-1">FINANCE & ACCOUNTING</div>
+          <h3 class="text-base font-bold text-white mb-2 font-display">แผนกบัญชีและการเงิน</h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            กระทบยอดบิลนับพันรายการใน 1.8 วิ ตรวจสอบภาษีหัก ณ ที่จ่าย และเชื่อมโยงฐานข้อมูล ERP ในองค์กร
+          </p>
+        </div>
+        <div class="space-y-2 pt-3 border-t border-border">
+          <a href="finance.html" class="w-full text-xs font-semibold text-brand hover:underline flex items-center justify-between">
+            <span>เว็บกลยุทธ์แผนกบัญชี</span>
+            <span>→</span>
+          </a>
+          <a href="account.html" target="_blank" class="w-full inline-flex items-center justify-between text-[11px] font-mono text-cyan-400 bg-cyan-950/40 border border-cyan-800/60 px-2.5 py-1.5 rounded-lg hover:bg-cyan-900/60 transition">
+            <span>⚡ เปิดแอปตรวจสลิปจริง</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Customer Ops & Omni-Channel Hub Card -->
+      <div class="bg-paper-subtle p-5 rounded-2xl border border-border hover:border-brand transition flex flex-col justify-between">
+        <div>
+          <div class="w-10 h-10 rounded-xl bg-surface border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+          </div>
+          <div class="text-[11px] font-mono text-cyan-400 font-bold mb-1">OMNI-CHANNEL & SUPPORT</div>
+          <h3 class="text-base font-bold text-white mb-2 font-display">ฝ่ายสื่อสารและบริการลูกค้า</h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            ระบบแชทรวมศูนย์ LINE OA & Gmail ตอบกลับ AI อัตโนมัติ พร้อมระบบ Claim/Release ส่งต่อแอดมินคนจริง
+          </p>
+        </div>
+        <div class="space-y-2 pt-3 border-t border-border">
+          <a href="inbox.html" target="_blank" class="w-full inline-flex items-center justify-between text-[11px] font-mono text-amber-400 bg-amber-950/40 border border-amber-800/60 px-2.5 py-1.5 rounded-lg hover:bg-amber-900/60 transition">
+            <span>⚡ เปิดแอป AI Unified Inbox</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- HR Hub Card -->
+      <div class="bg-paper-subtle p-5 rounded-2xl border border-border hover:border-brand transition flex flex-col justify-between">
+        <div>
+          <div class="w-10 h-10 rounded-xl bg-surface border border-amber-500/30 flex items-center justify-center text-amber-400 mb-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          </div>
+          <div class="text-[11px] font-mono text-amber-400 font-bold mb-1">HR & PEOPLE PRIVACY</div>
+          <h3 class="text-base font-bold text-white mb-2 font-display">แผนกทรัพยากรบุคคล (HR)</h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            ระบบ Role-Based Access Control กั้นความลับฐานเงินเดือน 100% พร้อม AI ช่วยคัดกรองเรซูเม่ตาม PDPA
+          </p>
+        </div>
+        <div class="space-y-2 pt-3 border-t border-border">
+          <a href="hr.html" class="w-full text-xs font-semibold text-brand hover:underline flex items-center justify-between">
+            <span>เข้าชมเว็บแผนก HR</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Legal Hub Card -->
+      <div class="bg-paper-subtle p-5 rounded-2xl border border-border hover:border-brand transition flex flex-col justify-between">
+        <div>
+          <div class="w-10 h-10 rounded-xl bg-surface border border-rose-500/30 flex items-center justify-center text-rose-400 mb-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          </div>
+          <div class="text-[11px] font-mono text-rose-400 font-bold mb-1">LEGAL & PROCUREMENT</div>
+          <h3 class="text-base font-bold text-white mb-2 font-display">ฝ่ายจัดซื้อและสัญญา</h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            สแกนสัญญาคู่ค้า SLA 68 หน้า ตรวจจับจุดเสี่ยงข้อกฎหมาย PDPA ม.28/29 และเปรียบเทียบใบเสนอราคาจัดซื้อ
+          </p>
+        </div>
+        <div class="space-y-2 pt-3 border-t border-border">
+          <a href="legal.html" class="w-full text-xs font-semibold text-brand hover:underline flex items-center justify-between">
+            <span>เข้าชมเว็บฝ่ายจัดซื้อ/สัญญา</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -507,10 +739,10 @@
   <section id="business" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
     <div class="max-w-3xl mb-12">
       <div class="text-xs font-mono text-accent-amber uppercase tracking-wider mb-2">Commercial Model & Strategy</div>
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-display mb-4">
-        ลูกค้าจ่ายอะไร ทำไมต้องเลือก AItoB และก้าวต่อไปในอนาคต
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4" style="font-family: 'IBM Plex Sans Thai', sans-serif !important; line-height: 1.6 !important; letter-spacing: 0.02em !important; font-weight: 700 !important; display: block;">
+        ลูกค้าจ่ายอะไร ทำไมต้องเลือก AItoB <br class="hidden sm:inline">และก้าวต่อไปในอนาคต
       </h2>
-      <p class="text-slate-400 text-sm sm:text-base">
+      <p class="text-slate-400 text-sm sm:text-base" style="line-height: 1.6 !important;">
         โครงสร้างราคาที่ชัดเจน ตรงไปตรงมา พร้อมแผนการพัฒนาความสามารถของ Sovereign AI ในภาคอุตสาหกรรม
       </p>
     </div>
@@ -871,6 +1103,24 @@
           easing: 'easeOutQuad'
         });
       }
+    }
+
+    // Video Chapter Seek Function
+    function seekVideoChapter(sec) {
+      const iframe = document.getElementById('video-frame');
+      if (iframe && iframe.contentWindow && iframe.contentWindow.__timelines && iframe.contentWindow.__timelines.main) {
+        iframe.contentWindow.__timelines.main.seek(sec);
+        iframe.contentWindow.__timelines.main.play();
+      }
+      document.querySelectorAll('.chapter-btn').forEach((btn, index) => {
+        if (index === Math.floor(sec / 5)) {
+          btn.classList.add('border-brand', 'bg-brand/10');
+          btn.classList.remove('border-border', 'bg-surface');
+        } else {
+          btn.classList.remove('border-brand', 'bg-brand/10');
+          btn.classList.add('border-border', 'bg-surface');
+        }
+      });
     }
 
     // 2. Interactive Simulator

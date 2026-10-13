@@ -1,0 +1,38 @@
+{
+  "name": "aizen-responder",
+  "version": "2.0.0",
+  "description": "Production AI Auto-Responder for LINE Official Account and Gmail (Next.js UI + Express API)",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "node server.js --prod",
+    "test": "node --test --test-force-exit \"tests/**/*.test.js\"",
+    "tunnel": "npx localtunnel --port 3000 --subdomain aizen-line-bot"
+  },
+  "keywords": [
+    "line-bot",
+    "gmail-auto-reply",
+    "ai-responder",
+    "line-messaging-api"
+  ],
+  "author": "AIZEN",
+  "license": "ISC",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "localtunnel": "^2.0.2",
+    "next": "^16.3.7",
+    "nodemailer": "^10.0.13",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "ws": "^8.17.0"
+  },
+  "overrides": {
+    "localtunnel": {
+      "axios": "^1.20.0"
+    }
+  }
+}

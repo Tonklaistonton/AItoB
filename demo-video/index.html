@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AItoB Enterprise Prototype Video Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #050811;
+        color: #f1f5f9;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        user-select: none;
+      }
+      #root {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(6px, 1.2vw, 20px);
+        background: radial-gradient(circle at 50% 50%, #0d1627 0%, #050811 100%);
+      }
+
+      /* CRT Scanline & Cyber Grid Overlay */
+      .scanline-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+        background-size: 100% 4px;
+        pointer-events: none;
+        z-index: 50;
+        opacity: 0.35;
+      }
+
+      /* Main Window Container */
+      .window-frame {
+        width: 100%;
+        height: 100%;
+        max-width: 1600px;
+        background: #0b1120;
+        border: 1px solid #1e293b;
+        border-radius: clamp(8px, 1.2vw, 16px);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px -10px rgba(16, 185, 129, 0.15);
+        position: relative;
+      }
+
+      /* Top Titlebar */
+      .window-bar {
+        background: #0f172a;
+        border-bottom: 1px solid #1e293b;
+        padding: clamp(6px, 0.8vw, 10px) clamp(10px, 1.2vw, 16px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: clamp(10px, 0.9vw, 12px);
+      }
+      .dots { display: flex; gap: 6px; }
+      .dot { width: 9px; height: 9px; border-radius: 50%; }
+      .dot-red { background: #ef4444; }
+      .dot-yellow { background: #eab308; }
+      .dot-green { background: #22c55e; }
+
+      .url-bar {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 6px;
+        padding: 3px clamp(8px, 1.2vw, 16px);
+        font-family: monospace;
+        color: #94a3b8;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: clamp(9px, 0.85vw, 11px);
+      }
+      .airgap-pill {
+        background: rgba(16, 185, 129, 0.12);
+        border: 1px solid #10b981;
+        color: #34d399;
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-weight: 700;
+        font-size: clamp(8px, 0.75vw, 10px);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* App Layout */
+      .app-body {
+        flex: 1;
+        display: flex;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Sidebar */
+      .app-sidebar {
+        width: clamp(120px, 16vw, 210px);
+        background: #080d18;
+        border-right: 1px solid #1e293b;
+        padding: clamp(8px, 1vw, 16px);
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .sidebar-brand {
+        font-weight: 800;
+        font-size: clamp(11px, 1.1vw, 14px);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 10px;
+      }
+      .brand-box {
+        background: #10b981;
+        color: #060911;
+        font-weight: 900;
+        padding: 1px 5px;
+        border-radius: 4px;
+        font-size: 10px;
+      }
+      .nav-item {
+        padding: clamp(5px, 0.7vw, 9px) clamp(6px, 0.9vw, 10px);
+        border-radius: 6px;
+        font-size: clamp(9px, 0.85vw, 12px);
+        color: #94a3b8;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .nav-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+      }
+      .nav-item.active {
+        background: rgba(16, 185, 129, 0.15);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        font-weight: 700;
+      }
+
+      /* Main Viewport & Scenes */
+      .app-content {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        padding: clamp(10px, 1.8vw, 24px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        opacity: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .scene.active-scene {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* Shared Scene Headers */
+      .scene-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: clamp(6px, 0.8vw, 12px);
+      }
+      .scene-title {
+        font-size: clamp(14px, 1.6vw, 22px);
+        font-weight: 800;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .scene-desc {
+        font-size: clamp(9px, 0.9vw, 12px);
+        color: #94a3b8;
+        margin-top: 2px;
+      }
+      .savings-badge {
+        background: rgba(16, 185, 129, 0.12);
+        border: 1px solid #10b981;
+        padding: clamp(3px, 0.5vw, 6px) clamp(8px, 1vw, 14px);
+        border-radius: 8px;
+        text-align: right;
+      }
+      .savings-val {
+        font-size: clamp(11px, 1.3vw, 17px);
+        font-weight: 800;
+        color: #fff;
+        font-family: monospace;
+      }
+
+      /* Laser Scanline FX */
+      .scanner-beam {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #10b981, #38bdf8, #10b981, transparent);
+        box-shadow: 0 0 12px 2px #10b981;
+        opacity: 0.8;
+        pointer-events: none;
+      }
+
+      /* Scene 1: GPU Cluster Monitors */
+      .gpu-rack {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: clamp(6px, 1vw, 12px);
+        margin-bottom: clamp(6px, 1vw, 12px);
+      }
+      .gpu-card {
+        background: #0e172a;
+        border: 1px solid #1e293b;
+        border-radius: 8px;
+        padding: clamp(6px, 0.8vw, 12px);
+        position: relative;
+        overflow: hidden;
+      }
+      .gpu-title {
+        font-size: clamp(8px, 0.8vw, 10px);
+        color: #64748b;
+        font-family: monospace;
+        display: flex;
+        justify-content: space-between;
+      }
+      .gpu-val {
+        font-size: clamp(13px, 1.6vw, 20px);
+        font-weight: 800;
+        color: #f8fafc;
+        margin-top: 2px;
+        font-family: monospace;
+      }
+      .gpu-bar {
+        height: 4px;
+        background: #1e293b;
+        border-radius: 2px;
+        overflow: hidden;
+        margin-top: 5px;
+      }
+      .gpu-fill {
+        height: 100%;
+        background: #10b981;
+        width: 85%;
+        border-radius: 2px;
+      }
+
+      /* Terminal Log with Cursor */
+      .terminal-box {
+        background: #020617;
+        border: 1px solid #1e293b;
+        border-radius: 8px;
+        padding: clamp(8px, 1vw, 12px);
+        font-family: monospace;
+        font-size: clamp(9px, 0.85vw, 11px);
+        color: #38bdf8;
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        position: relative;
+      }
+      .cursor-blink {
+        display: inline-block;
+        width: 7px;
+        height: 13px;
+        background: #10b981;
+        vertical-align: middle;
+        animation: blink 0.8s infinite;
+      }
+      @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+      /* Scene 2: Interactive Table & Bounding Boxes */
+      .slip-card {
+        background: #0a1120;
+        border: 1px solid #1e293b;
+        border-radius: 8px;
+        padding: clamp(8px, 1vw, 14px);
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 8px;
+        position: relative;
+        overflow: hidden;
+      }
+      .ocr-box {
+        border: 2px dashed #06b6d4;
+        background: rgba(6, 182, 212, 0.1);
+        border-radius: 4px;
+        padding: 4px 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* Scene 3: Shield Guard & Threat Log */
+      .shield-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.4);
+        border-radius: 8px;
+        padding: clamp(8px, 1vw, 14px);
+      }
+      .shield-icon {
+        width: clamp(32px, 4vw, 48px);
+        height: clamp(32px, 4vw, 48px);
+        background: rgba(239, 68, 68, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ef4444;
+        animation: pulseShield 1.5s infinite;
+      }
+      @keyframes pulseShield {
+        0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+        50% { transform: scale(1.06); box-shadow: 0 0 15px 4px rgba(239, 68, 68, 0.3); }
+      }
+
+      /* Scene 4: Legal Risk Dial */
+      .risk-dial-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #0a1222;
+        border: 1px solid #1e293b;
+        border-radius: 8px;
+        padding: 10px 14px;
+      }
+
+      /* Bottom Player Controller HUD */
+      .player-hud {
+        background: #080d18;
+        border-top: 1px solid #1e293b;
+        padding: clamp(6px, 0.8vw, 10px) clamp(10px, 1.2vw, 16px);
+        display: flex;
+        align-items: center;
+        gap: clamp(8px, 1.2vw, 14px);
+        z-index: 40;
+      }
+      .play-btn {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #10b981;
+        border: none;
+        color: #060911;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-weight: 900;
+        transition: transform 0.15s;
+      }
+      .play-btn:hover { transform: scale(1.1); }
+      .timeline-track {
+        flex: 1;
+        height: 6px;
+        background: #1e293b;
+        border-radius: 9999px;
+        position: relative;
+        cursor: pointer;
+      }
+      .timeline-progress {
+        height: 100%;
+        background: linear-gradient(90deg, #10b981, #06b6d4);
+        border-radius: 9999px;
+        width: 0%;
+      }
+      .timecode {
+        font-family: monospace;
+        font-size: clamp(9px, 0.8vw, 11px);
+        color: #94a3b8;
+        white-space: nowrap;
+      }
+      .chapter-pills {
+        display: flex;
+        gap: 4px;
+      }
+      .chap-pill {
+        background: #131d31;
+        border: 1px solid #1e293b;
+        color: #94a3b8;
+        font-size: clamp(8px, 0.75vw, 10px);
+        padding: 2px 7px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .chap-pill:hover, .chap-pill.active {
+        background: rgba(16, 185, 129, 0.2);
+        color: #34d399;
+        border-color: #10b981;
+        font-weight: 700;
+      }
+      .sound-btn {
+        background: #131d31;
+        border: 1px solid #1e293b;
+        color: #94a3b8;
+        font-size: clamp(9px, 0.8vw, 11px);
+        padding: 3px 8px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .sound-btn.on {
+        color: #10b981;
+        border-color: #10b981;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20" data-width="1920" data-height="1080">
+      <div class="scanline-overlay"></div>
+
+      <!-- Simulated Window Frame -->
+      <div class="window-frame">
+        <!-- Top Title Bar -->
+        <div class="window-bar">
+          <div class="dots">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+          </div>
+          <div class="url-bar">
+            <span>🔒 https://appliance.internal:8443/console</span>
+          </div>
+          <div class="airgap-pill">
+            <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#10b981; animation: blink 1s infinite;"></span>
+            <span>AIR-GAPPED SOVEREIGN NODE</span>
+          </div>
+        </div>
+
+        <!-- Body with Sidebar and Scenes -->
+        <div class="app-body">
+          <!-- Sidebar -->
+          <div class="app-sidebar">
+            <div class="sidebar-brand">
+              <span class="brand-box">AItoB</span>
+              <span>Enterprise Hub</span>
+            </div>
+            <div id="nav-dash" class="nav-item active" onclick="jumpTo(0)">📊 แดชบอร์ดฮาร์ดแวร์</div>
+            <div id="nav-fin" class="nav-item" onclick="jumpTo(5)">💰 กระทบยอดบัญชี ERP</div>
+            <div id="nav-hr" class="nav-item" onclick="jumpTo(10)">👥 ความลับ HR & PDPA</div>
+            <div id="nav-leg" class="nav-item" onclick="jumpTo(15)">⚖️ ตรวจสัญญาจัดซื้อ</div>
+            <div style="margin-top:auto; font-size:9px; color:#64748b; font-family:monospace; line-height:1.4;">
+              NODE: PowerEdge R760xa<br/>
+              CLUSTER: 4x GPU Local<br/>
+              WAN: DISCONNECTED
+            </div>
+          </div>
+
+          <!-- Scene Viewport -->
+          <div class="app-content">
+
+            <!-- SCENE 1: OVERVIEW & CLUSTER MONITOR (0s - 5s) -->
+            <div id="scene1" class="scene active-scene clip" data-start="0" data-duration="5" data-track-index="0">
+              <div class="scene-header">
+                <div>
+                  <h2 class="scene-title">
+                    <span>สถานะระบบคลัสเตอร์ฮาร์ดแวร์องค์กร</span>
+                    <span style="font-size:10px; background:rgba(16,185,129,0.15); color:#34d399; padding:2px 6px; border-radius:4px; font-mono;">100% AIR-GAPPED</span>
+                  </h2>
+                  <p class="scene-desc">โหนดประมวลผล Local Inference ในห้องเซิร์ฟเวอร์องค์กร ไร้การเชื่อมต่อ Cloud</p>
+                </div>
+                <div class="savings-badge">
+                  <div style="font-size:9px; color:#34d399; font-weight:600;">ประหยัดค่า Cloud Tokens</div>
+                  <div class="savings-val">฿145,000 / เดือน</div>
+                </div>
+              </div>
+
+              <!-- 4x Real-time Fluctuating GPU Gauges -->
+              <div class="gpu-rack">
+                <div class="gpu-card">
+                  <div class="gpu-title"><span>GPU #0 (DeepSeek-R1)</span><span>92%</span></div>
+                  <div class="gpu-val">84.2 t/s</div>
+                  <div class="gpu-bar"><div id="gpu-bar-0" class="gpu-fill" style="width:92%;"></div></div>
+                </div>
+                <div class="gpu-card">
+                  <div class="gpu-title"><span>GPU #1 (Qwen-Coder)</span><span>88%</span></div>
+                  <div class="gpu-val">81.0 t/s</div>
+                  <div class="gpu-bar"><div id="gpu-bar-1" class="gpu-fill" style="width:88%; background:#06b6d4;"></div></div>
+                </div>
+                <div class="gpu-card">
+                  <div class="gpu-title"><span>VRAM ALLOCATION</span><span>72/96GB</span></div>
+                  <div class="gpu-val" style="color:#10b981;">&lt; 18 ms</div>
+                  <div class="gpu-bar"><div id="gpu-bar-2" class="gpu-fill" style="width:75%; background:#a855f7;"></div></div>
+                </div>
+                <div class="gpu-card">
+                  <div class="gpu-title"><span>CLOUD EGRESS OUT</span><span style="color:#34d399;">0 KB</span></div>
+                  <div class="gpu-val" style="color:#34d399;">0.00 KB</div>
+                  <div class="gpu-bar"><div class="gpu-fill" style="width:0%; background:#10b981;"></div></div>
+                </div>
+              </div>
+
+              <!-- Live Streaming Console Output -->
+              <div class="terminal-box">
+                <div style="color:#94a3b8;">[BOOT] AItoB Enterprise Node #01 · Hardware Secure Boot Verified</div>
+                <div>[NETWORK] eth0: Disconnected from Internet | eth1: Isolated Enterprise LAN 10.0.4.0/24 (OK)</div>
+                <div style="color:#10b981;">[STATUS] DeepSeek-R1 70B & Qwen-2.5 32B loaded into Quad-GPU memory</div>
+                <div style="color:#e2e8f0;" id="term-stream">[AUDIT] Zero Token Leakage · Ready to serve Finance, HR and Legal agents...<span class="cursor-blink"></span></div>
+              </div>
+            </div>
+
+            <!-- SCENE 2: FINANCE RECONCILIATION PROTOTYPE (5s - 10s) -->
+            <div id="scene2" class="scene clip" data-start="5" data-duration="5" data-track-index="0">
+              <div class="scene-header">
+                <div>
+                  <h2 class="scene-title">
+                    <span>ตรวจสลิปและกระทบยอดบัญชี ERP (ai-account)</span>
+                    <span style="font-size:10px; background:rgba(6,182,212,0.15); color:#22d3ee; padding:2px 6px; border-radius:4px;">LIVE OCR ENGINE</span>
+                  </h2>
+                  <p class="scene-desc">ประมวลผล 1,420 ใบเสร็จจาก SAP เทียบสลิปโอนเงินอัตโนมัติด้วย Local OCR</p>
+                </div>
+                <div class="savings-badge" style="border-color:#06b6d4; background:rgba(6,182,212,0.12);">
+                  <div style="font-size:9px; color:#22d3ee; font-weight:600;">เวลาประหยัดต่องาน</div>
+                  <div class="savings-val" style="color:#38bdf8;">45 นาที → 1.8 วิ</div>
+                </div>
+              </div>
+
+              <!-- Animated OCR Scanning Box -->
+              <div class="slip-card">
+                <div id="laser-scan" class="scanner-beam" style="top:20px;"></div>
+                <div style="font-size:11px; color:#94a3b8;">
+                  <span style="display:inline-block; font-weight:700; color:#fff;">กำลังตรวจสอบใบเสร็จ:</span> INV-2026-8912 (บจก. โกลบอล ซัพพลาย)
+                </div>
+                <div class="ocr-box">
+                  <span style="font-size:10px; color:#06b6d4; font-family:monospace;">[OCR DETECT]</span>
+                  <span style="font-size:11px; font-weight:700; color:#fff;">฿128,500</span>
+                  <span style="font-size:9px; background:#ef4444; color:#fff; padding:1px 4px; border-radius:2px;">ส่วนลด 5% ขาด</span>
+                </div>
+                <div style="margin-left:auto; font-family:monospace; font-size:11px; color:#10b981; font-weight:700;">
+                  ✓ Duplicate Check: OK
+                </div>
+              </div>
+
+              <!-- Counter Progress Bar -->
+              <div style="margin-bottom:8px;">
+                <div style="display:flex; justify-content:space-between; font-size:11px; color:#94a3b8; margin-bottom:3px;">
+                  <span>ประมวลผลเอกสารอัตโนมัติ: <b id="inv-counter" style="color:#fff; font-family:monospace;">0</b> / 1,420 ใบเสร็จ</span>
+                  <span style="color:#10b981; font-weight:700;">100% สำเร็จ</span>
+                </div>
+                <div style="height:6px; background:#1e293b; border-radius:9999px; overflow:hidden;">
+                  <div id="fin-bar" style="height:100%; background:linear-gradient(90deg, #06b6d4, #10b981); width:0%;"></div>
+                </div>
+              </div>
+
+              <div style="background:#090e1a; border:1px solid #1e293b; padding:8px 12px; border-radius:6px; font-size:11px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="color:#94a3b8;">ผลลัพธ์: ตรวจพบข้อผิดพลาด 3 รายการ · ทักท้วงได้ ฿24,500</span>
+                <span style="color:#10b981; font-weight:700; font-family:monospace;">ลดเวลาทำงานลง 99.93%</span>
+              </div>
+            </div>
+
+            <!-- SCENE 3: HR PAYROLL RBAC DEFENSE (10s - 15s) -->
+            <div id="scene3" class="scene clip" data-start="10" data-duration="5" data-track-index="0">
+              <div class="scene-header">
+                <div>
+                  <h2 class="scene-title">
+                    <span>ระบบป้องกันข้อมูลเงินเดือนรั่วไหล (HR RBAC Guard)</span>
+                    <span style="font-size:10px; background:rgba(245,158,11,0.15); color:#fbbf24; padding:2px 6px; border-radius:4px;">ZERO LEAK SHIELD</span>
+                  </h2>
+                  <p class="scene-desc">บล็อกการสืบค้นข้อมูลลับ PDPA และเงินเดือนตามสิทธิ์พนักงานอย่างเคร่งครัด</p>
+                </div>
+                <div class="savings-badge" style="border-color:#f59e0b; background:rgba(245,158,11,0.12);">
+                  <div style="font-size:9px; color:#fbbf24; font-weight:600;">ความเสี่ยงข้อมูลหลุด</div>
+                  <div class="savings-val" style="color:#f59e0b;">0% (Zero Leak)</div>
+                </div>
+              </div>
+
+              <div class="shield-container">
+                <div class="shield-icon">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </div>
+                <div style="flex:1;">
+                  <div style="font-size:10px; font-family:monospace; color:#ef4444; font-weight:700;">🚨 [RBAC SECURITY TRIGGERED · POLICY #HR-904]</div>
+                  <div style="font-size:12px; color:#fff; font-weight:600; margin-top:2px;">
+                    พนักงานขอสืบค้น: "ขอสรุปฐานเงินเดือนและโบนัส C-Level ทุกคนใน Q3"
+                  </div>
+                  <div style="font-size:10px; color:#94a3b8; margin-top:2px;">
+                    ▶ <b style="color:#34d399;">การตอบสนอง:</b> ปฏิเสธคำขอทันที ไม่ประมวลผล พร้อมบันทึกหลักฐานลง Audit Trail Hash
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex; gap:8px; margin-top:8px;">
+                <div style="flex:1; background:#090e1a; border:1px solid #1e293b; padding:8px 12px; border-radius:6px; font-size:11px;">
+                  <div style="color:#64748b; font-size:9px;">AUDIT HASH (TAMPER-PROOF)</div>
+                  <div style="color:#38bdf8; font-family:monospace; font-size:10px; margin-top:2px;">SHA-256 #8fa9b2014e7... LOGGED</div>
+                </div>
+                <div style="flex:1; background:#090e1a; border:1px solid #1e293b; padding:8px 12px; border-radius:6px; font-size:11px;">
+                  <div style="color:#64748b; font-size:9px;">PDPA COMPLIANCE STATUS</div>
+                  <div style="color:#10b981; font-weight:700; font-size:10px; margin-top:2px;">100% สอดคล้องมาตรา 28/29</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SCENE 4: LEGAL CONTRACT SCANNER (15s - 20s) -->
+            <div id="scene4" class="scene clip" data-start="15" data-duration="5" data-track-index="0">
+              <div class="scene-header">
+                <div>
+                  <h2 class="scene-title">
+                    <span>สแกนสัญญาจัดซื้อ 68 หน้า (Legal Contract Scanner)</span>
+                    <span style="font-size:10px; background:rgba(244,63,94,0.15); color:#fb7185; padding:2px 6px; border-radius:4px;">AUTO-REDLINE</span>
+                  </h2>
+                  <p class="scene-desc">ตรวจจับจุดเสียเปรียบและประเมินเพดานความรับผิดชอบ (Liability Cap) อัตโนมัติ</p>
+                </div>
+                <div class="savings-badge" style="border-color:#f43f5e; background:rgba(244,63,94,0.12);">
+                  <div style="font-size:9px; color:#fb7185; font-weight:600;">ความเร็วนักกฎหมาย</div>
+                  <div class="savings-val" style="color:#f43f5e;">4 ชม. → 3.4 วิ</div>
+                </div>
+              </div>
+
+              <!-- Risk Dial & Highlights -->
+              <div class="risk-dial-box">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="width:40px; height:40px; border-radius:50%; border:3px solid #ef4444; display:flex; align-items:center; justify-content:center; font-family:monospace; font-weight:800; font-size:11px; color:#ef4444;">
+                    89%
+                  </div>
+                  <div>
+                    <div style="font-size:11px; font-weight:700; color:#fff;">ตรวจพบความเสี่ยงวิกฤตในสัญญา (Critical Risk)</div>
+                    <div style="font-size:10px; color:#94a3b8;">ข้อ 14.2 ขาดเพดานจำกัดความรับผิด (Uncapped Liability)</div>
+                  </div>
+                </div>
+                <div style="text-align:right;">
+                  <span style="font-size:10px; background:rgba(16,185,129,0.15); border:1px solid #10b981; color:#34d399; padding:3px 8px; border-radius:4px; font-weight:700;">
+                    ✓ แนะนำข้อความแก้ต่างอัตโนมัติ
+                  </span>
+                </div>
+              </div>
+
+              <div style="background:#090e1a; border:1px solid #1e293b; padding:8px 12px; border-radius:6px; font-size:11px; display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                <span style="color:#94a3b8;">ระยะเวลาเฉลี่ยคืนทุนระบบ Appliance: <b>~ 2.1 เดือน</b></span>
+                <span style="color:#10b981; font-weight:700; font-family:monospace;">ลดเวลาตรวจเอกสารลง 98.5%</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Bottom Player Controller HUD -->
+        <div class="player-hud">
+          <button id="btn-play" class="play-btn" onclick="togglePlay()" title="Play / Pause">
+            <span id="play-icon">❚❚</span>
+          </button>
+
+          <div class="timeline-track" id="time-track" onclick="seekByClick(event)">
+            <div id="time-bar" class="timeline-progress"></div>
+          </div>
+
+          <div class="timecode" id="timecode-display">00:00 / 00:20</div>
+
+          <!-- Chapter Pills Inside Video Canvas -->
+          <div class="chapter-pills">
+            <span class="chap-pill active" id="pill-0" onclick="jumpTo(0)">ภาพรวม</span>
+            <span class="chap-pill" id="pill-1" onclick="jumpTo(5)">บัญชี</span>
+            <span class="chap-pill" id="pill-2" onclick="jumpTo(10)">HR</span>
+            <span class="chap-pill" id="pill-3" onclick="jumpTo(15)">สัญญา</span>
+          </div>
+
+          <button id="btn-sound" class="sound-btn" onclick="toggleSound()">
+            🔊 เสียงเอฟเฟกต์
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GSAP Composition & Interactive Controller -->
+    <script>
+      let isPlaying = true;
+      let soundEnabled = false;
+      let audioCtx = null;
+
+      function playBeep(freq = 600, duration = 0.08) {
+        if (!soundEnabled) return;
+        try {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + duration);
+        } catch(e) {}
+      }
+
+      function toggleSound() {
+        soundEnabled = !soundEnabled;
+        const btn = document.getElementById('btn-sound');
+        btn.classList.toggle('on', soundEnabled);
+        if (soundEnabled) playBeep(880, 0.1);
+      }
+
+      const scenes = [
+        { id: 'scene1', nav: 'nav-dash', pill: 'pill-0' },
+        { id: 'scene2', nav: 'nav-fin', pill: 'pill-1' },
+        { id: 'scene3', nav: 'nav-hr', pill: 'pill-2' },
+        { id: 'scene4', nav: 'nav-leg', pill: 'pill-3' }
+      ];
+
+      function setActiveScene(idx) {
+        scenes.forEach((s, i) => {
+          const el = document.getElementById(s.id);
+          const nav = document.getElementById(s.nav);
+          const pill = document.getElementById(s.pill);
+          if (i === idx) {
+            el.classList.add('active-scene');
+            if (nav) nav.classList.add('active');
+            if (pill) pill.classList.add('active');
+          } else {
+            el.classList.remove('active-scene');
+            if (nav) nav.classList.remove('active');
+            if (pill) pill.classList.remove('active');
+          }
+        });
+        playBeep(440 + idx * 120, 0.06);
+      }
+
+      const tl = gsap.timeline({
+        paused: true,
+        repeat: -1,
+        onUpdate: updateHud
+      });
+
+      function updateHud() {
+        const time = tl.time();
+        const dur = tl.duration() || 20;
+        const pct = (time / dur) * 100;
+        document.getElementById('time-bar').style.width = pct + '%';
+        const sec = Math.floor(time);
+        document.getElementById('timecode-display').textContent =
+          `00:${sec < 10 ? '0' + sec : sec} / 00:20`;
+      }
+
+      // Timeline keyframes
+      // Scene 1: 0 - 5s
+      tl.call(() => setActiveScene(0), null, 0);
+      tl.fromTo("#scene1", { opacity: 0, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.3 }, 0.1);
+      tl.to("#scene1", { opacity: 0, duration: 0.25 }, 4.75);
+
+      // Scene 2: 5 - 10s
+      tl.call(() => setActiveScene(1), null, 5);
+      tl.fromTo("#scene2", { opacity: 0, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.3 }, 5.1);
+      tl.fromTo("#fin-bar", { width: "0%" }, { width: "100%", duration: 1.8, ease: "power2.out" }, 5.3);
+      tl.fromTo("#laser-scan", { top: "10px" }, { top: "45px", duration: 1.2, repeat: 2, yoyo: true }, 5.3);
+      tl.to({ val: 0 }, {
+        val: 1420,
+        duration: 1.8,
+        ease: "power2.out",
+        onUpdate: function() {
+          const counter = document.getElementById('inv-counter');
+          if (counter) counter.textContent = Math.floor(this.targets()[0].val).toLocaleString();
+        }
+      }, 5.3);
+      tl.to("#scene2", { opacity: 0, duration: 0.25 }, 9.75);
+
+      // Scene 3: 10 - 15s
+      tl.call(() => setActiveScene(2), null, 10);
+      tl.fromTo("#scene3", { opacity: 0, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.3 }, 10.1);
+      tl.to("#scene3", { opacity: 0, duration: 0.25 }, 14.75);
+
+      // Scene 4: 15 - 20s
+      tl.call(() => setActiveScene(3), null, 15);
+      tl.fromTo("#scene4", { opacity: 0, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.3 }, 15.1);
+      tl.to("#scene4", { opacity: 0, duration: 0.25 }, 19.75);
+
+      function togglePlay() {
+        if (isPlaying) {
+          tl.pause();
+          document.getElementById('play-icon').textContent = '▶';
+        } else {
+          tl.play();
+          document.getElementById('play-icon').textContent = '❚❚';
+        }
+        isPlaying = !isPlaying;
+      }
+
+      function jumpTo(sec) {
+        tl.seek(sec);
+        if (!isPlaying) {
+          tl.play();
+          isPlaying = true;
+          document.getElementById('play-icon').textContent = '❚❚';
+        }
+      }
+
+      function seekByClick(e) {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const pct = clickX / rect.width;
+        jumpTo(pct * 20);
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.play();
+    </script>
+  </body>
+</html>

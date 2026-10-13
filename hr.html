@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AItoB for HR — ระบบ AI ฝ่ายทรัพยากรบุคคลและความลับเงินเดือน | Sovereign Local AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            paper: '#090d16',
+            'paper-subtle': '#0e1524',
+            surface: '#131e33',
+            'surface-raised': '#192742',
+            border: '#203050',
+            brand: { DEFAULT: '#10b981', hover: '#059669', light: '#34d399' }
+          },
+          fontFamily: {
+            display: ['Plus Jakarta Sans', 'IBM Plex Sans Thai', 'sans-serif'],
+            sans: ['IBM Plex Sans Thai', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-paper text-slate-100 antialiased selection:bg-brand selection:text-slate-950">
+
+  <!-- Header -->
+  <header class="sticky top-4 z-40 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="bg-paper-subtle/90 backdrop-blur-md border border-border rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between shadow-lg">
+      <a href="index.html" class="flex items-center space-x-3 group">
+        <div class="w-9 h-9 rounded-xl bg-surface border border-brand/50 flex items-center justify-center text-brand">
+          <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3L27 8.5V17.5C27 23.5 22.3 27.8 16 29.5C9.7 27.8 5 23.5 5 17.5V8.5L16 3Z"/><circle cx="16" cy="16" r="3" fill="#10b981"/></svg>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-extrabold text-base text-white tracking-tight">AI<span class="text-brand">to</span>B</span>
+            <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold">HR & PEOPLE HUB</span>
+          </div>
+          <span class="text-[10px] text-slate-400 block -mt-0.5">Sovereign HR Privacy & RBAC</span>
+        </div>
+      </a>
+
+      <div class="flex items-center space-x-4 text-xs">
+        <a href="index.html" class="text-slate-300 hover:text-white transition">← กลับหน้าหลัก</a>
+        <a href="finance.html" class="hidden sm:inline-block text-slate-400 hover:text-white transition">แผนกบัญชี</a>
+        <a href="legal.html" class="hidden sm:inline-block text-slate-400 hover:text-white transition">ฝ่ายจัดซื้อ/สัญญา</a>
+        <a href="index.html#roi-calculator" class="px-3 py-1.5 rounded-lg bg-brand hover:bg-brand-hover text-slate-950 font-bold transition">คำนวณ ROI</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="pt-14 pb-16 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border">
+    <div class="max-w-3xl">
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-surface border border-border text-xs text-brand-light font-mono mb-4">
+        <span>● PDPA Compliant · Zero Payroll Data Leakage</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white mb-4 leading-tight font-display">
+        AI ผู้ช่วยฝ่ายทรัพยากรบุคคล (HR)<br>
+        ข้อมูลเงินเดือนและความลับพนักงาน ปลอดภัย 100%
+      </h1>
+      <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+        ฐานข้อมูลเงินเดือน ประวัติสุขภาพ และสัญญาส่วนบุคคลของพนักงานเป็นข้อมูลความลับสูงสุดตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA) AItoB มีระบบ Role-Based Access Control (RBAC) กั้นข้อมูลอัตโนมัติ ให้พนักงานใช้ AI ช่วยคัดกรองเรซูเม่และร่างประกาศงานได้ โดยข้อมูลเงินเดือนไม่มีวันรั่วไหล
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a href="#simulator" class="px-5 py-2.5 rounded-xl bg-brand hover:bg-brand-hover text-slate-950 font-bold text-xs transition">
+          ทดสอบระบบคุมสิทธิ์เงินเดือน (RBAC Test)
+        </a>
+        <a href="index.html#solution" class="px-5 py-2.5 rounded-xl bg-surface hover:bg-surface-raised text-slate-200 font-semibold text-xs border border-border transition">
+          ดูสถาปัตยกรรมความปลอดภัย
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Grid -->
+  <section class="py-16 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border">
+    <h2 class="text-2xl font-bold text-white mb-8 font-display">ความสามารถของ AItoB สำหรับฝ่าย HR</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border">
+        <div class="text-brand font-mono font-bold text-lg mb-2">01. RBAC Guard</div>
+        <h3 class="font-bold text-white mb-2">กั้นสิทธิ์เข้าถึงตามตำแหน่งงาน</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          บล็อกพนักงานทั่วไปไม่ให้สืบค้นฐานเงินเดือน โบนัส หรือการประเมินผลลับระดับผู้บริหาร พร้อมบันทึกหลักฐานการเข้าถึง (Audit Trail)
+        </p>
+      </div>
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border">
+        <div class="text-emerald-400 font-mono font-bold text-lg mb-2">02. Resume Screening</div>
+        <h3 class="font-bold text-white mb-2">คัดกรองเรซูเม่และจัดแมตชิ่ง</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          สแกนเรซูเม่ภาษาไทยและอังกฤษเปรียบเทียบกับ Job Description (JD) สรุปจุดเด่น-จุดด้อยของผู้สมัครแต่ละรายใน 3 วินาที
+        </p>
+      </div>
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border">
+        <div class="text-brand-light font-mono font-bold text-lg mb-2">03. Automated Onboarding</div>
+        <h3 class="font-bold text-white mb-2">ตอบคำถามระเบียบบริษัท 24/7</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          แปลงคู่มือพนักงาน ระเบียบวันลา และสิทธิประโยชน์ประกันสุขภาพเป็น Local Agent ประจำองค์กร ตอบคำถามพนักงานทุกคนได้อย่างแม่นยำ
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive HR Simulator -->
+  <section id="simulator" class="py-16 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="max-w-2xl mb-8">
+      <span class="text-xs font-mono text-brand uppercase">Security & RBAC Demo</span>
+      <h2 class="text-2xl font-bold text-white mt-1 font-display">ทดสอบการป้องกันข้อมูลความลับ HR (Access Control)</h2>
+      <p class="text-xs text-slate-400">ทดลองสลับบทบาทผู้ใช้ เพื่อดูว่าระบบ AItoB จัดการคำขอข้อมูลเงินเดือนและประวัติลับอย่างไร</p>
+    </div>
+
+    <div class="bg-paper-subtle border border-border rounded-2xl p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div class="lg:col-span-5 space-y-4">
+        <div>
+          <label class="text-xs text-slate-300 block mb-1">เลือกผู้ใช้งานจำลอง (Simulated Persona):</label>
+          <select id="hr-role" class="w-full bg-surface border border-border rounded-lg px-3 py-2 text-xs text-white">
+            <option value="unauthorized">เจ้าหน้าที่ฝ่ายการตลาด (ไม่มีสิทธิ์ข้อมูลเงินเดือน)</option>
+            <option value="authorized">ผู้จัดการฝ่ายบุคคล HR Manager (มีสิทธิ์เต็ม)</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-slate-300 block mb-1">คำสั่งที่ต้องการส่งเข้า AI:</label>
+          <div class="px-3 py-2 rounded-lg bg-surface border border-border text-xs text-slate-200 font-mono">
+            "ขออัตราเงินเดือนเฉลี่ยและโบนัสย้อนหลังของพนักงานทุกคนในแผนก IT"
+          </div>
+        </div>
+        <button onclick="runHRAudit()" class="w-full py-3 rounded-xl bg-brand hover:bg-brand-hover text-slate-950 font-bold text-xs transition">
+          ▶ ส่งคำสั่งทดสอบระบบรักษาความลับ
+        </button>
+      </div>
+
+      <div class="lg:col-span-7 bg-black/60 border border-border rounded-xl p-5 font-mono text-xs">
+        <div class="flex justify-between pb-2 mb-3 border-b border-border text-slate-400">
+          <span>rbac-guard@local-node</span>
+          <span class="text-brand">SECURITY AUDIT ENGINE</span>
+        </div>
+        <div id="hr-logs" class="space-y-2 min-h-[140px] text-slate-300">
+          <div class="text-slate-500">// รอคำสั่งทดสอบ... กดปุ่มส่งคำสั่งด้านซ้าย</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 sm:px-6 max-w-7xl mx-auto border-t border-border flex justify-between text-xs text-slate-400">
+    <div>AItoB Sovereign Enterprise — HR Edition</div>
+    <div class="space-x-4">
+      <a href="index.html" class="hover:text-white">หน้าหลัก</a>
+      <a href="finance.html" class="hover:text-white">แผนกบัญชี</a>
+      <a href="legal.html" class="hover:text-white">ฝ่ายจัดซื้อและสัญญา</a>
+    </div>
+  </footer>
+
+  <script>
+    function runHRAudit() {
+      const role = document.getElementById('hr-role').value;
+      const logEl = document.getElementById('hr-logs');
+      logEl.innerHTML = `<div class="text-brand font-bold">▶ [INCOMING QUERY] กำลังประเมินสิทธิ์ผู้ใช้กับระบบ Local RBAC...</div>`;
+
+      if (role === 'unauthorized') {
+        setTimeout(() => {
+          logEl.innerHTML += `<div class="text-amber-400">[RBAC CHECK] User Role: 'Marketing_Staff' -> Tag: 'General_Employee'</div>`;
+        }, 300);
+        setTimeout(() => {
+          logEl.innerHTML += `<div class="text-rose-400 font-bold">[ACCESS DENIED] ผู้ใช้ไม่มีสิทธิ์เข้าถึงหมวดหมู่ 'Payroll_Confidential'</div>`;
+          const div = document.createElement('div');
+          div.className = "bg-rose-950/40 border border-rose-500/40 p-3 rounded text-rose-200 mt-2";
+          div.innerText = "🛡️ การป้องกันสำเร็จ: ระบบปฏิเสธการดึงข้อมูลเงินเดือนโดยอัตโนมัติ และบันทึกประวัติการร้องขอลงใน Audit Log เรียบร้อย (ไม่มีข้อมูลหลุด 100%)";
+          logEl.appendChild(div);
+        }, 650);
+      } else {
+        setTimeout(() => {
+          logEl.innerHTML += `<div class="text-emerald-400">[RBAC CHECK] User Role: 'HR_Director' -> GRANTED (Verified Certificate)</div>`;
+        }, 300);
+        setTimeout(() => {
+          logEl.innerHTML += `<div class="text-cyan-400">[LOCAL RAG] ดึงข้อมูลสถิติเงินเดือนเฉพาะแผนก IT ผ่านฐานข้อมูลเข้ารหัสภายใน...</div>`;
+          const div = document.createElement('div');
+          div.className = "bg-surface border border-brand/40 p-3 rounded text-white mt-2";
+          div.innerText = "✓ ผลการวิเคราะห์สถิติ (สำหรับ HR เท่านั้น):\n• อัตราเงินเดือนเฉลี่ย IT: ฿64,500 บาท\n• ช่วงอัตราโบนัส: 1.5 - 2.8 เท่า\n• สรุป: อยู่ในเกณฑ์งบประมาณปี 2026";
+          logEl.appendChild(div);
+        }, 650);
+      }
+    }
+  </script>
+</body>
+</html>

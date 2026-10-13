@@ -1,36 +1,84 @@
-# Python
+# Python & caches
 __pycache__/
+**/__pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
+.venv/
+venv/
+env/
 
 # Node & package managers
 node_modules/
+**/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# Next.js & builds
+.next/
+**/.next/
+dist/
+**/dist/
+build/
+**/build/
+out/
+**/.turbo/
+
+# Databases, SQLite & runtime state
+*.db
+**/*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+**/*.sqlite*
+data/*.db
+ai-chat/data/*.db
+ai-account/data/*.db
+
 # Environment & secrets
 .env
 .env.*
 !.env.example
+*.local
 
-# OS files
+# OS junk
 .DS_Store
 Thumbs.db
+desktop.ini
 *.bak
 *.tmp
+*~
 
 # IDE & editors
 .vscode/
 .idea/
 *.swp
 *.swo
+*.sublime-*
 
-# Agent runtimes & local skills
+# Agent runtimes, skills & local frameworks
 .agents/
 skills-lock.json
 .hallmark/
 .claude/skills/hallmark
+.claude/skills/hyperframes*
+.claude/skills/media-use*
+.claude/skills/embedded-captions*
+.claude/skills/faceless-explainer*
+.claude/skills/figma*
+.claude/skills/general-video*
+.claude/skills/motion-graphics*
+.claude/skills/music-to-video*
+.claude/skills/pr-to-video*
+.claude/skills/product-launch-video*
+.claude/skills/remotion-to-hyperframes*
+.claude/skills/slideshow*
+.claude/skills/talking-head-recut*
+
+# Logs & temp test dumps
 *.log
+**/*.log
+coverage/

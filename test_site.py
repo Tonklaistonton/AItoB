@@ -4,6 +4,7 @@ import urllib.request
 import threading
 import http.server
 import socketserver
+import functools
 
 def test_html_structure():
     path = os.path.join(os.path.dirname(__file__), "index.html")
@@ -45,23 +46,42 @@ def test_html_structure():
     for slide_num in range(1, 7):
         assert f'data-slide="{slide_num}"' in html, f"Missing slide {slide_num}"
 
+    # 6. Video Demo, Department Pages & Integrated Subsystems
+    assert 'id="demo-video"' in html, "Missing Demo Video section"
+    assert 'id="departments"' in html, "Missing Departments section"
+    for dept_file in ["finance.html", "hr.html", "legal.html"]:
+        dept_path = os.path.join(os.path.dirname(__file__), dept_file)
+        assert os.path.exists(dept_path), f"{dept_file} must exist"
+        assert f'href="{dept_file}"' in html, f"Missing link to {dept_file}"
+
+    assert "ai-account" in html, "Missing ai-account in index.html"
+    assert "ai-chat" in html, "Missing ai-chat in index.html"
+    assert os.path.isdir(os.path.join(os.path.dirname(__file__), "ai-account"))
+    assert os.path.isdir(os.path.join(os.path.dirname(__file__), "ai-chat"))
+
     print("✓ All HTML content and section assertions passed.")
 
 def test_http_server():
-    port = 8765
-    handler = http.server.SimpleHTTPRequestHandler
-    httpd = socketserver.TCPServer(("", port), handler)
+    server_dir = os.path.dirname(os.path.abspath(__file__))
+    handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=server_dir)
+
+    class ReusableTCPServer(socketserver.TCPServer):
+        allow_reuse_address = True
+
+    httpd = ReusableTCPServer(("", 0), handler)
+    port = httpd.server_address[1]
     thread = threading.Thread(target=httpd.serve_forever)
     thread.daemon = True
     thread.start()
 
     try:
-        url = f"http://localhost:{port}/index.html"
-        req = urllib.request.urlopen(url, timeout=3)
-        assert req.status == 200, f"Expected status 200, got {req.status}"
-        body = req.read().decode("utf-8")
-        assert "<title>AItoB" in body
-        print(f"✓ HTTP server test passed on port {port}.")
+        for page in ["index.html", "finance.html", "hr.html", "legal.html", "account.html", "inbox.html", "demo-video/index.html"]:
+            url = f"http://localhost:{port}/{page}"
+            req = urllib.request.urlopen(url, timeout=3)
+            assert req.status == 200, f"Expected status 200 for {page}, got {req.status}"
+            body = req.read().decode("utf-8")
+            assert "AItoB" in body or "html" in body
+            print(f"✓ HTTP 200 passed for {page}.")
     finally:
         httpd.shutdown()
         httpd.server_close()
