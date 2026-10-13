@@ -10,6 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Anime.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -131,21 +133,21 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
       <!-- Main Pitch Narrative (Left-Heavy) -->
       <div class="lg:col-span-8">
-        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-surface border border-border text-xs text-brand-light font-mono mb-6">
+        <div class="hero-fade-in inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-surface border border-border text-xs text-brand-light font-mono mb-6">
           <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
           <span>100% On-Premise Air-Gapped Appliance · Zero Data Egress</span>
         </div>
 
-        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.12] mb-6 font-display">
+        <h1 class="hero-fade-in text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.12] mb-6 font-display">
           ปลดล็อกพลัง AI ในองค์กร<br>
           ข้อมูลความลับไม่หลุดออกนอกบริษัท
         </h1>
 
-        <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mb-8">
+        <p class="hero-fade-in text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mb-8">
           AItoB วางระบบและติดตั้ง <span class="text-white font-semibold">Private Local AI</span> บนฮาร์ดแวร์เฉพาะในองค์กร เชื่อมโยงฐานข้อมูลภายในและเอกสารสำคัญด้วยสิทธิ์ RBAC + Model Context Protocol ทำงานอัตโนมัติ 100% โดยไม่ต้องส่งข้อมูลออกอินเทอร์เน็ต
         </p>
 
-        <div class="flex flex-wrap items-center gap-4">
+        <div class="hero-fade-in flex flex-wrap items-center gap-4">
           <a href="#prototype" class="px-6 py-3 rounded-xl bg-brand hover:bg-brand-hover text-slate-950 font-bold text-sm transition flex items-center space-x-2 shadow-sm">
             <span>ทดลอง Interactive Simulator</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
@@ -157,7 +159,7 @@
       </div>
 
       <!-- Right Column: Hard Sovereign Guarantees (Structured Card) -->
-      <div class="lg:col-span-4 bg-paper-subtle border border-border rounded-2xl p-6 space-y-4">
+      <div class="hero-fade-in lg:col-span-4 bg-paper-subtle border border-border rounded-2xl p-6 space-y-4">
         <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider pb-3 border-b border-border-subtle">
           Sovereign Guarantees
         </div>
@@ -860,6 +862,15 @@
           </ul>
         </div>
       `;
+      if (window.anime) {
+        anime({
+          targets: '#step-content',
+          opacity: [0, 1],
+          translateY: [8, 0],
+          duration: 300,
+          easing: 'easeOutQuad'
+        });
+      }
     }
 
     // 2. Interactive Simulator
@@ -924,6 +935,15 @@
           div.className = color;
           div.innerText = l.text;
           term.appendChild(div);
+          if (window.anime) {
+            anime({
+              targets: div,
+              opacity: [0, 1],
+              translateX: [-10, 0],
+              duration: 250,
+              easing: 'easeOutQuad'
+            });
+          }
           i++;
           setTimeout(appendLog, 300);
         }
@@ -931,7 +951,8 @@
       appendLog();
     }
 
-    // 3. ROI Calculator Logic
+    // 3. ROI Calculator Logic with Animated Counter
+    const roiState = { hours: 0, savings: 0 };
     function calculateROI() {
       const employees = parseInt(document.getElementById('input-employees').value);
       const hours = parseFloat(document.getElementById('input-hours').value);
@@ -946,11 +967,26 @@
       const monthlySavings = Math.round(savedHoursPerMonth * hourlyRate);
       const annualSavings = monthlySavings * 12;
 
-      document.getElementById('res-hours').innerText = `${savedHoursPerMonth.toLocaleString()} ชั่วโมง`;
-      document.getElementById('res-savings').innerText = `${annualSavings.toLocaleString()} บาท`;
-
       const paybackMonths = monthlySavings > 0 ? (249000 / monthlySavings).toFixed(1) : "N/A";
       document.getElementById('res-payback').innerText = `~ ${paybackMonths} เดือน`;
+
+      if (window.anime) {
+        anime({
+          targets: roiState,
+          hours: savedHoursPerMonth,
+          savings: annualSavings,
+          round: 1,
+          duration: 350,
+          easing: 'easeOutQuad',
+          update: function() {
+            document.getElementById('res-hours').innerText = `${Math.round(roiState.hours).toLocaleString()} ชั่วโมง`;
+            document.getElementById('res-savings').innerText = `${Math.round(roiState.savings).toLocaleString()} บาท`;
+          }
+        });
+      } else {
+        document.getElementById('res-hours').innerText = `${savedHoursPerMonth.toLocaleString()} ชั่วโมง`;
+        document.getElementById('res-savings').innerText = `${annualSavings.toLocaleString()} บาท`;
+      }
     }
 
     // 4. Pitch Deck Modal Navigation
@@ -974,6 +1010,15 @@
         if (parseInt(s.getAttribute('data-slide')) === currentSlide) {
           s.classList.remove('hidden');
           s.classList.add('slide-active');
+          if (window.anime) {
+            anime({
+              targets: s,
+              opacity: [0, 1],
+              translateY: [15, 0],
+              duration: 280,
+              easing: 'easeOutCubic'
+            });
+          }
         }
       });
 
@@ -985,6 +1030,14 @@
     btnOpenDeck.addEventListener('click', () => {
       deckModal.classList.remove('hidden');
       deckModal.classList.add('flex');
+      if (window.anime) {
+        anime({
+          targets: '#deck-modal',
+          opacity: [0, 1],
+          duration: 250,
+          easing: 'easeOutQuad'
+        });
+      }
       showSlide(1);
     });
 
@@ -1022,6 +1075,17 @@
       selectStep(1);
       runScenario('finance');
       calculateROI();
+
+      if (window.anime) {
+        anime({
+          targets: '.hero-fade-in',
+          opacity: [0, 1],
+          translateY: [20, 0],
+          delay: anime.stagger(100, {start: 150}),
+          duration: 700,
+          easing: 'easeOutCubic'
+        });
+      }
     });
   </script>
 </body>
