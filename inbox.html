@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AIZEN Inbox · ระบบรวมศูนย์สนทนาหลายช่องทาง</title>
+  <title>AIZEN Inbox · ศูนย์รวมแชทหลายช่องทาง</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -1724,27 +1724,27 @@
 
     <!-- Live Theme / Design Variant Switcher -->
     <div class="theme-selector-bar" data-od-id="theme-switcher">
-      <span class="theme-label">ดีไซน์:</span>
+      <span class="theme-label">ธีม:</span>
       <button class="theme-btn active" onclick="switchTheme('compact-modern', this)" title="แบบที่ 1: Compact Modern (กระชับ สมดุล มาตรฐาน SaaS)">Compact</button>
-      <button class="theme-btn" onclick="switchTheme('dense-linear', this)" title="แบบที่ 2: Dense Linear (ตัวหนังสือเล็กกระชับ สไตล์ Linear/DevOps เจาะจงความจุข้อมูล)">Dense</button>
-      <button class="theme-btn" onclick="switchTheme('clean-slate', this)" title="แบบที่ 3: Clean Slate (มินิมอล นุ่มนวล โทนสีธรรมชาติ อ่านสบายตา)">Clean</button>
-      <button class="theme-btn" onclick="switchTheme('dark-studio', this)" title="แบบที่ 4: Dark Studio (ธีมมืดมืออาชีพ ถนอมสายตา)">Dark</button>
+      <button class="theme-btn" onclick="switchTheme('dense-linear', this)" title="แบบที่ 2: Dense Linear (ตัวอักษรเล็ก แสดงข้อมูลได้หนาแน่น สไตล์ Linear/DevOps)">Dense</button>
+      <button class="theme-btn" onclick="switchTheme('clean-slate', this)" title="แบบที่ 3: Clean Slate (มินิมอล นุ่มนวล โทนอบอุ่น อ่านสบายตา)">Clean</button>
+      <button class="theme-btn" onclick="switchTheme('dark-studio', this)" title="แบบที่ 4: Dark Studio (ธีมมืดแบบมืออาชีพ ถนอมสายตา)">Dark</button>
     </div>
 
     <!-- Font Size Switcher (Accessibility & Senior Friendly) -->
     <div class="font-size-selector-bar" data-od-id="font-size-switcher">
-      <span class="theme-label">ขนาดอักษร:</span>
+      <span class="theme-label">ขนาดตัวอักษร:</span>
       <button class="font-btn" data-size="sm" onclick="setFontSize('sm', this)" title="ขนาดเล็ก (88%)">A- เล็ก</button>
       <button class="font-btn active" data-size="md" onclick="setFontSize('md', this)" title="ขนาดปกติ (100%)">A ปกติ</button>
       <button class="font-btn" data-size="lg" onclick="setFontSize('lg', this)" title="ขนาดใหญ่ (115% อ่านสบายตา)">A+ ใหญ่</button>
-      <button class="font-btn font-btn-xl" data-size="xl" onclick="setFontSize('xl', this)" title="ขนาดใหญ่พิเศษ (130% ชัดเจน เหมาะสำหรับผู้สูงอายุ)">A++ ใหญ่พิเศษ</button>
+      <button class="font-btn font-btn-xl" data-size="xl" onclick="setFontSize('xl', this)" title="ขนาดใหญ่พิเศษ (130% ตัวอักษรชัดเจน เหมาะกับผู้สูงอายุ)">A++ ใหญ่พิเศษ</button>
     </div>
 
     <div class="topbar-right">
-      <button class="topbar-btn btn-admin" id="btn-admin-toggle" onclick="openAdminModal()" title="เปิดแผงตั้งค่าผู้ดูแลระบบ (API Keys, Backend, Database)">⚙️ แผงตั้งค่าแอดมิน</button>
+      <button class="topbar-btn btn-admin" id="btn-admin-toggle" onclick="openAdminModal()" title="เปิดหน้าตั้งค่าผู้ดูแลระบบ (API Key, แบ็กเอนด์, ฐานข้อมูล)">⚙️ ตั้งค่าผู้ดูแลระบบ</button>
       <div class="mode-pill">
         <span class="dot-live"></span>
-        <span id="topbar-sync-status">LINE & Gmail ซิงก์ปกติ</span>
+        <span id="topbar-sync-status">LINE และ Gmail ซิงก์ปกติ</span>
       </div>
     </div>
   </header>
@@ -1763,15 +1763,15 @@
       </div>
 
       <div class="search-box">
-        <input type="text" class="search-input" id="search-input" oninput="filterConversations()" placeholder="ค้นหาชื่อลูกค้า, ข้อความ, เบอร์โทร..." />
+        <input type="text" class="search-input" id="search-input" oninput="filterConversations()" placeholder="ค้นหาชื่อลูกค้า ข้อความ หรือเบอร์โทร..." />
       </div>
 
       <div class="conv-list" id="conv-list-container">
         <!-- Dynamic conversations rendered via JavaScript -->
         <div id="conv-empty-state" style="padding: 32px 16px; text-align: center; color: var(--muted); font-size: var(--text-xs);">
           <div style="font-size: 28px; margin-bottom: 8px;">💬</div>
-          <div>ยังไม่มีการสนทนาในระบบ</div>
-          <div style="margin-top: 4px; font-size: 11px; opacity: 0.7;">เมื่อมีข้อความ LINE หรืออีเมลเข้ามา จะปรากฏที่นี่</div>
+          <div>ยังไม่มีบทสนทนา</div>
+          <div style="margin-top: 4px; font-size: 11px; opacity: 0.7;">ข้อความจาก LINE หรืออีเมลที่เข้ามาจะแสดงที่นี่</div>
         </div>
       </div>
     </aside>
@@ -1793,8 +1793,8 @@
       <div class="message-stream" id="message-container">
         <div id="messages-empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); text-align: center; padding: 24px;">
           <div style="font-size: 36px; margin-bottom: 12px; opacity: 0.7;">💬</div>
-          <div style="font-size: var(--text-base); font-weight: 600; margin-bottom: 4px; color: var(--fg);">ไม่มีข้อความที่เลือก</div>
-          <div style="font-size: var(--text-xs); opacity: 0.8; max-width: 320px;">เลือกการสนทนาจากแถบด้านซ้าย หรือรอข้อความใหม่จากลูกค้า</div>
+          <div style="font-size: var(--text-base); font-weight: 600; margin-bottom: 4px; color: var(--fg);">ยังไม่ได้เปิดแชทใด ๆ</div>
+          <div style="font-size: var(--text-xs); opacity: 0.8; max-width: 320px;">เลือกบทสนทนาจากรายการด้านซ้าย หรือรอข้อความใหม่จากลูกค้า</div>
         </div>
       </div>
 
@@ -1843,11 +1843,11 @@
             <button class="tone-chip" onclick="setAiTone('detail', this)">💡 ละเอียด</button>
           </div>
           <div class="suggestion-text" id="ai-suggestion-box">
-            แพ็กเกจ Enterprise มีรอบอบรมออนไลน์ทุกวันอังคารและพฤหัสบดี เวลา 14:00 น. ครับ พร้อมคู่มือภาษาไทยฉบับสมบูรณ์ และมีทีมงานเทคนิคคอยดูแลตลอดการติดตั้งครับ
+            แพ็กเกจ Enterprise มีรอบอบรมออนไลน์ทุกวันอังคารและวันพฤหัสบดี เวลา 14:00 น. พร้อมคู่มือภาษาไทยฉบับสมบูรณ์ และมีทีมเทคนิคคอยดูแลตลอดขั้นตอนการติดตั้งครับ
           </div>
           <button class="btn-apply" onclick="useAiSuggestion()">+ นำข้อความนี้ไปตอบ</button>
           <button class="btn-regenerate" onclick="regenerateAiSuggestion()">
-            <span>✦ สร้างคำตอบใหม่ (AI Re-generate)</span>
+            <span>✦ สร้างคำตอบใหม่อีกครั้ง</span>
           </button>
         </div>
 
@@ -1877,7 +1877,7 @@
           </div>
           <div class="info-row">
             <span class="info-label">การซิงก์:</span>
-            <span class="info-value">Google Sheets ปกติ</span>
+            <span class="info-value">Google Sheets · ปกติ</span>
           </div>
           <div class="info-row">
             <span class="info-label">ประวัติการติดต่อ:</span>
@@ -2002,8 +2002,8 @@
         msgContainer.innerHTML = `
           <div id="messages-empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); text-align: center; padding: 24px;">
             <div style="font-size: 36px; margin-bottom: 12px; opacity: 0.7;">💬</div>
-            <div style="font-size: var(--text-base); font-weight: 600; margin-bottom: 4px; color: var(--fg);">ไม่มีข้อความที่เลือก</div>
-            <div style="font-size: var(--text-xs); opacity: 0.8; max-width: 320px;">เลือกการสนทนาจากแถบด้านซ้าย หรือรอข้อความใหม่จากลูกค้า</div>
+            <div style="font-size: var(--text-base); font-weight: 600; margin-bottom: 4px; color: var(--fg);">ยังไม่ได้เปิดแชทใด ๆ</div>
+            <div style="font-size: var(--text-xs); opacity: 0.8; max-width: 320px;">เลือกบทสนทนาจากรายการด้านซ้าย หรือรอข้อความใหม่จากลูกค้า</div>
           </div>
         `;
       }
@@ -2154,7 +2154,7 @@
       const item = CONV_DATA[targetId];
       const targetName = item ? item.name : 'การสนทนานี้';
       
-      if (!confirm(`คุณต้องการลบแชทของ "${targetName}" ออกจากระบบถาวรใช่หรือไม่?`)) {
+      if (!confirm(`ต้องการลบแชทของ "${targetName}" ออกจากระบบถาวรใช่หรือไม่?\nการลบนี้ไม่สามารถกู้คืนได้`)) {
         return;
       }
 
@@ -2328,7 +2328,7 @@
             <div class="email-meta-info">
               <span>จาก: ${data.id}</span>
               <span>ถึง: support@aizen.app</span>
-              <span>สถานะ: เข้ารหัส TLS สมบูรณ์</span>
+              <span>สถานะ: เข้ารหัสด้วย TLS</span>
             </div>
           </div>
         `;
@@ -2481,7 +2481,7 @@
           setTimeout(() => {
             aiBox.innerText = sample.aiResp;
             aiBox.classList.remove('shimmer-loading');
-            showToast('AI ประมวลผลคำตอบใหม่สำเร็จ', 'อ้างอิงจากคลังข้อมูล SQLite', '✦');
+            showToast('AI เตรียมคำตอบใหม่แล้ว', 'อ้างอิงจากคลังความรู้ในระบบ', '✦');
           }, 450);
         }
       }, 1100);
@@ -2491,19 +2491,19 @@
     const AI_TONES = {
       formal: {
         title: 'ทางการ',
-        text: 'ทางระบบ AIZEN ขอเรียนชี้แจงว่า สำหรับแพ็กเกจ Enterprise มีรอบการฝึกอบรมการใช้งานออนไลน์ทุกวันอังคารและพฤหัสบดี เวลา 14:00 น. พร้อมคู่มือภาษาไทยฉบับสมบูรณ์ และมีทีมวิศวกรคอยดูแลความพร้อมตลอดการติดตั้งครับ'
+        text: 'AIZEN ขอเรียนแจ้งว่า แพ็กเกจ Enterprise มีรอบอบรมการใช้งานออนไลน์ทุกวันอังคารและวันพฤหัสบดี เวลา 14:00 น. พร้อมคู่มือภาษาไทยฉบับสมบูรณ์ และมีทีมเทคนิคคอยดูแลตลอดขั้นตอนการติดตั้งครับ'
       },
       concise: {
         title: 'กระชับ',
-        text: 'รอบอบรมมีทุก อังคาร-พฤหัสฯ เวลา 14:00 น. ผ่านระบบออนไลน์ มีคู่มือไทยครบ และทีมช่างดูแลติดตั้งฟรีครับ'
+        text: 'รอบอบรมมีทุกวันอังคารและพฤหัสบดี เวลา 14:00 น. ผ่านระบบออนไลน์ พร้อมคู่มือภาษาไทยครบถ้วน และมีทีมเทคนิคช่วยดูแลการติดตั้งครับ'
       },
       sales: {
         title: 'ปิดการขาย',
-        text: 'รอบอบรมมีทุกอังคาร-พฤหัสฯ เวลา 14:00 น. ครับ และพิเศษสัปดาห์นี้ หากยืนยันแพ็กเกจ Enterprise รับฟรีอบรม Private On-site 1 วันเต็มทันทีครับ ต้องการให้จัดเตรียมใบเสนอราคาเลยไหมครับ?'
+        text: 'รอบอบรมมีทุกวันอังคารและพฤหัสบดี เวลา 14:00 น. ครับ และสัปดาห์นี้มีสิทธิพิเศษ หากยืนยันแพ็กเกจ Enterprise รับฟรีการอบรมแบบ Private On-site 1 วันเต็ม ต้องการให้จัดเตรียมใบเสนอราคาให้เลยไหมครับ?'
       },
       detail: {
         title: 'ละเอียด',
-        text: 'แพ็กเกจ Enterprise รองรับการใช้งาน 6 บัญชีขึ้นไป ซิงก์ Google Sheets/Airtable อัตโนมัติ พร้อมระบบ SQLite Webhook แบบ Real-time มีรอบอบรมออนไลน์ 2 วันต่อสัปดาห์ (อังคาร/พฤหัสฯ 14:00 น.) และบันทึกวิดีโอย้อนหลังพร้อมคู่มือ PDF ฉบับภาษาไทยครับ'
+        text: 'แพ็กเกจ Enterprise รองรับผู้ใช้งาน 6 บัญชีขึ้นไป ซิงก์ข้อมูลกับ Google Sheets หรือ Airtable อัตโนมัติ พร้อม Webhook แบบเรียลไทม์ มีรอบอบรมออนไลน์สัปดาห์ละ 2 วัน (อังคารและพฤหัสบดี เวลา 14:00 น.) และมีวิดีโอบันทึกย้อนหลังพร้อมคู่มือ PDF ฉบับภาษาไทยครับ'
       }
     };
 
@@ -2524,7 +2524,7 @@
           CONV_DATA[activeConvId].aiSuggestion = item.text;
         }
         aiBox.classList.remove('shimmer-loading');
-        showToast(`ปรับโทนคำตอบ: ${item.title}`, 'AI เรียบเรียงคำตอบใหม่ตามสไตล์ที่เลือก', '⚡');
+        showToast(`ปรับโทนคำตอบ: ${item.title}`, 'AI เรียบเรียงคำตอบใหม่ตามโทนที่เลือกแล้ว', '⚡');
       }, 320);
     }
 
@@ -2601,7 +2601,7 @@
       if (pill) {
         if (next === 'closed') {
           pill.className = 'status-pill status-closed';
-          pill.innerText = 'ปิดการสนทนา';
+          pill.innerText = 'ปิดเคส';
         } else {
           pill.className = 'status-pill status-pending';
           pill.innerText = 'รอตอบ';
@@ -2614,7 +2614,7 @@
       if (next === 'closed') {
         playSound('celebrate');
         triggerConfetti();
-        showToast('🎉 ปิดการสนทนาเรียบร้อย', 'บันทึกข้อมูลสถิติไปยัง SQLite เรียบร้อย', '✓');
+        showToast('🎉 ปิดเคสเรียบร้อย', 'บันทึกสถิติลงฐานข้อมูลแล้ว', '✓');
       } else {
         playSound('pop');
         showToast('↺ เปิดการสนทนาใหม่อีกครั้ง', 'เปลี่ยนสถานะเป็นรอเจ้าหน้าที่ตอบ', '↺');
@@ -2627,13 +2627,13 @@
       input.value = text;
       input.focus();
       playSound('pop');
-      showToast('นำคำตอบ AI ไปยังกล่องข้อความ', 'กดส่ง หรือ ปรับแต่งข้อความต่อได้ทันที', '⚡');
+      showToast('ใส่คำตอบจาก AI ในกล่องข้อความแล้ว', 'กดส่งหรือแก้ไขข้อความต่อได้ทันที', '⚡');
     }
 
     function applyTemplate(type) {
       const input = document.getElementById('reply-text');
       if (type === 'แจ้งตารางรอบอบรม') {
-        input.value = 'รอบอบรมครั้งถัดไปจัดขึ้นในวันพฤหัสบดี เวลา 14:00 - 15:30 น. ผ่านระบบออนไลน์ (Google Meet) ครับ';
+        input.value = 'รอบอบรมครั้งถัดไปจัดขึ้นวันพฤหัสบดี เวลา 14:00-15:30 น. ผ่านระบบออนไลน์ (Google Meet) ครับ';
       } else if (type === 'ส่งลิงก์คู่มือ') {
         input.value = 'ท่านสามารถศึกษาคู่มือการตั้งค่าและการใช้งานฉบับภาษาไทยได้ที่ https://aizen.app/docs/th ครับ';
       } else {
@@ -2641,7 +2641,7 @@
       }
       input.focus();
       playSound('pop');
-      showToast(`เลือกแม่แบบ: ${type}`, 'ใส่เนื้อหาลงกล่องพิมพ์แล้ว', '📄');
+      showToast(`เลือกเทมเพลต: ${type}`, 'ใส่ข้อความลงในกล่องตอบกลับแล้ว', '📄');
     }
 
     let isAutoReplyActive = true;
@@ -2737,8 +2737,8 @@
         container.innerHTML = `
           <div id="conv-empty-state" style="padding: 32px 16px; text-align: center; color: var(--muted); font-size: var(--text-xs);">
             <div style="font-size: 28px; margin-bottom: 8px;">💬</div>
-            <div>ยังไม่มีการสนทนาในระบบ</div>
-            <div style="margin-top: 4px; font-size: 11px; opacity: 0.7;">เมื่อมีข้อความ LINE หรืออีเมลเข้ามา จะปรากฏที่นี่</div>
+            <div>ยังไม่มีบทสนทนา</div>
+            <div style="margin-top: 4px; font-size: 11px; opacity: 0.7;">ข้อความจาก LINE หรืออีเมลที่เข้ามาจะแสดงที่นี่</div>
           </div>
         `;
         clearActiveChat();
@@ -2820,7 +2820,7 @@
           if (resJson.delivered) {
             showToast('ส่งถึง LINE ลูกค้าสำเร็จ', 'ข้อความ Push ไปยัง LINE Official Account แล้ว', '✓');
           } else {
-            showToast('บันทึกลงระบบ SQLite แล้ว', 'สถานะข้อความถูกจัดเก็บในระบบเรียบร้อย', '✓');
+            showToast('บันทึกข้อความแล้ว', 'เก็บไว้ในระบบแล้ว แต่ยังไม่ได้ส่งถึงลูกค้าทาง LINE', '⚠️');
           }
         } else {
           // Send real email
@@ -2836,7 +2836,7 @@
           showToast('ส่งอีเมลตอบกลับแล้ว', `ส่งผ่าน Gmail ไปยัง ${conv.id || 'ลูกค้า'}`, '✉');
         }
       } catch (err) {
-        showToast('แจ้งเตือน', 'บันทึกลงระบบและหน้าจอเรียบร้อย', '✓');
+        showToast('ส่งข้อความไม่สำเร็จ', 'ข้อความแสดงบนหน้าจอแล้ว แต่เชื่อมต่อเซิร์ฟเวอร์ไม่ได้', '⚠️');
       }
 
       // Auto-reply simulation only if test auto reply is turned on AND not a real customer ID
@@ -2889,7 +2889,7 @@
     }
 
     async function clearAllTestChats() {
-      if (!confirm('คุณต้องการลบข้อความทดสอบและแชททั้งหมดในฐานข้อมูล SQLite หรือไม่?\n(การกระทำนี้จะล้างประวัติแชททั้งหมดเพื่อให้ระบบสะอาดพร้อมใช้งานจริง)')) {
+      if (!confirm('ต้องการลบข้อความทดสอบและแชททั้งหมดในฐานข้อมูล SQLite ใช่หรือไม่?\n(ประวัติแชททั้งหมดจะถูกลบและไม่สามารถกู้คืนได้)')) {
         return;
       }
       try {
@@ -2953,7 +2953,7 @@
     async function loadAdminConfig() {
       try {
         const res = await fetch('/api/config');
-        if (!res.ok) throw new Error('ไม่สามารถโหลดคอนฟิกได้ (อาจต้องเข้าสู่ระบบแอดมิน)');
+        if (!res.ok) throw new Error('ไม่สามารถโหลดการตั้งค่าได้ (อาจต้องเข้าสู่ระบบผู้ดูแลก่อน)');
         const data = await res.json();
         adminConfigData = data.config || {};
         
@@ -3202,17 +3202,17 @@
     <div class="admin-modal-window">
       <div class="admin-modal-header">
         <div class="admin-modal-title">
-          <span>⚙️ แผงควบคุมและตั้งค่าผู้ดูแลระบบ (Admin & Developer Settings)</span>
+          <span>⚙️ ตั้งค่าผู้ดูแลระบบและนักพัฒนา</span>
         </div>
         <button class="admin-modal-close" onclick="closeAdminModal()" title="ปิดหน้าต่าง">✕</button>
       </div>
 
       <nav class="admin-tabs-nav">
-        <button class="admin-tab-btn active" onclick="switchAdminTab('api-keys', this)">🤖 AI & โมเดล API</button>
-        <button class="admin-tab-btn" onclick="switchAdminTab('channels', this)">💬 LINE OA & Gmail</button>
-        <button class="admin-tab-btn" onclick="switchAdminTab('database', this)">🗄️ Database (Airtable / Sheets)</button>
+        <button class="admin-tab-btn active" onclick="switchAdminTab('api-keys', this)">🤖 AI และโมเดล</button>
+        <button class="admin-tab-btn" onclick="switchAdminTab('channels', this)">💬 LINE OA และ Gmail</button>
+        <button class="admin-tab-btn" onclick="switchAdminTab('database', this)">🗄️ ฐานข้อมูล (Airtable / Sheets)</button>
         <button class="admin-tab-btn" onclick="switchAdminTab('sandbox-test', this)">🧪 จำลองและทดสอบ (Sandbox)</button>
-        <button class="admin-tab-btn" onclick="switchAdminTab('backend-routes', this)">⚡ Developer & Backend Links</button>
+        <button class="admin-tab-btn" onclick="switchAdminTab('backend-routes', this)">⚡ ลิงก์สำหรับนักพัฒนา</button>
       </nav>
 
       <div class="admin-modal-body">
@@ -3220,20 +3220,20 @@
         <!-- Tab 1: AI Keys & Models -->
         <div class="admin-tab-content" id="tab-api-keys">
           <div class="admin-panel-card">
-            <div class="admin-card-title">✨ Google Gemini & OpenAI Configuration</div>
+            <div class="admin-card-title">✨ การตั้งค่า Google Gemini และ OpenAI</div>
             <div class="admin-grid-2">
               <div class="admin-form-group">
-                <label>ผู้ให้บริการ AI เริ่มต้น (Active AI Provider)</label>
+                <label>ผู้ให้บริการ AI ที่ใช้งาน</label>
                 <select id="cfg-ai-provider">
-                  <option value="gemini">Google Gemini (ค่าเริ่มต้น แนะนำ)</option>
+                  <option value="gemini">Google Gemini (ค่าเริ่มต้น · แนะนำ)</option>
                   <option value="openai">OpenAI (GPT-4o / GPT-4o-mini)</option>
                 </select>
               </div>
               <div class="admin-form-group">
-                <label>โหมดการทำงานของบอท (Bot Operating Mode)</label>
+                <label>โหมดการทำงานของบอท</label>
                 <select id="cfg-mode">
                   <option value="copilot">Copilot (สร้างแบบร่างให้เจ้าหน้าที่กดส่ง)</option>
-                  <option value="autopilot">Autopilot (ตอบกลับลูกค้าอัตโนมัติ 24 ชม.)</option>
+                  <option value="autopilot">Autopilot (ตอบกลับลูกค้าอัตโนมัติตลอด 24 ชั่วโมง)</option>
                   <option value="assist">Assist (แนะนำคำตอบข้างกล่องพิมพ์)</option>
                 </select>
               </div>
