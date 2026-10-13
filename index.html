@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AItoB — Private Local AI for Enterprise | Pitch & Interactive Demo</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857'
+            },
+            accent: {
+              cyan: '#06b6d4',
+              violet: '#8b5cf6',
+              amber: '#f59e0b'
+            },
+            dark: {
+              bg: '#080c14',
+              card: '#0f172a',
+              border: '#1e293b',
+              surface: '#131e33'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'Sarabun', 'system-ui', '-apple-system', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap');
+
+    body {
+      background-color: #080c14;
+      color: #e2e8f0;
+      font-family: 'Inter', 'Sarabun', sans-serif;
+    }
+
+    .glow-cyan {
+      box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.25);
+    }
+    .glow-emerald {
+      box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.25);
+    }
+    .grid-bg {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    /* Presentation mode styles */
+    .slide-active {
+      display: block !important;
+    }
+  </style>
+</head>
+<body class="bg-dark-bg text-slate-200 antialiased selection:bg-brand-500 selection:text-white">
+
+  <!-- ==================== TOP NAVIGATION ==================== -->
+  <nav class="sticky top-0 z-50 bg-dark-bg/85 backdrop-blur-md border-b border-dark-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-500 to-accent-cyan flex items-center justify-center font-extrabold text-white text-xl shadow-lg shadow-brand-500/20">
+            A<span class="text-slate-900 text-sm font-black">2</span>B
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="font-extrabold text-lg text-white tracking-tight">AItoB</span>
+              <span class="text-[10px] bg-brand-500/20 text-brand-500 font-bold px-2 py-0.5 rounded-full border border-brand-500/30">ENTERPRISE</span>
+            </div>
+            <p class="text-[11px] text-slate-400 font-medium">Private Local AI Solutions</p>
+          </div>
+        </div>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-300">
+          <a href="#pain-point" class="hover:text-brand-500 transition-colors">1. Pain Point</a>
+          <a href="#solution" class="hover:text-brand-500 transition-colors">2. Solution</a>
+          <a href="#how-it-works" class="hover:text-brand-500 transition-colors">3. How It Works</a>
+          <a href="#prototype" class="hover:text-brand-500 transition-colors">4. Interactive Demo</a>
+          <a href="#business" class="hover:text-brand-500 transition-colors">5. Business & Vision</a>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex items-center space-x-3">
+          <button id="btn-open-deck" class="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 border border-slate-700 transition">
+            <svg class="w-4 h-4 text-accent-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+            <span>Pitch Deck Mode</span>
+          </button>
+          <a href="#roi-calculator" class="hidden sm:inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-lg bg-brand-500 hover:bg-brand-600 text-xs font-bold text-slate-950 transition shadow-lg shadow-brand-500/20">
+            <span>คำนวณ ROI</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section class="relative pt-16 pb-20 overflow-hidden grid-bg border-b border-dark-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-xs text-brand-500 font-medium mb-6">
+          <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+          <span>100% On-Premise Data Sovereignty — Zero Data Egress</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight sm:leading-none mb-6">
+          ปลดล็อกพลัง AI ในองค์กร<br>
+          <span class="bg-gradient-to-r from-brand-500 via-accent-cyan to-blue-400 bg-clip-text text-transparent">
+            โดยข้อมูลความลับไม่หลุดออกนอกบริษัท
+          </span>
+        </h1>
+        <p class="text-base sm:text-lg text-slate-300 font-normal leading-relaxed mb-8">
+          AItoB ออกแบบและติดตั้ง <span class="text-white font-semibold">Private Local AI</span> บนฮาร์ดแวร์ภายในองค์กร เชื่อมต่อระบบ ERP, ฐานข้อมูล และเอกสารลับด้วยสิทธิ์ RBAC + MCP ทำงานได้สมบูรณ์แม้ออฟไลน์ ปลอดภัย ไร้ค่า Token รายเดือน
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a href="#prototype" class="px-6 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 text-slate-950 font-bold text-sm transition shadow-xl shadow-brand-500/25 flex items-center space-x-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span>ทดลอง Interactive Demo</span>
+          </a>
+          <a href="#how-it-works" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm border border-slate-700 transition flex items-center space-x-2">
+            <span>ดูโครงสร้างสถาปัตยกรรม (5 Steps)</span>
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Bar -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto">
+        <div class="bg-dark-card/90 p-4 rounded-xl border border-dark-border text-center">
+          <div class="text-2xl font-bold text-brand-500">100%</div>
+          <div class="text-xs text-slate-400 mt-1">Data Sovereignty (PDPA Ready)</div>
+        </div>
+        <div class="bg-dark-card/90 p-4 rounded-xl border border-dark-border text-center">
+          <div class="text-2xl font-bold text-accent-cyan">0 บาท</div>
+          <div class="text-xs text-slate-400 mt-1">ค่า Cloud Token รายเดือน</div>
+        </div>
+        <div class="bg-dark-card/90 p-4 rounded-xl border border-dark-border text-center">
+          <div class="text-2xl font-bold text-accent-violet">70-85%</div>
+          <div class="text-xs text-slate-400 mt-1">ลดเวลาทำงานเอกสารซ้ำซ้อน</div>
+        </div>
+        <div class="bg-dark-card/90 p-4 rounded-xl border border-dark-border text-center">
+          <div class="text-2xl font-bold text-amber-400">&lt; 3 เดือน</div>
+          <div class="text-xs text-slate-400 mt-1">ระยะเวลาคืนทุนโดยเฉลี่ย (ROI)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 1. PAIN POINT ==================== -->
+  <section id="pain-point" class="py-20 border-b border-dark-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold text-red-400 uppercase tracking-wider bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">1. THE PAIN POINT</span>
+        <h2 class="text-3xl font-extrabold text-white mt-4 mb-4">
+          องค์กรอยากใช้ AI แต่ติดคอขวดที่ “ความลับรั่วไหล” และ “งานเอกสารซ้ำซ้อน”
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          ปัญหาจริงที่องค์กรทุกแห่งกำลังเผชิญเมื่อพนักงานเริ่มนำ Public Cloud AI เข้ามาใช้งาน
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Card 1 -->
+        <div class="bg-dark-card p-6 rounded-2xl border border-red-900/30 hover:border-red-500/50 transition">
+          <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">ข้อมูลลับส่งออก Cloud ไม่ได้</h3>
+          <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+            งบการเงิน, ข้อมูลเงินเดือน, สัญญาการค้า และฐานข้อมูลลูกค้า ไม่สามารถอัปโหลดขึ้น Public AI (ChatGPT/Claude) ได้ เพราะผิดกฎ PDPA และเสี่ยงความลับลูกค้ารั่วไหล
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-dark-card p-6 rounded-2xl border border-amber-900/30 hover:border-amber-500/50 transition">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">เสียเวลากับงานเอกสารซ้ำซาก</h3>
+          <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+            พนักงานระดับสูงและ Operation ต้องสละเวลา 3-5 ชั่วโมง/วัน กับการสรุปรายงาน, เทียบใบเสนอราคากับ ERP, และตรวจร่างสัญญาซ้ำไปซ้ำมา
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-dark-card p-6 rounded-2xl border border-blue-900/30 hover:border-blue-500/50 transition">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">ค่า Cloud Token บานปลาย</h3>
+          <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+            เมื่อสเกลใช้งานหลายแผนก ค่า API token บน Cloud พุ่งขึ้นตามปริมาณ input/output และไม่สามารถควบคุมงบประมาณระยะยาวได้อย่างแน่นอน
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-dark-card p-6 rounded-2xl border border-purple-900/30 hover:border-purple-500/50 transition">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">ไม่เชื่อมต่อระบบภายใน</h3>
+          <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+            Public AI ทั่วไปไม่เข้าใจบริบทองค์กร ไม่สามารถต่อฐานข้อมูล SQL, SAP, หรือไฟล์ใน NAS ภายในได้ และไม่มีระบบควบคุมสิทธิ์ตามตำแหน่งพนักงาน
+          </p>
+        </div>
+      </div>
+
+      <!-- Comparative Table -->
+      <div class="mt-12 bg-dark-card rounded-2xl border border-dark-border overflow-hidden">
+        <div class="px-6 py-4 bg-slate-900/80 border-b border-dark-border">
+          <h4 class="text-sm font-bold text-white flex items-center space-x-2">
+            <span>เปรียบเทียบ: Public Cloud AI vs. AItoB Private Local AI</span>
+          </h4>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead>
+              <tr class="border-b border-dark-border text-slate-400">
+                <th class="py-3 px-6">ปัจจัยการเปรียบเทียบ</th>
+                <th class="py-3 px-6 text-red-400">Public Cloud AI (ChatGPT, API Cloud)</th>
+                <th class="py-3 px-6 text-brand-500 font-bold">AItoB Private Local AI</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-dark-border/50 text-slate-300">
+              <tr>
+                <td class="py-3 px-6 font-medium">ความปลอดภัยของข้อมูล</td>
+                <td class="py-3 px-6 text-red-300">ส่งออกนอกผ่านอินเทอร์เน็ต เสี่ยงหลุด</td>
+                <td class="py-3 px-6 text-brand-400 font-semibold">100% อยู่ในออฟฟิศ ไม่หลุดออกภายนอก</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-6 font-medium">การทำงานเมื่อไม่มีเน็ต (Offline)</td>
+                <td class="py-3 px-6 text-red-300">หยุดทำงานทันที</td>
+                <td class="py-3 px-6 text-brand-400 font-semibold">ทำงานได้ 100% ต่อให้ตัดเน็ตทั้งหมด</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-6 font-medium">โมเดลค่าใช้จ่าย</td>
+                <td class="py-3 px-6 text-red-300">จ่ายตามปริมาณ Token ยิ่งใช้เยอะยิ่งแพง</td>
+                <td class="py-3 px-6 text-brand-400 font-semibold">ฮาร์ดแวร์ซื้อขาด/เช่าคงที่ ไม่มีค่า Token ยิ่งใช้ยิ่งคุ้ม</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-6 font-medium">การจำกัดสิทธิ์พนักงาน (RBAC)</td>
+                <td class="py-3 px-6 text-red-300">ยาก หรือไม่มีระบบแยกแผนกในตัว</td>
+                <td class="py-3 px-6 text-brand-400 font-semibold">มี Role-based Guard คุมสิทธิ์เข้าถึงไฟล์ตามแผนก</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 2. AItoB SOLUTION ==================== -->
+  <section id="solution" class="py-20 border-b border-dark-border bg-slate-950/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold text-brand-500 uppercase tracking-wider bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">2. THE AITOB SOLUTION</span>
+        <h2 class="text-3xl font-extrabold text-white mt-4 mb-4">
+          วิเคราะห์ Pain Point และติดตั้ง Private Local AI ที่ตรงโจทย์องค์กร
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          เราไม่ใช่แค่คนขายกล่อง แต่คือพาร์ทเนอร์ที่วิเคราะห์กระบวนการทำงาน ออกแบบ และส่งมอบ Turnkey Local AI พร้อมใช้งาน
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Pillar 1 -->
+        <div class="bg-dark-card p-8 rounded-2xl border border-dark-border hover:border-brand-500/40 transition relative">
+          <div class="w-14 h-14 rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center mb-6">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">1. Pain Point Diagnosis</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-4">
+            ทีมวิศวกร AItoB เข้าสำรวจกระบวนการทำงาน (Workflow Audit) เพื่อชี้เป้า 3-5 จุดคอขวดที่กินเวลาพนักงานมากที่สุด พร้อมประเมินความพร้อมของชุดข้อมูล
+          </p>
+          <ul class="text-xs text-slate-300 space-y-2">
+            <li class="flex items-center space-x-2">
+              <span class="text-brand-500">✓</span>
+              <span>ระบุคอขวดในฝ่าย HR, บัญชี, จัดซื้อ, กฎหมาย</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <span class="text-brand-500">✓</span>
+              <span>ประเมินระดับความลับและความเสี่ยง PDPA</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="bg-dark-card p-8 rounded-2xl border border-dark-border hover:border-accent-cyan/40 transition relative">
+          <div class="w-14 h-14 rounded-2xl bg-accent-cyan/10 text-accent-cyan flex items-center justify-center mb-6">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">2. Tailored Local AI Appliance</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-4">
+            จัดเตรียมฮาร์ดแวร์ GPU Workstation / Server Rack ที่ปรับจูนโมเดล Open-weight (DeepSeek, Llama 3.3, Qwen) ให้ตอบภาษาไทยและข้อมูลเฉพาะทางได้อย่างแม่นยำ
+          </p>
+          <ul class="text-xs text-slate-300 space-y-2">
+            <li class="flex items-center space-x-2">
+              <span class="text-accent-cyan">✓</span>
+              <span>เลือกสเปก GPU พอดีกับปริมาณพนักงาน (ไม่ over-spec)</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <span class="text-accent-cyan">✓</span>
+              <span>Quantization & Fine-tuning รองรับภาษาไทยสมบูรณ์</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="bg-dark-card p-8 rounded-2xl border border-dark-border hover:border-accent-violet/40 transition relative">
+          <div class="w-14 h-14 rounded-2xl bg-accent-violet/10 text-accent-violet flex items-center justify-center mb-6">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">3. Enterprise RBAC & MCP Workflow</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-4">
+            ติดตั้งระบบรักษาความปลอดภัย Permission Guard พร้อมเชื่อมต่อฐานข้อมูล ERP/CRM ภายในผ่าน Model Context Protocol (MCP) ให้ AI กลายเป็นผู้ช่วยที่ทำงานแทนได้ทันที
+          </p>
+          <ul class="text-xs text-slate-300 space-y-2">
+            <li class="flex items-center space-x-2">
+              <span class="text-accent-violet">✓</span>
+              <span>พนักงานทั่วไปไม่สามารถเข้าถึงไฟล์เงินเดือนหรือสัญญา CEO</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <span class="text-accent-violet">✓</span>
+              <span>เชื่อมต่อฐานข้อมูล SQL, เอกสาร PDF, Excel ในองค์กร</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 3. HOW IT WORKS ==================== -->
+  <section id="how-it-works" class="py-20 border-b border-dark-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold text-accent-cyan uppercase tracking-wider bg-accent-cyan/10 px-3 py-1 rounded-full border border-accent-cyan/20">3. HOW IT WORKS</span>
+        <h2 class="text-3xl font-extrabold text-white mt-4 mb-4">
+          สถาปัตยกรรม 5 ขั้นตอน: Hardware สู่ Autonomous Workflow
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          คลิกที่แต่ละขั้นตอนเพื่อดูการทำงานเชิงลึกและการเชื่อมโยงข้อมูลภายในองค์กร
+        </p>
+      </div>
+
+      <!-- Pipeline Steps Navigation -->
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-10">
+        <button onclick="selectStep(1)" id="step-btn-1" class="step-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition bg-brand-500 text-slate-950 flex items-center space-x-2">
+          <span class="w-5 h-5 rounded-full bg-slate-900 text-brand-500 flex items-center justify-center text-xs font-bold">1</span>
+          <span>Hardware</span>
+        </button>
+        <span class="text-slate-600">→</span>
+        <button onclick="selectStep(2)" id="step-btn-2" class="step-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center space-x-2">
+          <span class="w-5 h-5 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center text-xs font-bold">2</span>
+          <span>Local AI</span>
+        </button>
+        <span class="text-slate-600">→</span>
+        <button onclick="selectStep(3)" id="step-btn-3" class="step-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center space-x-2">
+          <span class="w-5 h-5 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center text-xs font-bold">3</span>
+          <span>Permission (RBAC)</span>
+        </button>
+        <span class="text-slate-600">→</span>
+        <button onclick="selectStep(4)" id="step-btn-4" class="step-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center space-x-2">
+          <span class="w-5 h-5 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center text-xs font-bold">4</span>
+          <span>RAG / MCP</span>
+        </button>
+        <span class="text-slate-600">→</span>
+        <button onclick="selectStep(5)" id="step-btn-5" class="step-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center space-x-2">
+          <span class="w-5 h-5 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center text-xs font-bold">5</span>
+          <span>Workflow Automation</span>
+        </button>
+      </div>
+
+      <!-- Step Content Display Box -->
+      <div class="bg-dark-card rounded-2xl border border-dark-border p-6 sm:p-8 max-w-4xl mx-auto shadow-2xl">
+        <div id="step-content">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 4. PROTOTYPE / RESULT & ROI ==================== -->
+  <section id="prototype" class="py-20 border-b border-dark-border bg-slate-950/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold text-accent-violet uppercase tracking-wider bg-accent-violet/10 px-3 py-1 rounded-full border border-accent-violet/20">4. PROTOTYPE & INTERACTIVE DEMO</span>
+        <h2 class="text-3xl font-extrabold text-white mt-4 mb-4">
+          แสดงของจริง: AI ทำงานอย่างไร และประหยัดเวลาองค์กรได้แค่ไหน
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          ทดลองสั่งงานจำลองของ AItoB พร้อมคำนวณผลตอบแทนการลงทุน (ROI Calculator) ทันที
+        </p>
+      </div>
+
+      <!-- Demo Box -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
+        <!-- Left: Simulator Controls -->
+        <div class="lg:col-span-5 bg-dark-card p-6 rounded-2xl border border-dark-border flex flex-col justify-between">
+          <div>
+            <h3 class="text-lg font-bold text-white mb-2 flex items-center space-x-2">
+              <span class="w-3 h-3 rounded-full bg-brand-500 animate-ping"></span>
+              <span>เลือกสถานการณ์จำลอง (Interactive Scenario)</span>
+            </h3>
+            <p class="text-xs text-slate-400 mb-6">
+              เลือกจำลองการทำงานของ AItoB ในแผนกต่างๆ โดยจำลองการรันผ่าน Local Node (0 bytes หลุดออกเน็ต)
+            </p>
+
+            <div class="space-y-3">
+              <button onclick="runScenario('finance')" data-scenario="finance" class="scenario-btn w-full text-left p-3.5 rounded-xl border border-brand-500/50 bg-brand-500/10 hover:bg-brand-500/20 transition flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-brand-400">แผนกบัญชีและการเงิน</div>
+                  <div class="text-xs text-slate-300">กระทบยอดบิล & สรุปตัวเลขผลกำไร Q3</div>
+                </div>
+                <span class="text-xs bg-brand-500 text-slate-950 font-bold px-2 py-0.5 rounded">ทดลอง</span>
+              </button>
+
+              <button onclick="runScenario('hr')" data-scenario="hr" class="scenario-btn w-full text-left p-3.5 rounded-xl border border-slate-700 bg-slate-800/40 hover:bg-slate-800 transition flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-white">แผนกทรัพยากรบุคคล (HR)</div>
+                  <div class="text-xs text-slate-400">ตรวจสิทธิ์การเข้าถึงข้อมูลฐานเงินเดือน (RBAC)</div>
+                </div>
+                <span class="text-xs bg-slate-700 text-slate-300 font-medium px-2 py-0.5 rounded">ทดลอง</span>
+              </button>
+
+              <button onclick="runScenario('legal')" data-scenario="legal" class="scenario-btn w-full text-left p-3.5 rounded-xl border border-slate-700 bg-slate-800/40 hover:bg-slate-800 transition flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-white">ฝ่ายจัดซื้อและสัญญา (Procurement)</div>
+                  <div class="text-xs text-slate-400">ตรวจร่างสัญญาคู่ค้า & จับจุดเสี่ยง PDPA</div>
+                </div>
+                <span class="text-xs bg-slate-700 text-slate-300 font-medium px-2 py-0.5 rounded">ทดลอง</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-4 border-t border-dark-border text-xs text-slate-500 flex items-center justify-between">
+            <span>Inference: Local RTX 4090 / Ollama</span>
+            <span class="text-brand-500 font-semibold">Latency: ~22ms</span>
+          </div>
+        </div>
+
+        <!-- Right: Simulator Output Window -->
+        <div class="lg:col-span-7 bg-slate-900 rounded-2xl border border-dark-border p-6 font-mono text-xs overflow-hidden shadow-2xl flex flex-col justify-between">
+          <div>
+            <!-- Terminal Header -->
+            <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-800 text-slate-400">
+              <div class="flex items-center space-x-2">
+                <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
+                <span class="ml-2 text-slate-300 font-sans font-semibold">aitob-local-node@cluster-01 [OFFLINE MODE]</span>
+              </div>
+              <span class="text-[11px] bg-slate-800 text-brand-400 px-2 py-0.5 rounded border border-slate-700">Audit Trail: SECURE</span>
+            </div>
+
+            <!-- Terminal Stream Body -->
+            <div id="terminal-output" class="text-slate-300 space-y-3 font-sans leading-relaxed">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-slate-400 text-[11px] font-sans">
+            <div>Data egress to internet: <span class="text-emerald-400 font-bold">0 KB (Blocked)</span></div>
+            <div>Time spent by human: <span class="line-through text-red-400">45 นาที</span> → <span class="text-emerald-400 font-bold">3 วินาที</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== ROI CALCULATOR ==================== -->
+      <div id="roi-calculator" class="bg-gradient-to-br from-dark-card to-dark-surface p-8 rounded-3xl border border-brand-500/30 max-w-4xl mx-auto shadow-2xl">
+        <div class="text-center max-w-xl mx-auto mb-8">
+          <h3 class="text-2xl font-bold text-white mb-2">คำนวณความคุ้มค่าและผลตอบแทน (ROI Calculator)</h3>
+          <p class="text-xs text-slate-400">
+            ปรับตัวเลขตามขนาดองค์กรของคุณเพื่อดูเวลาและค่าใช้จ่ายที่ประหยัดได้จริงต่อปี
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <!-- Sliders -->
+          <div class="space-y-6">
+            <div>
+              <div class="flex justify-between text-xs font-semibold mb-2">
+                <span class="text-slate-300">จำนวนพนักงานที่ทำงานเอกสาร/ข้อมูล</span>
+                <span id="label-employees" class="text-brand-500 font-bold text-sm">20 คน</span>
+              </div>
+              <input type="range" id="input-employees" min="5" max="200" step="5" value="20" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-brand-500" oninput="calculateROI()">
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-semibold mb-2">
+                <span class="text-slate-300">เวลาทำงานซ้ำซ้อนต่อคน / วัน (ชั่วโมง)</span>
+                <span id="label-hours" class="text-brand-500 font-bold text-sm">3 ชั่วโมง</span>
+              </div>
+              <input type="range" id="input-hours" min="1" max="6" step="0.5" value="3" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-brand-500" oninput="calculateROI()">
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-semibold mb-2">
+                <span class="text-slate-300">เงินเดือนเฉลี่ยต่อคน (บาท)</span>
+                <span id="label-salary" class="text-brand-500 font-bold text-sm">35,000 บาท</span>
+              </div>
+              <input type="range" id="input-salary" min="20000" max="100000" step="5000" value="35000" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-brand-500" oninput="calculateROI()">
+            </div>
+          </div>
+
+          <!-- ROI Output Cards -->
+          <div class="bg-dark-bg/80 p-6 rounded-2xl border border-dark-border text-center space-y-4">
+            <div>
+              <div class="text-xs text-slate-400">เวลาที่องค์กรประหยัดได้ต่อเดือน</div>
+              <div id="res-hours" class="text-3xl font-black text-brand-500 mt-1">960 ชั่วโมง</div>
+              <div class="text-[11px] text-slate-500">เทียบเท่าการจ้างพนักงานเพิ่ม 6 คน</div>
+            </div>
+            <div class="border-t border-slate-800 pt-3">
+              <div class="text-xs text-slate-400">มูลค่าที่ประหยัดได้ต่อปี (Cost Saved)</div>
+              <div id="res-savings" class="text-3xl font-black text-accent-cyan mt-1">2,016,000 บาท</div>
+              <div class="text-[11px] text-slate-500">คิดจาก 80% Automation Efficiency</div>
+            </div>
+            <div class="border-t border-slate-800 pt-3 flex justify-between items-center px-4">
+              <span class="text-xs text-slate-400 font-medium">ระยะเวลาคืนทุน (Payback):</span>
+              <span id="res-payback" class="text-sm font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20">~ 2.1 เดือน</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 5. BUSINESS & VISION ==================== -->
+  <section id="business" class="py-20 border-b border-dark-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">5. BUSINESS MODEL & VISION</span>
+        <h2 class="text-3xl font-extrabold text-white mt-4 mb-4">
+          ลูกค้าจ่ายอะไร ทำไมต้องเลือก AItoB และก้าวต่อไปในอนาคต
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          โมเดลรายได้ที่โปร่งใส ชัดเจน และวิสัยทัศน์การขยายขีดความสามารถของ Sovereign AI ในภาคธุรกิจ
+        </p>
+      </div>
+
+      <!-- Pricing / Offerings -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <!-- Tier 1 -->
+        <div class="bg-dark-card p-6 rounded-2xl border border-dark-border hover:border-slate-600 transition flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-bold text-slate-400 uppercase mb-2">Phase 1: Discovery</div>
+            <h3 class="text-xl font-bold text-white mb-2">Audit & Architecture Blueprint</h3>
+            <p class="text-xs text-slate-400 mb-6">สำหรับองค์กรที่ต้องการประเมินความคุ้มค่าและความเสี่ยงก่อนลงทุนใหญ่</p>
+            <div class="text-2xl font-black text-white mb-6">฿49,000 <span class="text-xs font-normal text-slate-400">/ ครั้ง</span></div>
+            <ul class="text-xs text-slate-300 space-y-3">
+              <li class="flex items-start space-x-2">
+                <span class="text-brand-500 font-bold">✓</span>
+                <span>Audit กระบวนการทำงานเอกสารและชี้เป้า 3 use-cases</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-brand-500 font-bold">✓</span>
+                <span>ออกแบบ Hardware Sizing & Network Topology</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-brand-500 font-bold">✓</span>
+                <span>รายงานประเมิน ROI และแผนการดำเนินงาน</span>
+              </li>
+            </ul>
+          </div>
+          <a href="#contact" class="mt-8 block text-center py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition">เริ่มต้นประเมิน</a>
+        </div>
+
+        <!-- Tier 2 (Highlighted) -->
+        <div class="bg-gradient-to-b from-dark-surface to-dark-card p-6 rounded-2xl border-2 border-brand-500 relative flex flex-col justify-between shadow-xl shadow-brand-500/10">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-500 text-slate-950 text-[10px] font-black px-3 py-0.5 rounded-full uppercase tracking-wider">
+            Most Popular Turnkey
+          </div>
+          <div>
+            <div class="text-xs font-bold text-brand-400 uppercase mb-2">Phase 2: Full Deployment</div>
+            <h3 class="text-xl font-bold text-white mb-2">Turnkey Private AI Appliance</h3>
+            <p class="text-xs text-slate-400 mb-6">จัดหา Hardware + ติดตั้งระบบ Local AI + RBAC + RAG พร้อมใช้งานทันที</p>
+            <div class="text-2xl font-black text-white mb-6">฿249,000+ <span class="text-xs font-normal text-slate-400">(รวม HW + ติดตั้ง)</span></div>
+            <ul class="text-xs text-slate-300 space-y-3">
+              <li class="flex items-start space-x-2">
+                <span class="text-brand-500 font-bold">✓</span>
+                <span>เซิร์ฟเวอร์ AI Hardware (GPU Station) ติดตั้งในออฟฟิศ</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-brand-500 font-bold">✓</span>
+                <span>Fine-tuned Local LLM ภาษาไทย + RAG ค้นหาเอกสาร</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-brand-500 font-bold">✓</span>
+                <span>ระบบ Permission RBAC แยกสิทธิ์พนักงานตามตำแหน่ง</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-brand-500 font-bold">✓</span>
+                <span>อบรมทีมงาน + ซัพพอร์ต Onsite 3 เดือน</span>
+              </li>
+            </ul>
+          </div>
+          <a href="#contact" class="mt-8 block text-center py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-slate-950 text-xs font-bold transition shadow-lg shadow-brand-500/20">ปรึกษาการติดตั้ง</a>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="bg-dark-card p-6 rounded-2xl border border-dark-border hover:border-slate-600 transition flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-bold text-slate-400 uppercase mb-2">Phase 3: Managed SLA</div>
+            <h3 class="text-xl font-bold text-white mb-2">Enterprise Care & Tuning</h3>
+            <p class="text-xs text-slate-400 mb-6">อัปเดตโมเดลเวอร์ชันใหม่ ดูแลความเสถียรของระบบ และขยาย Agent Workflow</p>
+            <div class="text-2xl font-black text-white mb-6">฿18,000 <span class="text-xs font-normal text-slate-400">/ เดือน</span></div>
+            <ul class="text-xs text-slate-300 space-y-3">
+              <li class="flex items-start space-x-2">
+                <span class="text-accent-cyan font-bold">✓</span>
+                <span>อัปเกรด Open-weight Model รุ่นใหม่ล่าสุดอย่างต่อเนื่อง</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-accent-cyan font-bold">✓</span>
+                <span>มอนิเตอร์ฮาร์ดแวร์ GPU, ความร้อน และความจุแบบ Real-time</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-accent-cyan font-bold">✓</span>
+                <span>พัฒนา Custom MCP Connectors เพิ่มเติมตามความต้องการ</span>
+              </li>
+            </ul>
+          </div>
+          <a href="#contact" class="mt-8 block text-center py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition">เลือกแพ็กเกจดูแล</a>
+        </div>
+      </div>
+
+      <!-- Why AItoB & Vision Roadmap -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Why AItoB -->
+        <div class="bg-dark-card p-8 rounded-2xl border border-dark-border">
+          <h3 class="text-lg font-bold text-white mb-4 flex items-center space-x-2">
+            <span class="text-brand-500">★</span>
+            <span>ทำไมต้องเลือก AItoB (Competitive Moat)</span>
+          </h3>
+          <div class="space-y-4 text-xs sm:text-sm text-slate-300">
+            <div class="flex items-start space-x-3">
+              <div class="w-6 h-6 rounded bg-brand-500/20 text-brand-500 flex items-center justify-center shrink-0 font-bold text-xs">1</div>
+              <div>
+                <strong class="text-white block">Sovereign Data Guarantee:</strong>
+                รับประกันสัญญากฎหมายและ Audit Log ว่าข้อมูลทุกไบต์ไม่เคยสัมผัสกับเครือข่ายอินเทอร์เน็ตภายนอก
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <div class="w-6 h-6 rounded bg-brand-500/20 text-brand-500 flex items-center justify-center shrink-0 font-bold text-xs">2</div>
+              <div>
+                <strong class="text-white block">Thai Language Enterprise Tuning:</strong>
+                จูนคำศัพท์เฉพาะทางด้านบัญชี กฎหมาย และกระบวนการผลิตของธุรกิจไทยโดยเฉพาะ
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <div class="w-6 h-6 rounded bg-brand-500/20 text-brand-500 flex items-center justify-center shrink-0 font-bold text-xs">3</div>
+              <div>
+                <strong class="text-white block">End-to-End Handover:</strong>
+                ให้คำปรึกษา จัดซื้อฮาร์ดแวร์ ประกอบระบบ พัฒนาซอฟต์แวร์ และฝึกอบรมจนพนักงานใช้งานจริงได้ 100%
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vision Roadmap -->
+        <div class="bg-dark-card p-8 rounded-2xl border border-dark-border">
+          <h3 class="text-lg font-bold text-white mb-4 flex items-center space-x-2">
+            <span class="text-accent-cyan">🚀</span>
+            <span>วิสัยทัศน์และการพัฒนาต่อยอด (Future Roadmap)</span>
+          </h3>
+          <div class="space-y-4 text-xs sm:text-sm text-slate-300">
+            <div class="border-l-2 border-brand-500 pl-4 py-1">
+              <div class="text-[11px] font-bold text-brand-500">2026: The Knowledge Appliance</div>
+              <p class="text-slate-300 mt-0.5">เปลี่ยนไฟล์ PDF และฐานข้อมูลภายในให้กลายเป็น Local Knowledge Agent แยกตามแผนก</p>
+            </div>
+            <div class="border-l-2 border-accent-cyan pl-4 py-1">
+              <div class="text-[11px] font-bold text-accent-cyan">2027: Autonomous Multi-Agent Mesh</div>
+              <p class="text-slate-300 mt-0.5">ขยายสู่ระบบ AI อัตโนมัติที่คุยกันเองข้ามแผนก เช่น บัญชีกระทบยอดอัตโนมัติ สั่งซื้อของผ่าน ERP โดยคนเพียงแค่กด Approve</p>
+            </div>
+            <div class="border-l-2 border-accent-violet pl-4 py-1">
+              <div class="text-[11px] font-bold text-accent-violet">2028: Federated Sovereign Enterprise Mesh</div>
+              <p class="text-slate-300 mt-0.5">เชื่อมต่อ AI ระหว่างสาขาและสำนักงานใหญ่ด้วยเทคโนโลยี Zero-knowledge Encrypted Federation</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PITCH DECK MODAL ==================== -->
+  <div id="deck-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl hidden flex-col justify-between p-4 sm:p-10">
+    <!-- Deck Top Bar -->
+    <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+      <div class="flex items-center space-x-3">
+        <span class="w-3 h-3 rounded-full bg-brand-500"></span>
+        <span class="font-bold text-white text-sm sm:text-base">AItoB Investor & Enterprise Pitch Deck</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span id="deck-counter" class="text-xs text-slate-400 font-mono">Slide 1 / 6</span>
+        <button id="btn-close-deck" class="text-slate-400 hover:text-white p-1 rounded-lg bg-slate-800 text-xs">
+          ✕ ปิด (Esc)
+        </button>
+      </div>
+    </div>
+
+    <!-- Deck Slide Container -->
+    <div class="max-w-4xl mx-auto w-full my-auto py-6">
+      <!-- Slide 1 -->
+      <div class="slide hidden slide-active" data-slide="1">
+        <span class="text-xs font-bold text-brand-500 uppercase tracking-widest">TITLE SLIDE</span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white mt-4 mb-4 leading-tight">
+          AItoB: Sovereign Private AI<br>
+          <span class="text-accent-cyan">for Enterprise</span>
+        </h2>
+        <p class="text-base sm:text-lg text-slate-300 mb-6">
+          เปลี่ยนองค์กรสู่ยุค AI โดยข้อมูลความลับ 100% อยู่ในบริษัท และลดงานเอกสารซ้ำซ้อน 80%
+        </p>
+        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl text-xs text-slate-400 space-y-1">
+          <div><strong class="text-white">Presenter Takeaway:</strong> องค์กรต้องการ AI มาก แต่กลัวข้อมูลหลุด AItoB แก้ปัญหานี้ด้วย Turnkey On-Premises Appliance</div>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide hidden" data-slide="2">
+        <span class="text-xs font-bold text-red-400 uppercase tracking-widest">1. PAIN POINT</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-4 mb-4">
+          ความลับส่งขึ้นคลาวด์ไม่ได้ & เวลาหายไปกับงานเดิมๆ
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
+          <div class="bg-slate-900 p-4 rounded-xl border border-red-900/30 text-xs">
+            <h4 class="font-bold text-red-400 mb-1">Data Sovereignty & PDPA Block</h4>
+            <p class="text-slate-400">งบการเงิน ข้อมูลเงินเดือน HR ไม่สามารถใช้กับ ChatGPT หรือ Cloud AI ได้ตามกฎหมาย</p>
+          </div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-amber-900/30 text-xs">
+            <h4 class="font-bold text-amber-400 mb-1">3-5 ชั่วโมง/วัน เสียเปล่า</h4>
+            <p class="text-slate-400">พนักงานใช้เวลาสรุปเอกสาร เทียบบิล กรอกระบบ ERP ซ้ำซาก ประสิทธิภาพชะงักงัน</p>
+          </div>
+        </div>
+        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl text-xs text-slate-400">
+          <div><strong class="text-white">Presenter Takeaway:</strong> ทุกบริษัทมีข้อมูลลับที่ “อยากให้ AI ช่วยวิเคราะห์ แต่ให้ส่งออกนอกไม่ได้”</div>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slide hidden" data-slide="3">
+        <span class="text-xs font-bold text-brand-500 uppercase tracking-widest">2. SOLUTION</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-4 mb-4">
+          Private Local AI Appliance ติดตั้งตรงถึงองค์กร
+        </h2>
+        <p class="text-sm sm:text-base text-slate-300 mb-6">
+          AItoB ส่งมอบฮาร์ดแวร์ที่จูนโมเดลเฉพาะทาง ปลอดภัย ตัดเน็ตก็ทำงานได้ ไร้ค่า Token รายเดือน
+        </p>
+        <div class="grid grid-cols-3 gap-3 text-center text-xs mb-6">
+          <div class="bg-slate-900 p-3 rounded-lg border border-slate-800">
+            <div class="text-brand-500 font-bold">100% Private</div>
+            <div class="text-slate-400 mt-1">Zero Cloud Egress</div>
+          </div>
+          <div class="bg-slate-900 p-3 rounded-lg border border-slate-800">
+            <div class="text-accent-cyan font-bold">Fixed Capex</div>
+            <div class="text-slate-400 mt-1">ไม่มีค่า Token จุกจิก</div>
+          </div>
+          <div class="bg-slate-900 p-3 rounded-lg border border-slate-800">
+            <div class="text-accent-violet font-bold">Role-Based</div>
+            <div class="text-slate-400 mt-1">คุมสิทธิ์เข้าถึงตามแผนก</div>
+          </div>
+        </div>
+        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl text-xs text-slate-400">
+          <div><strong class="text-white">Presenter Takeaway:</strong> AItoB ทำหน้าที่เสมือน IT Department ชั้นยอดในการนำส่ง AI ที่พร้อมใช้งาน</div>
+        </div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="slide hidden" data-slide="4">
+        <span class="text-xs font-bold text-accent-cyan uppercase tracking-widest">3. HOW IT WORKS</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-4 mb-4">
+          Hardware → Local AI → RBAC → MCP → Workflow
+        </h2>
+        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-2 mb-6">
+          <div><strong class="text-brand-400">1. Sized Hardware:</strong> เลือก GPU ให้พอดีกับปริมาณงาน</div>
+          <div><strong class="text-brand-400">2. Local Model:</strong> Open-weights (DeepSeek / Llama) ภาษาไทยคมชัด</div>
+          <div><strong class="text-brand-400">3. RBAC Guard:</strong> ป้องกันข้อมูลลับข้ามแผนกอย่างเด็ดขาด</div>
+          <div><strong class="text-brand-400">4. RAG / MCP:</strong> ดึงเอกสารภายใน & ต่อตรงระบบ ERP/SQL</div>
+          <div><strong class="text-brand-400">5. Workflow:</strong> รันอัตโนมัติ ตรวจสอบ และสรุปผลส่งแจ้งเตือน</div>
+        </div>
+        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl text-xs text-slate-400">
+          <div><strong class="text-white">Presenter Takeaway:</strong> สถาปัตยกรรมแบบ Modular ขยายได้ตลอดเวลา ไม่ผูกขาดกับ Vendor รายเดียว</div>
+        </div>
+      </div>
+
+      <!-- Slide 5 -->
+      <div class="slide hidden" data-slide="5">
+        <span class="text-xs font-bold text-accent-violet uppercase tracking-widest">4. PROTOTYPE & ROI</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-4 mb-4">
+          ผลลัพธ์จริง: ลดเวลาตรวจเอกสาร 90% คืนทุนใน 2-3 เดือน
+        </h2>
+        <div class="grid grid-cols-2 gap-4 text-xs mb-6">
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+            <div class="text-slate-400 mb-1">กระทบยอดบิล & สัญญา 100 หน้า</div>
+            <div class="text-xl font-bold text-red-400 line-through">45 นาที (คนทำ)</div>
+            <div class="text-2xl font-bold text-brand-500 mt-1">3 วินาที (AItoB)</div>
+          </div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+            <div class="text-slate-400 mb-1">ผลประหยัดเฉลี่ย (ทีม 20 คน)</div>
+            <div class="text-2xl font-bold text-accent-cyan">฿2,000,000+ / ปี</div>
+            <div class="text-[11px] text-slate-500 mt-1">Payback period &lt; 90 วัน</div>
+          </div>
+        </div>
+        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl text-xs text-slate-400">
+          <div><strong class="text-white">Presenter Takeaway:</strong> ธุรกิจเห็นผลกำไรและ productivity ชัดเจนตั้งแต่ไตรมาสแรก</div>
+        </div>
+      </div>
+
+      <!-- Slide 6 -->
+      <div class="slide hidden" data-slide="6">
+        <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">5. BUSINESS & VISION</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-4 mb-4">
+          Turnkey Model & ก้าวสู่ Autonomous Mesh
+        </h2>
+        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-3 mb-6">
+          <div><strong class="text-amber-400">Revenue Stream:</strong> ค่าบริการ Audit (฿49k) + Turnkey Appliance (฿249k+) + Monthly SLA & Tuning (฿18k/m)</div>
+          <div><strong class="text-amber-400">Defensibility:</strong> ความชำนาญ Hardware On-premise + Thai Enterprise Fine-tuning + MCP Infrastructure</div>
+          <div><strong class="text-amber-400">Future Horizon:</strong> Autonomous Enterprise Workflows & Sovereign Mesh ข้ามสาขา</div>
+        </div>
+        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl text-xs text-slate-400">
+          <div><strong class="text-white">Presenter Takeaway:</strong> AItoB พร้อมเปิดรับองค์กรนำร่อง (Pilot Partners) 5 รายแรกในไตรมาสนี้</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deck Bottom Bar (Controls) -->
+    <div class="flex items-center justify-between border-t border-slate-800 pt-4">
+      <div class="text-xs text-slate-400">ใช้ปุ่ม <kbd class="px-2 py-1 bg-slate-800 rounded border border-slate-700">←</kbd> <kbd class="px-2 py-1 bg-slate-800 rounded border border-slate-700">→</kbd> หรือคลิกปุ่มนำทาง</div>
+      <div class="flex items-center space-x-3">
+        <button id="btn-prev-slide" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white transition">
+          ← สไลด์ก่อนหน้า
+        </button>
+        <button id="btn-next-slide" class="px-4 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-xs font-bold text-slate-950 transition">
+          สไลด์ถัดไป →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FOOTER / CTA ==================== -->
+  <footer id="contact" class="py-16 bg-slate-950 border-t border-dark-border">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-4">
+        พร้อมยกระดับองค์กรด้วย Private Local AI หรือยัง?
+      </h3>
+      <p class="text-slate-400 text-xs sm:text-sm mb-8 max-w-xl mx-auto">
+        ติดต่อทีมงาน AItoB เพื่อสำรวจความพร้อมของข้อมูลและรับคำปรึกษาแนวทางการติดตั้งระบบ On-Premise AI ฟรี
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <button onclick="alert('ขอบคุณสำหรับความสนใจ! ทีมงาน AItoB จะติดต่อกลับภายใน 24 ชั่วโมง')" class="px-8 py-3.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-slate-950 font-bold text-sm transition shadow-xl shadow-brand-500/25">
+          นัดหมายเพื่อทำ Discovery Audit
+        </button>
+        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-sm transition">
+          กลับสู่ด้านบนสุด ↑
+        </button>
+      </div>
+      <div class="mt-12 text-xs text-slate-600">
+        © 2026 AItoB Enterprise Solutions. Built with sovereign privacy by design.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script>
+    // --- 1. How It Works Steps Data ---
+    const stepsData = {
+      1: {
+        title: "1. Hardware Selection & Sizing",
+        subtitle: "เลือกขนาดฮาร์ดแวร์ให้เหมาะสมกับจำนวนพนักงานและขนาดโมเดล",
+        desc: "ทีมงานประเมินจำนวน Concurrent Users และขนาดโมเดล เพื่อเลือกฮาร์ดแวร์ที่คุ้มค่าที่สุด ตั้งแต่ GPU Workstation (Nvidia RTX 4090 / 6000 Ada) สำหรับองค์กรขนาดกลาง จนถึง Rack Server หลายโหนดสำหรับองค์กรใหญ่",
+        badge: "Zero-Overprovision",
+        details: [
+          "คำนวณ VRAM ที่ต้องใช้ตามขนาดพารามิเตอร์ (8B, 14B, 32B, 70B)",
+          "ระบบระบายความร้อนและเสียงเงียบสำหรับวางในห้องทำงานทั่วไปได้",
+          "รองรับการอัปเกรดขยาย GPU ในอนาคตเมื่อความต้องการเพิ่มขึ้น"
+        ]
+      },
+      2: {
+        title: "2. Local AI Engine (Open-Weight Models)",
+        subtitle: "รันโมเดลภาษาชั้นนำภายในเครื่องด้วยความเร็วสูงสุด",
+        desc: "ติดตั้ง Inference Engine ประสิทธิภาพสูง (vLLM / Ollama) พร้อมโมเดล Open-weight ระดับโลก เช่น DeepSeek-V3/R1, Qwen 2.5, Llama 3.3 ที่ผ่านการ Fine-tune ปรับแต่งให้เข้าใจภาษาไทยบริบทธุรกิจและการเงินอย่างแม่นยำ",
+        badge: "100% Offline Capable",
+        details: [
+          "Inference Latency ต่ำกว่า 25ms ตอบสนองทันทีแบบ Real-time",
+          "ตัดการเชื่อมต่ออินเทอร์เน็ตได้ 100% ข้อมูลไม่เคยถูกส่งออกไปข้างนอก",
+          "ไม่มีข้อจำกัดเรื่อง Rate-limit หรือโควตาการใช้งานรายวัน"
+        ]
+      },
+      3: {
+        title: "3. Permission Guard & RBAC",
+        subtitle: "ระบบควบคุมสิทธิ์การเข้าถึงข้อมูลตามตำแหน่งหน้าที่",
+        desc: "หัวใจสำคัญของความปลอดภัยองค์กร: เราติดตั้ง Security Layer คั่นกลาง เพื่อตรวจสอบ Role-Based Access Control (RBAC) ของผู้ใช้ก่อนส่งคำถามเข้าสู่โมเดล",
+        badge: "Enterprise Grade Security",
+        details: [
+          "พนักงานทั่วไปไม่สามารถถามหรือดึงข้อมูลเงินเดือนและสัญญาระดับบริหาร",
+          "บันทึก Audit Log ทุกคำถาม-คำตอบเพื่อการตรวจสอบตามมาตรฐาน ISO/PDPA",
+          "เชื่อมต่อกับระบบ Active Directory / LDAP ที่องค์กรใช้อยู่เดิม"
+        ]
+      },
+      4: {
+        title: "4. RAG & Model Context Protocol (MCP)",
+        subtitle: "เชื่อมโยงเอกสารภายในและระบบฐานข้อมูลขององค์กร",
+        desc: "ใช้สถาปัตยกรรม Retrieval-Augmented Generation (RAG) แปลงเอกสารลับของบริษัท (PDF, Excel, Word) ให้ AI ค้นหาและอ้างอิงได้ถูกต้อง ไม่มโน (Zero Hallucination) พร้อมต่อตรงผ่าน MCP กับระบบ ERP/SAP/SQL",
+        badge: "Real-time Context",
+        details: [
+          "Local Vector Database เข้ารหัสบนเครื่อง (ChromaDB / Qdrant)",
+          "เชื่อมต่อ API ภายในองค์กรผ่าน Standardized Model Context Protocol",
+          "แสดง Reference แหล่งที่มาของเอกสารพร้อมเลขหน้าทุกครั้งที่ตอบ"
+        ]
+      },
+      5: {
+        title: "5. Autonomous Workflow Automation",
+        subtitle: "เปลี่ยนคำตอบเป็นการลงมือปฏิบัติงานอัตโนมัติ",
+        desc: "ต่อยอดจากแค่ Chatbot ทั่วไป สู่ Autonomous Agent Pipeline ที่ทำงานวนซ้ำได้ เช่น เมื่อมีใบเสร็จใหม่เข้ามาในโฟลเดอร์ AI จะกระทบยอดใน ERP ดึงข้อผิดพลาด และร่างอีเมลขอเอกสารเพิ่มรอให้คนกดส่ง",
+        badge: "Human-in-the-loop",
+        details: [
+          "ลดเวลางานเอกสารซ้ำซากลงได้ถึง 80-90%",
+          "มีระบบยืนยัน (Human-in-the-loop) ก่อนทำธุรกรรมสำคัญ",
+          "รายงานผลการทำงานประจำวันอัตโนมัติ"
+        ]
+      }
+    };
+
+    function selectStep(stepNum) {
+      // Update button styles
+      document.querySelectorAll('.step-btn').forEach((btn, index) => {
+        if (index + 1 === stepNum) {
+          btn.className = "step-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition bg-brand-500 text-slate-950 flex items-center space-x-2";
+          btn.querySelector('span:first-child').className = "w-5 h-5 rounded-full bg-slate-900 text-brand-500 flex items-center justify-center text-xs font-bold";
+        } else {
+          btn.className = "step-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center space-x-2";
+          btn.querySelector('span:first-child').className = "w-5 h-5 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center text-xs font-bold";
+        }
+      });
+
+      const s = stepsData[stepNum];
+      const contentEl = document.getElementById('step-content');
+      contentEl.innerHTML = `
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs font-bold text-brand-500 bg-brand-500/10 px-2.5 py-1 rounded-md border border-brand-500/20">${s.badge}</span>
+          <span class="text-xs text-slate-500 font-mono">Architecture Layer 0${stepNum}</span>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white mb-1">${s.title}</h3>
+        <p class="text-xs sm:text-sm text-brand-400 font-medium mb-4">${s.subtitle}</p>
+        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">${s.desc}</p>
+        <div class="bg-slate-950/70 p-4 rounded-xl border border-dark-border">
+          <div class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide">Key Enterprise Features:</div>
+          <ul class="text-xs text-slate-300 space-y-2">
+            ${s.details.map(d => `<li class="flex items-center space-x-2"><span class="text-brand-500">✓</span><span>${d}</span></li>`).join('')}
+          </ul>
+        </div>
+      `;
+    }
+
+    // --- 2. Interactive Simulator Scenarios ---
+    const scenarios = {
+      finance: {
+        title: "กระทบยอดบิล & สรุปกำไร Q3 (แผนกบัญชี)",
+        logs: [
+          { type: "info", text: "[LOCAL STORAGE] ตรวจพบไฟล์ 'Q3_Invoice_Ledger_Confidential.xlsx' (24.8 MB)..." },
+          { type: "security", text: "[PERMISSION] User: Somchai (Senior Accountant) -> Role 'Finance_Admin' -> GRANTED" },
+          { type: "process", text: "[MCP ENGINE] Querying Local ERP DB via mcp-sql-bridge..." },
+          { type: "success", text: "[ANALYSIS RESULT] ตรวจสอบรายการใบเสร็จทั้งหมด 1,420 รายการเสร็จสิ้นใน 1.8 วินาที" },
+          { type: "highlight", text: "• ยอดรวมรายได้ Q3: ฿48,920,000 (ตรงกับระบบบัญชี 100%)\n• พบรายการผิดปกติ (Flagged): ใบแจ้งหนี้ INV-8821 ยอดซ้ำซ้อน ฿145,000 บาท\n• สรุป: แนะนำให้ออกใบลดหนี้ (Credit Note) ให้คู่ค้าทันที" }
+        ]
+      },
+      hr: {
+        title: "ตรวจสิทธิ์การเข้าถึงฐานข้อมูลเงินเดือน (แผนก HR)",
+        logs: [
+          { type: "info", text: "[QUERY] 'ขอสรุปอัตราเงินเดือนเฉลี่ยของแผนกวิศวกรรมทุกคน'" },
+          { type: "security", text: "[RBAC GUARD] User: Napat (Marketing Officer) -> Role 'Marketing_Staff'" },
+          { type: "warning", text: "[ACCESS DENIED] ผู้ใช้ไม่มีสิทธิ์ในกลุ่มข้อมูล 'HR_Confidential_Payroll'" },
+          { type: "highlight", text: "🛡️ ระบบ AItoB ไม่อนุญาตให้ดึงข้อมูลตามคำสั่งนี้ และทำการบันทึก Log ส่งฝ่าย Security Audit เรียบร้อยแล้ว (0% ข้อมูลรั่วไหล)" }
+        ]
+      },
+      legal: {
+        title: "ตรวจร่างสัญญาคู่ค้า & จับจุดเสี่ยง PDPA (ฝ่ายจัดซื้อ/สัญญา)",
+        logs: [
+          { type: "info", text: "[LOCAL RAG] อ่านสัญญา 'Vendor_SLA_Agreement_2026.pdf' (68 หน้า)..." },
+          { type: "security", text: "[ENCRYPTION] ประมวลผลบนหน่วยความจำ Local VRAM ไม่มีการบันทึกไฟล์ชั่วคราวบน Cloud" },
+          { type: "process", text: "[LOCAL LLM] DeepSeek-R1-Local วิเคราะห์ข้อสัญญาตามกฎหมายไทย..." },
+          { type: "highlight", text: "⚠️ พบจุดเสี่ยงในข้อ 14.2: คู่ค้าขอสิทธิ์ส่งข้อมูลลูกค้าไปประมวลผลนอกราชอาณาจักร โดยไม่มีระบุมาตรการคุ้มครองตาม PDPA มาตรา 28/29\n💡 คำแนะนำ AItoB: ให้แก้ไขเป็น 'การประมวลผลต้องอยู่ภายในประเทศไทยเท่านั้น หรือต้องได้รับความยินยอมเป็นลายลักษณ์อักษร'" }
+        ]
+      }
+    };
+
+    function runScenario(key) {
+      // Highlight selected button
+      document.querySelectorAll('.scenario-btn').forEach(btn => {
+        btn.classList.remove('border-brand-500/50', 'bg-brand-500/10');
+        btn.classList.add('border-slate-700', 'bg-slate-800/40');
+      });
+      const activeBtn = document.querySelector(`.scenario-btn[data-scenario="${key}"]`);
+      if (activeBtn) {
+        activeBtn.classList.remove('border-slate-700', 'bg-slate-800/40');
+        activeBtn.classList.add('border-brand-500/50', 'bg-brand-500/10');
+      }
+
+      const sc = scenarios[key];
+      const term = document.getElementById('terminal-output');
+      term.innerHTML = `<div class="text-brand-400 font-bold mb-2">▶ กำลังจำลอง: ${sc.title}</div>`;
+
+      let i = 0;
+      function appendLog() {
+        if (i < sc.logs.length) {
+          const l = sc.logs[i];
+          let color = "text-slate-300";
+          if (l.type === "info") color = "text-cyan-400";
+          if (l.type === "security") color = "text-purple-400";
+          if (l.type === "warning") color = "text-red-400 font-bold";
+          if (l.type === "success") color = "text-emerald-400 font-semibold";
+          if (l.type === "highlight") color = "bg-slate-950 p-3 rounded-lg border border-brand-500/30 text-white font-mono whitespace-pre-line mt-2";
+
+          const div = document.createElement('div');
+          div.className = color;
+          div.innerText = l.text;
+          term.appendChild(div);
+          i++;
+          setTimeout(appendLog, 400);
+        }
+      }
+      appendLog();
+    }
+
+    // --- 3. ROI Calculator Logic ---
+    function calculateROI() {
+      const employees = parseInt(document.getElementById('input-employees').value);
+      const hours = parseFloat(document.getElementById('input-hours').value);
+      const salary = parseInt(document.getElementById('input-salary').value);
+
+      document.getElementById('label-employees').innerText = `${employees} คน`;
+      document.getElementById('label-hours').innerText = `${hours} ชั่วโมง`;
+      document.getElementById('label-salary').innerText = `${salary.toLocaleString()} บาท`;
+
+      // 20 working days/month, 8 hours/day
+      // Hourly rate = salary / 160 hours
+      const hourlyRate = salary / 160;
+      // Automation efficiency = 80% saved
+      const savedHoursPerMonth = Math.round(employees * hours * 20 * 0.8);
+      const monthlySavings = Math.round(savedHoursPerMonth * hourlyRate);
+      const annualSavings = monthlySavings * 12;
+
+      document.getElementById('res-hours').innerText = `${savedHoursPerMonth.toLocaleString()} ชั่วโมง`;
+      document.getElementById('res-savings').innerText = `${annualSavings.toLocaleString()} บาท`;
+
+      // Estimated appliance capex = 249,000 THB
+      const paybackMonths = monthlySavings > 0 ? (249000 / monthlySavings).toFixed(1) : "N/A";
+      document.getElementById('res-payback').innerText = `~ ${paybackMonths} เดือน`;
+    }
+
+    // --- 4. Pitch Deck Modal Navigation ---
+    let currentSlide = 1;
+    const totalSlides = 6;
+
+    const deckModal = document.getElementById('deck-modal');
+    const btnOpenDeck = document.getElementById('btn-open-deck');
+    const btnCloseDeck = document.getElementById('btn-close-deck');
+    const btnPrevSlide = document.getElementById('btn-prev-slide');
+    const btnNextSlide = document.getElementById('btn-next-slide');
+    const deckCounter = document.getElementById('deck-counter');
+
+    function showSlide(index) {
+      if (index < 1) index = 1;
+      if (index > totalSlides) index = totalSlides;
+      currentSlide = index;
+
+      document.querySelectorAll('.slide').forEach(s => {
+        s.classList.add('hidden');
+        s.classList.remove('slide-active');
+        if (parseInt(s.getAttribute('data-slide')) === currentSlide) {
+          s.classList.remove('hidden');
+          s.classList.add('slide-active');
+        }
+      });
+
+      deckCounter.innerText = `Slide ${currentSlide} / ${totalSlides}`;
+      btnPrevSlide.disabled = currentSlide === 1;
+      btnNextSlide.innerText = currentSlide === totalSlides ? 'สิ้นสุดสไลด์' : 'สไลด์ถัดไป →';
+    }
+
+    btnOpenDeck.addEventListener('click', () => {
+      deckModal.classList.remove('hidden');
+      deckModal.classList.add('flex');
+      showSlide(1);
+    });
+
+    btnCloseDeck.addEventListener('click', () => {
+      deckModal.classList.add('hidden');
+      deckModal.classList.remove('flex');
+    });
+
+    btnPrevSlide.addEventListener('click', () => showSlide(currentSlide - 1));
+    btnNextSlide.addEventListener('click', () => {
+      if (currentSlide === totalSlides) {
+        deckModal.classList.add('hidden');
+        deckModal.classList.remove('flex');
+      } else {
+        showSlide(currentSlide + 1);
+      }
+    });
+
+    // Keyboard support for presentation
+    document.addEventListener('keydown', (e) => {
+      if (!deckModal.classList.contains('hidden')) {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+          e.preventDefault();
+          if (currentSlide < totalSlides) showSlide(currentSlide + 1);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          if (currentSlide > 1) showSlide(currentSlide - 1);
+        } else if (e.key === 'Escape') {
+          deckModal.classList.add('hidden');
+          deckModal.classList.remove('flex');
+        }
+      }
+    });
+
+    // Initialize defaults on load
+    document.addEventListener('DOMContentLoaded', () => {
+      selectStep(1);
+      runScenario('finance');
+      calculateROI();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{
+  "permissions": {
+    "defaultMode": "acceptEdits"
+  },
+  "enabledMcpjsonServers": [
+    "exa",
+    "context7"
+  ],
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node '/home/tonton/.openrig/state/claude-activity-hooks/activity-relay.cjs'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node '/home/tonton/.openrig/state/claude-activity-hooks/activity-relay.cjs'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node '/home/tonton/.openrig/state/claude-activity-hooks/activity-relay.cjs'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node '/home/tonton/.openrig/state/claude-activity-hooks/activity-relay.cjs'",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "node '/home/tonton/aizen/AItoB/ass/.openrig/context-collector.cjs' '/home/tonton/.openrig/state/context-usage' '/home/tonton/.openrig/state/provider-usage'"
+  }
+}
