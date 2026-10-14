@@ -80,22 +80,95 @@
     .slide-active {
       display: block !important;
     }
+    /* Subtle Technical Background Grid & Ambient Glow */
+    .bg-tech-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(32, 48, 80, 0.22) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(32, 48, 80, 0.22) 1px, transparent 1px);
+    }
+    /* Custom Card Hover & Glow Effects */
+    .card-glow {
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease, box-shadow 0.28s ease;
+    }
+    .card-glow:hover {
+      transform: translateY(-3px);
+      border-color: rgba(16, 185, 129, 0.55);
+      box-shadow: 0 12px 32px -10px rgba(16, 185, 129, 0.16);
+    }
+    .card-glow-crimson:hover {
+      transform: translateY(-3px);
+      border-color: rgba(244, 63, 94, 0.55);
+      box-shadow: 0 12px 32px -10px rgba(244, 63, 94, 0.16);
+    }
+    /* Animated SVG Data Packet Flow */
+    @keyframes dashFlow {
+      to {
+        stroke-dashoffset: -24;
+      }
+    }
+    .animate-dash-flow {
+      stroke-dasharray: 6 6;
+      animation: dashFlow 0.9s linear infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.35; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.06); }
+    }
+    .animate-pulse-glow {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+    /* Scroll Reveal Initial State */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+    /* Custom Range Slider */
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #10b981;
+      border: 2px solid #090d16;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.18);
+    }
+    /* Active Nav Link Pill */
+    .nav-link.active {
+      color: #10b981;
+      background-color: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
   </style>
 </head>
-<body class="bg-paper text-slate-100 antialiased selection:bg-brand selection:text-slate-950">
+<body class="bg-paper bg-tech-grid text-slate-100 antialiased selection:bg-brand selection:text-slate-950 relative">
 
-  <!-- ==================== HEADER (FLOATING MODERN PILL) ==================== -->
+  <!-- Top Reading Scroll Progress Bar -->
+  <div class="fixed top-0 left-0 right-0 h-1 z-50 bg-paper-subtle/60 backdrop-blur-sm">
+    <div id="scroll-progress" class="h-full w-0 bg-gradient-to-r from-brand via-accent-cyan to-brand-light shadow-[0_0_12px_#10b981] transition-all duration-75"></div>
+  </div>
+
+  <!-- Ambient Background Radial Spotlights -->
+  <div class="pointer-events-none fixed inset-0 overflow-hidden z-0">
+    <div class="absolute -top-40 left-1/4 w-96 h-96 bg-brand/10 rounded-full blur-[130px]"></div>
+    <div class="absolute top-1/3 -right-32 w-80 h-80 bg-accent-cyan/10 rounded-full blur-[120px]"></div>
+  </div>
+
+  <!-- ==================== HEADER (FLOATING MODERN PILL + MOBILE DRAWER) ==================== -->
   <header class="sticky top-4 z-40 px-4 sm:px-6 max-w-7xl mx-auto">
-    <div class="bg-paper-subtle/90 backdrop-blur-md border border-border rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between shadow-lg">
+    <div class="bg-paper-subtle/90 backdrop-blur-xl border border-border rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between shadow-[0_10px_30px_rgba(0,0,0,0.45)] relative">
       <!-- Modern Sovereign Logo & Wordmark -->
       <a href="#" class="flex items-center space-x-3.5 group">
         <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-surface-raised via-surface to-paper border border-brand/50 shadow-[0_0_15px_rgba(16,185,129,0.15)] group-hover:border-brand transition duration-300">
           <svg class="w-6 h-6 text-brand" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Shield Geometry -->
             <path d="M16 3L27 8.5V17.5C27 23.5 22.3 27.8 16 29.5C9.7 27.8 5 23.5 5 17.5V8.5L16 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" class="opacity-95"/>
-            <!-- Sovereign Neural Mesh -->
             <path d="M16 9V23M10.5 13L21.5 19.5M10.5 19.5L21.5 13" stroke="#34d399" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="1.5 2.5" class="opacity-70"/>
-            <!-- Secure Core Node -->
             <circle cx="16" cy="16" r="3" fill="#10b981"/>
             <circle cx="16" cy="16" r="1.2" fill="#042f2e"/>
           </svg>
@@ -113,88 +186,218 @@
         </div>
       </a>
 
-      <!-- Desktop Section Links -->
-      <nav class="hidden md:flex items-center space-x-6 text-xs font-medium text-slate-300">
-        <a href="#pain-point" class="hover:text-brand transition-colors">1. Pain Point</a>
-        <a href="#solution" class="hover:text-brand transition-colors">2. Solution</a>
-        <a href="#how-it-works" class="hover:text-brand transition-colors">3. How It Works</a>
-        <a href="#demo-video" class="text-brand font-semibold hover:underline transition-colors flex items-center space-x-1">
+      <!-- Desktop Section Links with Active Spy -->
+      <nav class="hidden lg:flex items-center space-x-1.5 text-xs font-medium text-slate-300">
+        <a href="#pain-point" data-section="pain-point" class="nav-link px-2.5 py-1.5 rounded-lg border border-transparent hover:text-brand transition-all">1. Pain Point</a>
+        <a href="#solution" data-section="solution" class="nav-link px-2.5 py-1.5 rounded-lg border border-transparent hover:text-brand transition-all">2. Solution</a>
+        <a href="#how-it-works" data-section="how-it-works" class="nav-link px-2.5 py-1.5 rounded-lg border border-transparent hover:text-brand transition-all">3. How It Works</a>
+        <a href="#demo-video" data-section="demo-video" class="nav-link px-2.5 py-1.5 rounded-lg border border-transparent text-brand font-semibold hover:bg-brand/10 transition-all flex items-center space-x-1">
           <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           <span>วิดีโอสาธิต</span>
         </a>
-        <a href="#prototype" class="hover:text-brand transition-colors">4. Live Demo & ROI</a>
-        <a href="#departments" class="hover:text-brand transition-colors">5. แยกตามแผนก</a>
-        <a href="#business" class="hover:text-brand transition-colors">6. Business</a>
+        <a href="#prototype" data-section="prototype" class="nav-link px-2.5 py-1.5 rounded-lg border border-transparent hover:text-brand transition-all">4. Live Demo & ROI</a>
+        <a href="#departments" data-section="departments" class="nav-link px-2.5 py-1.5 rounded-lg border border-transparent hover:text-brand transition-all">5. แยกตามแผนก</a>
+        <a href="#business" data-section="business" class="nav-link px-2.5 py-1.5 rounded-lg border border-transparent hover:text-brand transition-all">6. Business</a>
       </nav>
 
-      <!-- Header CTAs -->
-      <div class="flex items-center space-x-2.5">
-        <button id="btn-open-deck" class="px-3 py-1.5 rounded-lg bg-surface hover:bg-surface-raised text-xs font-semibold text-slate-200 border border-border transition flex items-center space-x-1.5">
+      <!-- Header CTAs + Mobile Menu Button -->
+      <div class="flex items-center space-x-2">
+        <button id="btn-open-deck" class="hidden sm:flex px-3 py-1.5 rounded-lg bg-surface hover:bg-surface-raised text-xs font-semibold text-slate-200 border border-border transition items-center space-x-1.5">
           <svg class="w-3.5 h-3.5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
           <span>Deck Mode</span>
         </button>
-        <a href="#roi-calculator" class="px-3.5 py-1.5 rounded-lg bg-brand hover:bg-brand-hover text-slate-950 text-xs font-bold transition">
+        <a href="#roi-calculator" class="px-3.5 py-1.5 rounded-lg bg-brand hover:bg-brand-hover text-slate-950 text-xs font-bold transition shadow-[0_0_15px_rgba(16,185,129,0.25)]">
           คำนวณ ROI
+        </a>
+
+        <!-- Hamburger Toggle Button (Visible on Mobile / Tablet) -->
+        <button id="btn-mobile-menu" aria-label="เปิดเมนูนำทาง" aria-expanded="false" class="lg:hidden p-2 rounded-xl bg-surface hover:bg-surface-raised border border-border text-slate-200 hover:text-brand transition focus:outline-none">
+          <svg id="icon-menu-open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg id="icon-menu-close" class="w-5 h-5 hidden text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu-drawer" class="lg:hidden hidden mt-2 bg-paper-subtle/95 backdrop-blur-2xl border border-border rounded-2xl p-4 shadow-2xl overflow-hidden">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-border-subtle">
+        <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400">Navigation Menu</span>
+        <span class="text-[10px] font-mono text-brand bg-brand/10 border border-brand/30 px-2 py-0.5 rounded-full flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand animate-ping"></span>
+          Air-Gapped Ready
+        </span>
+      </div>
+      <nav class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs font-medium">
+        <a href="#pain-point" class="mobile-nav-link flex items-center justify-between p-2.5 rounded-xl bg-surface/60 hover:bg-surface border border-transparent hover:border-brand/40 text-slate-200 transition">
+          <span>1. Pain Point (ปัญหาคอขวดองค์กร)</span>
+          <span class="text-slate-500 font-mono">→</span>
+        </a>
+        <a href="#solution" class="mobile-nav-link flex items-center justify-between p-2.5 rounded-xl bg-surface/60 hover:bg-surface border border-transparent hover:border-brand/40 text-slate-200 transition">
+          <span>2. Solution (สถาปัตยกรรม AItoB)</span>
+          <span class="text-slate-500 font-mono">→</span>
+        </a>
+        <a href="#how-it-works" class="mobile-nav-link flex items-center justify-between p-2.5 rounded-xl bg-surface/60 hover:bg-surface border border-transparent hover:border-brand/40 text-slate-200 transition">
+          <span>3. How It Works (5 ขั้นตอนระบบ)</span>
+          <span class="text-slate-500 font-mono">→</span>
+        </a>
+        <a href="#demo-video" class="mobile-nav-link flex items-center justify-between p-2.5 rounded-xl bg-brand/10 hover:bg-brand/20 border border-brand/30 text-brand font-semibold transition">
+          <span class="flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <span>วิดีโอสาธิตการทำงานจริง</span>
+          </span>
+          <span class="font-mono">▶</span>
+        </a>
+        <a href="#prototype" class="mobile-nav-link flex items-center justify-between p-2.5 rounded-xl bg-surface/60 hover:bg-surface border border-transparent hover:border-brand/40 text-slate-200 transition">
+          <span>4. Live Demo & ROI Simulator</span>
+          <span class="text-slate-500 font-mono">→</span>
+        </a>
+        <a href="#departments" class="mobile-nav-link flex items-center justify-between p-2.5 rounded-xl bg-surface/60 hover:bg-surface border border-transparent hover:border-brand/40 text-slate-200 transition">
+          <span>5. เว็บไซต์แยกตามแผนก</span>
+          <span class="text-slate-500 font-mono">→</span>
+        </a>
+        <a href="#business" class="mobile-nav-link sm:col-span-2 flex items-center justify-between p-2.5 rounded-xl bg-surface/60 hover:bg-surface border border-transparent hover:border-brand/40 text-slate-200 transition">
+          <span>6. Business Model, แพ็กเกจราคา & Roadmap</span>
+          <span class="text-slate-500 font-mono">→</span>
+        </a>
+      </nav>
+      <div class="mt-3 pt-3 border-t border-border-subtle flex items-center gap-2">
+        <button id="btn-open-deck-mobile" class="flex-1 py-2.5 px-3 rounded-xl bg-surface hover:bg-surface-raised text-xs font-semibold text-slate-200 border border-border transition flex items-center justify-center space-x-1.5">
+          <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+          <span>เปิดสไลด์ Deck Mode</span>
+        </button>
+        <a href="#roi-calculator" class="mobile-nav-link flex-1 py-2.5 px-3 rounded-xl bg-brand hover:bg-brand-hover text-slate-950 text-xs font-bold text-center transition">
+          คำนวณความคุ้มค่า ROI
         </a>
       </div>
     </div>
   </header>
 
-  <!-- ==================== HERO SECTION (EDITORIAL ASYMMETRIC) ==================== -->
-  <section class="pt-16 pb-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+  <!-- ==================== HERO SECTION (EDITORIAL ASYMMETRIC + INTERACTIVE SHIELD) ==================== -->
+  <section class="relative z-10 pt-14 pb-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
       <!-- Main Pitch Narrative (Left-Heavy) -->
-      <div class="lg:col-span-8">
-        <div class="hero-fade-in inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-surface border border-border text-xs text-brand-light font-mono mb-6">
-          <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+      <div class="lg:col-span-7">
+        <div class="hero-fade-in inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-surface/90 border border-brand/30 text-xs text-brand-light font-mono mb-6 shadow-[0_0_20px_rgba(16,185,129,0.12)]">
+          <span class="w-2 h-2 rounded-full bg-brand animate-ping"></span>
           <span>100% On-Premise Air-Gapped Appliance · Zero Data Egress</span>
         </div>
 
-        <h1 class="hero-fade-in text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.12] mb-6 font-display">
+        <h1 class="hero-fade-in text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-white leading-[1.15] mb-6 font-display">
           ปลดล็อกพลัง AI ในองค์กร<br>
-          ข้อมูลความลับไม่หลุดออกนอกบริษัท
+          <span class="bg-gradient-to-r from-brand-light via-brand to-accent-cyan bg-clip-text text-transparent">ข้อมูลความลับไม่หลุดออกนอกบริษัท</span>
         </h1>
 
         <p class="hero-fade-in text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mb-8">
           AItoB วางระบบและติดตั้ง <span class="text-white font-semibold">Private Local AI</span> บนฮาร์ดแวร์เฉพาะในองค์กร เชื่อมโยงฐานข้อมูลภายในและเอกสารสำคัญด้วยสิทธิ์ RBAC + Model Context Protocol ทำงานอัตโนมัติ 100% โดยไม่ต้องส่งข้อมูลออกอินเทอร์เน็ต
         </p>
 
-        <div class="hero-fade-in flex flex-wrap items-center gap-4">
-          <a href="#prototype" class="px-6 py-3 rounded-xl bg-brand hover:bg-brand-hover text-slate-950 font-bold text-sm transition flex items-center space-x-2 shadow-sm">
+        <div class="hero-fade-in flex flex-wrap items-center gap-3.5 mb-10">
+          <a href="#prototype" class="px-6 py-3.5 rounded-xl bg-brand hover:bg-brand-hover text-slate-950 font-bold text-sm transition flex items-center space-x-2 shadow-[0_0_25px_rgba(16,185,129,0.3)] hover:scale-[1.02]">
             <span>ทดลอง Interactive Simulator</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </a>
-          <a href="#how-it-works" class="px-5 py-3 rounded-xl bg-surface hover:bg-surface-raised text-slate-200 text-sm font-semibold border border-border transition">
+          <a href="#how-it-works" class="px-5 py-3.5 rounded-xl bg-surface hover:bg-surface-raised text-slate-200 text-sm font-semibold border border-border hover:border-brand/40 transition">
             ดูสถาปัตยกรรม 5 ขั้นตอน
           </a>
         </div>
+
+        <!-- Live Telemetry Strip -->
+        <div class="hero-fade-in grid grid-cols-3 gap-3 sm:gap-4 pt-6 border-t border-border-subtle max-w-xl">
+          <div class="bg-paper-subtle/80 border border-border rounded-xl p-3">
+            <div class="text-lg sm:text-2xl font-extrabold text-brand font-mono tabular-nums">0 KB</div>
+            <div class="text-[11px] text-slate-400">ข้อมูลส่งออกนอกองค์กร</div>
+          </div>
+          <div class="bg-paper-subtle/80 border border-border rounded-xl p-3">
+            <div class="text-lg sm:text-2xl font-extrabold text-white font-mono tabular-nums">~22 ms</div>
+            <div class="text-[11px] text-slate-400">Local GPU Latency</div>
+          </div>
+          <div class="bg-paper-subtle/80 border border-border rounded-xl p-3">
+            <div class="text-lg sm:text-2xl font-extrabold text-accent-cyan font-mono tabular-nums">฿0 / เดือน</div>
+            <div class="text-[11px] text-slate-400">ค่า Cloud API Token</div>
+          </div>
+        </div>
       </div>
 
-      <!-- Right Column: Hard Sovereign Guarantees (Structured Card) -->
-      <div class="hero-fade-in lg:col-span-4 bg-paper-subtle border border-border rounded-2xl p-6 space-y-4">
-        <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider pb-3 border-b border-border-subtle">
-          Sovereign Guarantees
+      <!-- Right Column: Interactive Air-Gapped Shield & Sovereign Guarantees -->
+      <div class="hero-fade-in lg:col-span-5 bg-paper-subtle/95 border border-border rounded-2xl p-5 sm:p-6 shadow-2xl relative overflow-hidden">
+        <!-- Interactive Air-Gap Simulator Toggle Header -->
+        <div class="flex items-center justify-between pb-4 mb-4 border-b border-border-subtle">
+          <div>
+            <span class="text-[10px] font-mono text-brand uppercase tracking-wider block">Live Perimeter Topology</span>
+            <h3 class="text-sm font-bold text-white font-display">Sovereign Air-Gapped Shield</h3>
+          </div>
+          <button id="btn-toggle-airgap" onclick="toggleAirGapDemo()" class="px-3 py-1.5 rounded-lg bg-brand/15 hover:bg-brand/25 border border-brand/40 text-brand-light text-[11px] font-mono font-semibold flex items-center gap-1.5 transition">
+            <span id="airgap-dot" class="w-2 h-2 rounded-full bg-brand animate-ping"></span>
+            <span id="airgap-btn-label">โหมด: ตัดสายอินเทอร์เน็ต (Air-Gap)</span>
+          </button>
         </div>
 
-        <div class="space-y-4 text-xs">
-          <div class="flex items-start space-x-3">
-            <div class="text-brand font-bold text-sm">01</div>
+        <!-- Animated SVG Architecture Diagram -->
+        <div class="bg-paper border border-border rounded-xl p-3 mb-5 relative">
+          <svg class="w-full h-40" viewBox="0 0 420 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Corporate Perimeter Box -->
+            <rect x="8" y="10" width="275" height="135" rx="12" fill="#0e1524" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <text x="20" y="27" fill="#34d399" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700">CORPORATE ON-PREMISE PERIMETER (100% LOCAL)</text>
+
+            <!-- Internal Data Node (ERP / Docs) -->
+            <rect x="22" y="45" width="95" height="80" rx="8" fill="#131e33" stroke="#203050" stroke-width="1.2"/>
+            <text x="70" y="68" text-anchor="middle" fill="#f1f5f9" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="700">ERP / SQL / NAS</text>
+            <text x="70" y="84" text-anchor="middle" fill="#94a3b8" font-family="JetBrains Mono, monospace" font-size="8">งบการเงิน · เงินเดือน</text>
+            <text x="70" y="98" text-anchor="middle" fill="#10b981" font-family="JetBrains Mono, monospace" font-size="8">RBAC Protected</text>
+
+            <!-- Animated Flow Line Inside Perimeter -->
+            <line x1="117" y1="78" x2="165" y2="78" stroke="#10b981" stroke-width="2.2" class="animate-dash-flow"/>
+            <line x1="165" y1="92" x2="117" y2="92" stroke="#06b6d4" stroke-width="2.2" class="animate-dash-flow"/>
+
+            <!-- AItoB Appliance Node -->
+            <rect x="165" y="42" width="104" height="86" rx="10" fill="#192742" stroke="#10b981" stroke-width="1.8"/>
+            <circle cx="217" cy="64" r="10" fill="rgba(16,185,129,0.2)" stroke="#10b981" stroke-width="1.5"/>
+            <circle cx="217" cy="64" r="4" fill="#10b981"/>
+            <text x="217" y="88" text-anchor="middle" fill="#ffffff" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="800">AItoB Node</text>
+            <text x="217" y="102" text-anchor="middle" fill="#34d399" font-family="JetBrains Mono, monospace" font-size="8">Local GPU + MCP</text>
+            <text id="svg-node-status" x="217" y="116" text-anchor="middle" fill="#a7f3d0" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">● ONLINE (22ms)</text>
+
+            <!-- Firewall / Air-Gap Barrier -->
+            <line x1="305" y1="16" x2="305" y2="140" stroke="#f43f5e" stroke-width="2" stroke-dasharray="3 3"/>
+            <rect x="291" y="64" width="28" height="28" rx="6" fill="#2a121f" stroke="#f43f5e" stroke-width="1.5"/>
+            <path d="M300 73L310 83M310 73L300 83" stroke="#f43f5e" stroke-width="2" stroke-linecap="round"/>
+
+            <!-- External Public Cloud (Blocked) -->
+            <rect x="332" y="45" width="78" height="80" rx="8" fill="#131824" stroke="#334155" stroke-width="1" opacity="0.65"/>
+            <text x="371" y="72" text-anchor="middle" fill="#94a3b8" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700">Public Cloud</text>
+            <text x="371" y="88" text-anchor="middle" fill="#f43f5e" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">0 KB EGRESS</text>
+            <text x="371" y="102" text-anchor="middle" fill="#64748b" font-family="JetBrains Mono, monospace" font-size="7.5">Blocked 100%</text>
+          </svg>
+          <div id="airgap-status-banner" class="mt-1 px-3 py-1.5 rounded-lg bg-brand/10 border border-brand/30 flex items-center justify-between text-[11px] font-mono">
+            <span class="text-brand-light">✓ สถานะ: ตัดการเชื่อมต่ออินเทอร์เน็ตภายนอก 100%</span>
+            <span class="text-white font-bold">AI ทำงานได้ปกติ</span>
+          </div>
+        </div>
+
+        <!-- 3 Sovereign Guarantees -->
+        <div class="space-y-3.5 text-xs">
+          <div class="flex items-start space-x-3 p-2.5 rounded-xl bg-surface/60 border border-border-subtle">
+            <div class="text-brand font-mono font-bold text-sm bg-brand/10 px-2 py-1 rounded border border-brand/30">01</div>
             <div>
               <div class="font-bold text-white text-sm">Zero Data Egress</div>
               <p class="text-slate-400 mt-0.5">ทำงานสมบูรณ์แม้ตัดสาย LAN อินเทอร์เน็ต ไม่มีข้อความใดหลุดถึง Cloud API ภายนอก</p>
             </div>
           </div>
 
-          <div class="flex items-start space-x-3">
-            <div class="text-brand font-bold text-sm">02</div>
+          <div class="flex items-start space-x-3 p-2.5 rounded-xl bg-surface/60 border border-border-subtle">
+            <div class="text-brand font-mono font-bold text-sm bg-brand/10 px-2 py-1 rounded border border-brand/30">02</div>
             <div>
               <div class="font-bold text-white text-sm">Zero Token Subscriptions</div>
               <p class="text-slate-400 mt-0.5">ลงทุนฮาร์ดแวร์ครั้งเดียว ไม่มีค่าใช้จ่ายราย Token บานปลายตามจำนวนพนักงาน</p>
             </div>
           </div>
 
-          <div class="flex items-start space-x-3">
-            <div class="text-brand font-bold text-sm">03</div>
+          <div class="flex items-start space-x-3 p-2.5 rounded-xl bg-surface/60 border border-border-subtle">
+            <div class="text-brand font-mono font-bold text-sm bg-brand/10 px-2 py-1 rounded border border-brand/30">03</div>
             <div>
               <div class="font-bold text-white text-sm">Enterprise RBAC & Audit</div>
               <p class="text-slate-400 mt-0.5">ระบบควบคุมสิทธิ์ระดับ Role กั้นข้อมูลเงินเดือนและสัญญาลับ พร้อม Audit Trail ตรวจสอบได้</p>
@@ -205,10 +408,12 @@
     </div>
   </section>
 
-  <!-- ==================== 1. PAIN POINT (ASYMMETRIC SPLIT) ==================== -->
-  <section id="pain-point" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
-    <div class="max-w-3xl mb-12">
-      <div class="text-xs font-mono text-accent-crimson uppercase tracking-wider mb-2">Problem Statement</div>
+  <!-- ==================== 1. PAIN POINT & VISUAL COMPARISON GRAPHIC ==================== -->
+  <section id="pain-point" class="relative z-10 py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
+    <div class="max-w-3xl mb-12 reveal-on-scroll">
+      <div class="inline-flex items-center gap-2 text-xs font-mono text-accent-crimson uppercase tracking-wider mb-2 px-2.5 py-1 rounded bg-accent-crimson/10 border border-accent-crimson/30">
+        <span>01 · Problem Statement</span>
+      </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-display mb-4 leading-snug sm:leading-relaxed">
         องค์กรอยากเร่งสปีดด้วย AI แต่คอขวดอยู่ที่ความเสี่ยงข้อมูลและงานเดิมซ้ำซาก
       </h2>
@@ -217,88 +422,257 @@
       </p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      <!-- Left: The 4 Bottlenecks (Asymmetric Spans) -->
-      <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="bg-paper-subtle p-5 rounded-xl border border-border">
-          <div class="text-accent-crimson font-mono text-xs font-bold mb-2">[01] COMPLIANCE BLOCK</div>
-          <h3 class="font-bold text-white text-base mb-2">ข้อมูลลับส่งออก Cloud ไม่ได้</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">
-            งบการเงิน, ข้อมูลเงินเดือน HR, สัญญาคู่ค้า และฐานข้อมูลลูกค้า ไม่สามารถอัปโหลดขึ้น Public AI เพราะผิดกฎหมาย PDPA และสัญญาความลับ
-          </p>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      <!-- Left: The 4 Bottlenecks with Visual Risk Meter -->
+      <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4 reveal-on-scroll">
+        <div class="bg-paper-subtle p-5 rounded-2xl border border-border card-glow-crimson flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-accent-crimson font-mono text-xs font-bold px-2 py-0.5 rounded bg-accent-crimson/10 border border-accent-crimson/30">[01] COMPLIANCE BLOCK</span>
+              <span class="text-[11px] font-mono text-accent-crimson font-semibold">Risk: วิกฤต</span>
+            </div>
+            <h3 class="font-bold text-white text-base mb-2">ข้อมูลลับส่งออก Cloud ไม่ได้</h3>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              งบการเงิน, ข้อมูลเงินเดือน HR, สัญญาคู่ค้า และฐานข้อมูลลูกค้า ไม่สามารถอัปโหลดขึ้น Public AI เพราะผิดกฎหมาย PDPA และสัญญาความลับ
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-border-subtle">
+            <div class="flex justify-between text-[10px] font-mono text-slate-400 mb-1">
+              <span>ผลกระทบด้านกฎหมาย PDPA</span>
+              <span class="text-accent-crimson font-bold">95%</span>
+            </div>
+            <div class="w-full h-1.5 bg-surface rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-accent-amber to-accent-crimson rounded-full" style="width: 95%"></div>
+            </div>
+          </div>
         </div>
 
-        <div class="bg-paper-subtle p-5 rounded-xl border border-border">
-          <div class="text-accent-amber font-mono text-xs font-bold mb-2">[02] PRODUCTIVITY DRAIN</div>
-          <h3 class="font-bold text-white text-base mb-2">เสียเวลากับงานเอกสารซ้ำซาก</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">
-            พนักงานฝ่ายบัญชี จัดซื้อ และวิศวกรรม เสียเวลา 3-5 ชั่วโมงต่อวันไปกับการตรวจเทียบเอกสาร สรุปรายงาน และกรอกข้อมูลซ้ำซ้อน
-          </p>
+        <div class="bg-paper-subtle p-5 rounded-2xl border border-border card-glow-crimson flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-accent-amber font-mono text-xs font-bold px-2 py-0.5 rounded bg-accent-amber/10 border border-accent-amber/30">[02] PRODUCTIVITY DRAIN</span>
+              <span class="text-[11px] font-mono text-accent-amber font-semibold">3-5 ชม./วัน</span>
+            </div>
+            <h3 class="font-bold text-white text-base mb-2">เสียเวลากับงานเอกสารซ้ำซาก</h3>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              พนักงานฝ่ายบัญชี จัดซื้อ และวิศวกรรม เสียเวลา 3-5 ชั่วโมงต่อวันไปกับการตรวจเทียบเอกสาร สรุปรายงาน และกรอกข้อมูลซ้ำซ้อน
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-border-subtle">
+            <div class="flex justify-between text-[10px] font-mono text-slate-400 mb-1">
+              <span>สัดส่วนเวลาที่สูญเปล่าต่อวัน</span>
+              <span class="text-accent-amber font-bold">60%</span>
+            </div>
+            <div class="w-full h-1.5 bg-surface rounded-full overflow-hidden">
+              <div class="h-full bg-accent-amber rounded-full" style="width: 60%"></div>
+            </div>
+          </div>
         </div>
 
-        <div class="bg-paper-subtle p-5 rounded-xl border border-border">
-          <div class="text-slate-400 font-mono text-xs font-bold mb-2">[03] UNCONTROLLED OPEX</div>
-          <h3 class="font-bold text-white text-base mb-2">ค่า Cloud Token บานปลาย</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">
-            เมื่อสเกลผู้ใช้งานหลายแผนก ค่าบริการราย Token ของ Cloud API เพิ่มขึ้นแบบคาดเดายาก และกลายเป็นภาระงบประมาณระยะยาว
-          </p>
+        <div class="bg-paper-subtle p-5 rounded-2xl border border-border card-glow-crimson flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-accent-amber font-mono text-xs font-bold px-2 py-0.5 rounded bg-surface border border-border">[03] UNCONTROLLED OPEX</span>
+              <span class="text-[11px] font-mono text-slate-300 font-semibold">จ่ายรายหัว/Token</span>
+            </div>
+            <h3 class="font-bold text-white text-base mb-2">ค่า Cloud Token บานปลาย</h3>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              เมื่อสเกลผู้ใช้งานหลายแผนก ค่าบริการราย Token ของ Cloud API เพิ่มขึ้นแบบคาดเดายาก และกลายเป็นภาระงบประมาณระยะยาว
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-border-subtle">
+            <div class="flex justify-between text-[10px] font-mono text-slate-400 mb-1">
+              <span>ความผันผวนของงบประมาณ</span>
+              <span class="text-accent-crimson font-bold">สูงมาก</span>
+            </div>
+            <div class="w-full h-1.5 bg-surface rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-accent-amber to-accent-crimson rounded-full" style="width: 82%"></div>
+            </div>
+          </div>
         </div>
 
-        <div class="bg-paper-subtle p-5 rounded-xl border border-border">
-          <div class="text-slate-400 font-mono text-xs font-bold mb-2">[04] DATA ISOLATION</div>
-          <h3 class="font-bold text-white text-base mb-2">ไม่เชื่อมต่อระบบภายใน</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">
-            AI ทั่วไปไม่เข้าใจบริบทองค์กร ไม่สามารถต่อตรงฐานข้อมูล ERP/SAP ภายในได้ และไม่มีระบบจำกัดสิทธิ์ความลับตามตำแหน่ง
-          </p>
+        <div class="bg-paper-subtle p-5 rounded-2xl border border-border card-glow-crimson flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-accent-cyan font-mono text-xs font-bold px-2 py-0.5 rounded bg-surface border border-border">[04] DATA ISOLATION</span>
+              <span class="text-[11px] font-mono text-slate-300 font-semibold">Siloed ERP</span>
+            </div>
+            <h3 class="font-bold text-white text-base mb-2">ไม่เชื่อมต่อระบบภายใน</h3>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              AI ทั่วไปไม่เข้าใจบริบทองค์กร ไม่สามารถต่อตรงฐานข้อมูล ERP/SAP ภายในได้ และไม่มีระบบจำกัดสิทธิ์ความลับตามตำแหน่ง
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-border-subtle">
+            <div class="flex justify-between text-[10px] font-mono text-slate-400 mb-1">
+              <span>ข้อจำกัดการเชื่อมต่อฐานข้อมูลภายใน</span>
+              <span class="text-accent-crimson font-bold">88%</span>
+            </div>
+            <div class="w-full h-1.5 bg-surface rounded-full overflow-hidden">
+              <div class="h-full bg-accent-crimson rounded-full" style="width: 88%"></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Right: Direct Comparison Table -->
-      <div class="lg:col-span-5 bg-surface border border-border rounded-xl p-5">
-        <div class="text-xs font-mono font-bold text-slate-300 uppercase mb-4 pb-2 border-b border-border">
-          Head-to-Head Comparison
+      <!-- Right: Interactive Visual Comparison Dashboard (Public Cloud vs AItoB) -->
+      <div class="lg:col-span-6 bg-surface border border-border rounded-2xl p-5 sm:p-6 flex flex-col justify-between reveal-on-scroll shadow-xl">
+        <div>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-5 border-b border-border">
+            <div>
+              <span class="text-[10px] font-mono text-brand uppercase tracking-wider block">Interactive Architecture Benchmark</span>
+              <h3 class="text-base font-bold text-white font-display">เปรียบเทียบ Public Cloud AI vs. AItoB Appliance</h3>
+            </div>
+            <!-- View Switcher Tabs -->
+            <div class="inline-flex rounded-xl bg-paper p-1 border border-border text-[11px] font-mono">
+              <button onclick="switchCompareTab('scorecard')" id="tab-btn-scorecard" class="compare-tab-btn px-2.5 py-1 rounded-lg bg-brand text-slate-950 font-bold transition">
+                ดัชนีชี้วัด
+              </button>
+              <button onclick="switchCompareTab('cost')" id="tab-btn-cost" class="compare-tab-btn px-2.5 py-1 rounded-lg text-slate-300 hover:text-white transition">
+                กราฟต้นทุน 3 ปี
+              </button>
+            </div>
+          </div>
+
+          <!-- TAB 1: Visual Scorecard Bars -->
+          <div id="compare-panel-scorecard" class="space-y-4 text-xs">
+            <!-- Metric 1 -->
+            <div class="bg-paper-subtle/90 p-3.5 rounded-xl border border-border-subtle">
+              <div class="flex justify-between items-center mb-2">
+                <span class="font-bold text-white">1. ความปลอดภัยของข้อมูล (Data Sovereignty)</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand/15 text-brand-light border border-brand/30">Zero Egress</span>
+              </div>
+              <div class="space-y-2">
+                <div>
+                  <div class="flex justify-between text-[11px] mb-1">
+                    <span class="text-slate-400">Public Cloud: ส่งออกนอกผ่านเน็ต (เสี่ยงข้อมูลรั่วไหล)</span>
+                    <span class="font-mono text-accent-crimson">ความเสี่ยงสูง</span>
+                  </div>
+                  <div class="w-full h-2 bg-paper rounded-full overflow-hidden">
+                    <div class="compare-bar h-full bg-accent-crimson/80 rounded-full" data-width="25%" style="width: 25%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-[11px] mb-1">
+                    <span class="text-brand-light font-semibold">AItoB: ประมวลผลอยู่ในเครื่องของบริษัท 100%</span>
+                    <span class="font-mono text-brand font-bold">ปลอดภัย 100%</span>
+                  </div>
+                  <div class="w-full h-2 bg-paper rounded-full overflow-hidden">
+                    <div class="compare-bar h-full bg-gradient-to-r from-brand to-accent-cyan rounded-full" data-width="100%" style="width: 100%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Metric 2 -->
+            <div class="bg-paper-subtle/90 p-3.5 rounded-xl border border-border-subtle">
+              <div class="flex justify-between items-center mb-2">
+                <span class="font-bold text-white">2. การทำงานขณะออฟไลน์ (Offline Readiness)</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand/15 text-brand-light border border-brand/30">Air-Gap Ready</span>
+              </div>
+              <div class="space-y-2">
+                <div>
+                  <div class="flex justify-between text-[11px] mb-1">
+                    <span class="text-slate-400">Public Cloud: เน็ตล่มหรือตัดเน็ต = หยุดทำงานทันที</span>
+                    <span class="font-mono text-accent-crimson">0% Uptime</span>
+                  </div>
+                  <div class="w-full h-2 bg-paper rounded-full overflow-hidden">
+                    <div class="compare-bar h-full bg-accent-crimson/80 rounded-full" data-width="6%" style="width: 6%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-[11px] mb-1">
+                    <span class="text-brand-light font-semibold">AItoB: รันต่อได้ 100% บนเครือข่าย LAN ภายใน</span>
+                    <span class="font-mono text-brand font-bold">100% Uptime</span>
+                  </div>
+                  <div class="w-full h-2 bg-paper rounded-full overflow-hidden">
+                    <div class="compare-bar h-full bg-gradient-to-r from-brand to-accent-cyan rounded-full" data-width="100%" style="width: 100%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Metric 3 -->
+            <div class="bg-paper-subtle/90 p-3.5 rounded-xl border border-border-subtle">
+              <div class="flex justify-between items-center mb-2">
+                <span class="font-bold text-white">3. โครงสร้างค่าใช้จ่าย & การกั้นสิทธิ์ (Cost & RBAC)</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand/15 text-brand-light border border-brand/30">Fixed Capex + RBAC</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2.5 pt-1">
+                <div class="p-2.5 rounded-lg bg-paper border border-accent-crimson/30">
+                  <div class="text-[10px] font-mono text-accent-crimson uppercase font-bold">Public Cloud AI</div>
+                  <div class="text-slate-300 mt-1 text-[11px]">• จ่ายตาม Token ผันผวน</div>
+                  <div class="text-slate-400 text-[11px]">• ไม่มีระบบแยกสิทธิ์ไฟล์ในตัว</div>
+                </div>
+                <div class="p-2.5 rounded-lg bg-brand/10 border border-brand/40">
+                  <div class="text-[10px] font-mono text-brand-light uppercase font-bold">AItoB Sovereign</div>
+                  <div class="text-white font-semibold mt-1 text-[11px]">• ค่าฮาร์ดแวร์คงที่ ไม่คิด Token</div>
+                  <div class="text-brand-light text-[11px]">• มี RBAC Guard คุมสิทธิ์ไฟล์</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: 3-Year Cumulative Cost Graphic (Hidden by Default) -->
+          <div id="compare-panel-cost" class="hidden space-y-4 text-xs">
+            <div class="bg-paper-subtle p-4 rounded-xl border border-border-subtle">
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-bold text-white">เปรียบเทียบต้นทุนสะสม 3 ปี (สำหรับองค์กร 50-100 คน)</span>
+                <span class="text-[10px] font-mono text-brand bg-brand/10 px-2 py-0.5 rounded border border-brand/30">ประหยัดงบ 65%+</span>
+              </div>
+              <!-- Visual SVG Chart comparing Escalating Cloud Token Cost vs Flat AItoB Capex -->
+              <svg class="w-full h-44" viewBox="0 0 400 165" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Grid lines -->
+                <line x1="45" y1="25" x2="380" y2="25" stroke="#1f2d48" stroke-dasharray="3 3"/>
+                <line x1="45" y1="65" x2="380" y2="65" stroke="#1f2d48" stroke-dasharray="3 3"/>
+                <line x1="45" y1="105" x2="380" y2="105" stroke="#1f2d48" stroke-dasharray="3 3"/>
+                <line x1="45" y1="135" x2="380" y2="135" stroke="#334155" stroke-width="1.5"/>
+
+                <!-- Y-Axis Labels -->
+                <text x="40" y="28" text-anchor="end" fill="#64748b" font-family="JetBrains Mono" font-size="8">฿1.8M</text>
+                <text x="40" y="68" text-anchor="end" fill="#64748b" font-family="JetBrains Mono" font-size="8">฿1.2M</text>
+                <text x="40" y="108" text-anchor="end" fill="#64748b" font-family="JetBrains Mono" font-size="8">฿600k</text>
+                <text x="40" y="138" text-anchor="end" fill="#64748b" font-family="JetBrains Mono" font-size="8">฿0</text>
+
+                <!-- X-Axis Labels -->
+                <text x="100" y="152" text-anchor="middle" fill="#94a3b8" font-family="IBM Plex Sans Thai" font-size="9">ปีที่ 1</text>
+                <text x="215" y="152" text-anchor="middle" fill="#94a3b8" font-family="IBM Plex Sans Thai" font-size="9">ปีที่ 2</text>
+                <text x="330" y="152" text-anchor="middle" fill="#94a3b8" font-family="IBM Plex Sans Thai" font-size="9">ปีที่ 3</text>
+
+                <!-- Public Cloud Curve (Escalating Red) -->
+                <path d="M100 105 L215 65 L330 22" stroke="#f43f5e" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="100" cy="105" r="4" fill="#f43f5e"/>
+                <circle cx="215" cy="65" r="4" fill="#f43f5e"/>
+                <circle cx="330" cy="22" r="5" fill="#f43f5e"/>
+                <text x="325" y="14" text-anchor="end" fill="#fda4af" font-family="JetBrains Mono" font-size="8.5" font-weight="700">Public Cloud (ค่า Token สะสมพุ่งสูง)</text>
+
+                <!-- AItoB Curve (Flat Predictable Emerald) -->
+                <path d="M100 98 L215 88 L330 78" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="100" cy="98" r="4" fill="#10b981"/>
+                <circle cx="215" cy="88" r="4" fill="#10b981"/>
+                <circle cx="330" cy="78" r="5" fill="#10b981"/>
+                <text x="330" y="96" text-anchor="end" fill="#34d399" font-family="JetBrains Mono" font-size="8.5" font-weight="700">AItoB (ลงทุนครั้งเดียว ไม่คิดค่า Token)</text>
+              </svg>
+              <p class="text-[11px] text-slate-400 mt-2">
+                เมื่อจำนวนการใช้งานและพนักงานเพิ่มขึ้น ค่าใช้จ่ายของ AItoB จะคงที่และคาดการณ์ได้ 100% ในขณะที่ Cloud API คิดค่าใช้จ่ายตามปริมาณข้อความทุกครั้งที่ถาม
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="space-y-4 text-xs">
-          <div class="pb-3 border-b border-border/50">
-            <span class="text-slate-400 block mb-1">ความปลอดภัยของข้อมูล (Data Sovereignty)</span>
-            <div class="grid grid-cols-2 gap-2">
-              <span class="text-accent-crimson">Public Cloud: ส่งออกนอกผ่านเน็ต</span>
-              <span class="text-brand font-semibold">AItoB: อยู่ในเครื่อง 100%</span>
-            </div>
-          </div>
 
-          <div class="pb-3 border-b border-border/50">
-            <span class="text-slate-400 block mb-1">การทำงานขณะออฟไลน์ (Offline Readiness)</span>
-            <div class="grid grid-cols-2 gap-2">
-              <span class="text-accent-crimson">Public Cloud: หยุดทำงานทันที</span>
-              <span class="text-brand font-semibold">AItoB: รันต่อได้ 100%</span>
-            </div>
-          </div>
-
-          <div class="pb-3 border-b border-border/50">
-            <span class="text-slate-400 block mb-1">โครงสร้างค่าใช้จ่าย (Cost Predictability)</span>
-            <div class="grid grid-cols-2 gap-2">
-              <span class="text-accent-crimson">Public Cloud: จ่ายตาม Token ผันผวน</span>
-              <span class="text-brand font-semibold">AItoB: ค่าฮาร์ดแวร์คงที่ ไม่คิด Token</span>
-            </div>
-          </div>
-
-          <div>
-            <span class="text-slate-400 block mb-1">การกั้นสิทธิ์เข้าถึง (Internal RBAC)</span>
-            <div class="grid grid-cols-2 gap-2">
-              <span class="text-accent-crimson">Public Cloud: ไม่มีระบบแยกสิทธิ์ในตัว</span>
-              <span class="text-brand font-semibold">AItoB: มี RBAC Guard คุมสิทธิ์ไฟล์</span>
-            </div>
-          </div>
+        <div class="mt-4 pt-3 border-t border-border flex items-center justify-between text-[11px] font-mono text-slate-400">
+          <span>มาตรฐานความปลอดภัย: <strong class="text-white">ISO / PDPA Ready</strong></span>
+          <a href="#roi-calculator" class="text-brand hover:underline font-bold">คำนวณงบองค์กรของคุณ →</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ==================== 2. AITOB SOLUTION (STEPPED SYSTEM) ==================== -->
-  <section id="solution" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
-    <div class="max-w-3xl mb-12">
-      <div class="text-xs font-mono text-brand uppercase tracking-wider mb-2">Our Architecture</div>
+  <section id="solution" class="relative z-10 py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
+    <div class="max-w-3xl mb-12 reveal-on-scroll">
+      <div class="inline-flex items-center gap-2 text-xs font-mono text-brand uppercase tracking-wider mb-2 px-2.5 py-1 rounded bg-brand/10 border border-brand/30">
+        <span>02 · Our Architecture</span>
+      </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-display mb-4 leading-snug sm:leading-relaxed">
         วิเคราะห์ Pain Point และติดตั้ง Private Local AI ที่ตรงโจทย์องค์กร
       </h2>
@@ -307,87 +681,104 @@
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-paper-subtle p-6 rounded-2xl border border-border">
-        <div class="text-2xl font-bold font-mono text-brand mb-4">01</div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-on-scroll">
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border card-glow relative overflow-hidden">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-2xl font-bold font-mono text-brand bg-brand/10 border border-brand/30 w-11 h-11 rounded-xl flex items-center justify-center">01</div>
+          <span class="text-[10px] font-mono text-slate-400 uppercase">Step 1 · Audit</span>
+        </div>
         <h3 class="text-lg font-bold text-white mb-2 font-display">Pain Point Diagnosis</h3>
         <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
           สำรวจ Workflow Audit ชี้เป้าคอขวดในฝ่ายบัญชี จัดซื้อ และกฎหมาย ประเมินชุดข้อมูลและความเสี่ยง PDPA ก่อนเริ่มวางระบบ
         </p>
-        <div class="text-xs font-mono text-slate-300 space-y-1.5">
-          <div class="text-slate-400">• สรุปรายการ 3 use-cases ที่ให้ผลตอบแทนสูงสุด</div>
-          <div class="text-slate-400">• ประเมินชั้นความลับของไฟล์และฐานข้อมูล</div>
+        <div class="text-xs font-mono text-slate-300 space-y-1.5 pt-3 border-t border-border-subtle">
+          <div class="text-slate-300 flex items-center gap-2"><span class="text-brand">✓</span><span>สรุปรายการ 3 use-cases ที่ให้ผลตอบแทนสูงสุด</span></div>
+          <div class="text-slate-300 flex items-center gap-2"><span class="text-brand">✓</span><span>ประเมินชั้นความลับของไฟล์และฐานข้อมูล</span></div>
         </div>
       </div>
 
-      <div class="bg-paper-subtle p-6 rounded-2xl border border-border">
-        <div class="text-2xl font-bold font-mono text-accent-cyan mb-4">02</div>
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border card-glow relative overflow-hidden">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-2xl font-bold font-mono text-accent-cyan bg-accent-cyan/10 border border-accent-cyan/30 w-11 h-11 rounded-xl flex items-center justify-center">02</div>
+          <span class="text-[10px] font-mono text-slate-400 uppercase">Step 2 · Deploy</span>
+        </div>
         <h3 class="text-lg font-bold text-white mb-2 font-display">Tailored Local AI Appliance</h3>
         <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
           จัดเตรียมฮาร์ดแวร์ GPU Workstation / Server ที่ปรับจูนโมเดล Open-weight (DeepSeek, Llama, Qwen) รองรับภาษาไทยธุรกิจได้อย่างแม่นยำ
         </p>
-        <div class="text-xs font-mono text-slate-300 space-y-1.5">
-          <div class="text-slate-400">• Hardware Sizing พอดีกับ Concurrent Users</div>
-          <div class="text-slate-400">• Quantization & Fine-tuning ภาษาไทย</div>
+        <div class="text-xs font-mono text-slate-300 space-y-1.5 pt-3 border-t border-border-subtle">
+          <div class="text-slate-300 flex items-center gap-2"><span class="text-accent-cyan">✓</span><span>Hardware Sizing พอดีกับ Concurrent Users</span></div>
+          <div class="text-slate-300 flex items-center gap-2"><span class="text-accent-cyan">✓</span><span>Quantization & Fine-tuning ภาษาไทย</span></div>
         </div>
       </div>
 
-      <div class="bg-paper-subtle p-6 rounded-2xl border border-border">
-        <div class="text-2xl font-bold font-mono text-brand-light mb-4">03</div>
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border card-glow relative overflow-hidden">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-2xl font-bold font-mono text-brand-light bg-brand/10 border border-brand/30 w-11 h-11 rounded-xl flex items-center justify-center">03</div>
+          <span class="text-[10px] font-mono text-slate-400 uppercase">Step 3 · Automate</span>
+        </div>
         <h3 class="text-lg font-bold text-white mb-2 font-display">Enterprise RBAC & MCP Workflow</h3>
         <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
           วางระบบ Permission Guard และเชื่อมต่อระบบ ERP/SQL ด้วย Model Context Protocol (MCP) ให้ AI ลงมือปฏิบัติงานจริงแทนพนักงาน
         </p>
-        <div class="text-xs font-mono text-slate-300 space-y-1.5">
-          <div class="text-slate-400">• สิทธิ์การเข้าถึงไฟล์แยกตามบทบาทพนักงาน</div>
-          <div class="text-slate-400">• เชื่อมต่อ ERP, SQL, NAS แบบ Real-time</div>
+        <div class="text-xs font-mono text-slate-300 space-y-1.5 pt-3 border-t border-border-subtle">
+          <div class="text-slate-300 flex items-center gap-2"><span class="text-brand-light">✓</span><span>สิทธิ์การเข้าถึงไฟล์แยกตามบทบาทพนักงาน</span></div>
+          <div class="text-slate-300 flex items-center gap-2"><span class="text-brand-light">✓</span><span>เชื่อมต่อ ERP, SQL, NAS แบบ Real-time</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== 3. HOW IT WORKS (PIPELINE DISCOVERY) ==================== -->
-  <section id="how-it-works" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
-    <div class="max-w-3xl mb-12">
-      <div class="text-xs font-mono text-accent-cyan uppercase tracking-wider mb-2">5-Layer Engineering Pipeline</div>
+  <!-- ==================== 3. HOW IT WORKS (INTERACTIVE 5-LAYER PIPELINE) ==================== -->
+  <section id="how-it-works" class="relative z-10 py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
+    <div class="max-w-3xl mb-10 reveal-on-scroll">
+      <div class="inline-flex items-center gap-2 text-xs font-mono text-accent-cyan uppercase tracking-wider mb-2 px-2.5 py-1 rounded bg-accent-cyan/10 border border-accent-cyan/30">
+        <span>03 · 5-Layer Engineering Pipeline</span>
+      </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-display mb-4 leading-snug sm:leading-relaxed">
         สถาปัตยกรรม 5 ขั้นตอน: Hardware สู่ Autonomous Workflow
       </h2>
       <p class="text-slate-400 text-sm sm:text-base">
-        คลิกเลือกดูแต่ละชั้นของระบบ เพื่อดูรายละเอียดเชิงลึกของกระบวนการส่งต่อข้อมูลอย่างปลอดภัย
+        คลิกเลือกดูแต่ละชั้นของระบบ เพื่อดูรายละเอียดเชิงลึกและแผนผังการส่งต่อข้อมูลอย่างปลอดภัย
       </p>
     </div>
 
-    <!-- Stepper Buttons Bar -->
-    <div class="flex flex-wrap items-center gap-2 mb-8">
-      <button onclick="selectStep(1)" id="step-btn-1" class="step-btn px-4 py-2 rounded-xl text-xs font-semibold bg-brand text-slate-950 flex items-center space-x-2 transition">
-        <span class="font-mono">01</span>
-        <span>Hardware</span>
-      </button>
-      <span class="text-slate-600">→</span>
-      <button onclick="selectStep(2)" id="step-btn-2" class="step-btn px-4 py-2 rounded-xl text-xs font-semibold bg-surface text-slate-300 hover:bg-surface-raised flex items-center space-x-2 transition">
-        <span class="font-mono">02</span>
-        <span>Local AI</span>
-      </button>
-      <span class="text-slate-600">→</span>
-      <button onclick="selectStep(3)" id="step-btn-3" class="step-btn px-4 py-2 rounded-xl text-xs font-semibold bg-surface text-slate-300 hover:bg-surface-raised flex items-center space-x-2 transition">
-        <span class="font-mono">03</span>
-        <span>Permission (RBAC)</span>
-      </button>
-      <span class="text-slate-600">→</span>
-      <button onclick="selectStep(4)" id="step-btn-4" class="step-btn px-4 py-2 rounded-xl text-xs font-semibold bg-surface text-slate-300 hover:bg-surface-raised flex items-center space-x-2 transition">
-        <span class="font-mono">04</span>
-        <span>RAG / MCP</span>
-      </button>
-      <span class="text-slate-600">→</span>
-      <button onclick="selectStep(5)" id="step-btn-5" class="step-btn px-4 py-2 rounded-xl text-xs font-semibold bg-surface text-slate-300 hover:bg-surface-raised flex items-center space-x-2 transition">
-        <span class="font-mono">05</span>
-        <span>Workflow Automation</span>
-      </button>
+    <!-- Stepper Buttons Bar with Visual Progress Track -->
+    <div class="mb-8 reveal-on-scroll">
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <button onclick="selectStep(1)" id="step-btn-1" class="step-btn px-4 py-2.5 rounded-xl text-xs font-semibold bg-brand text-slate-950 flex items-center space-x-2 transition shadow-md">
+          <span class="font-mono font-bold">01</span>
+          <span>Hardware</span>
+        </button>
+        <span class="text-slate-600 hidden sm:inline">→</span>
+        <button onclick="selectStep(2)" id="step-btn-2" class="step-btn px-4 py-2.5 rounded-xl text-xs font-semibold bg-surface text-slate-300 hover:bg-surface-raised flex items-center space-x-2 transition">
+          <span class="font-mono font-bold">02</span>
+          <span>Local AI</span>
+        </button>
+        <span class="text-slate-600 hidden sm:inline">→</span>
+        <button onclick="selectStep(3)" id="step-btn-3" class="step-btn px-4 py-2.5 rounded-xl text-xs font-semibold bg-surface text-slate-300 hover:bg-surface-raised flex items-center space-x-2 transition">
+          <span class="font-mono font-bold">03</span>
+          <span>Permission (RBAC)</span>
+        </button>
+        <span class="text-slate-600 hidden sm:inline">→</span>
+        <button onclick="selectStep(4)" id="step-btn-4" class="step-btn px-4 py-2.5 rounded-xl text-xs font-semibold bg-surface text-slate-300 hover:bg-surface-raised flex items-center space-x-2 transition">
+          <span class="font-mono font-bold">04</span>
+          <span>RAG / MCP</span>
+        </button>
+        <span class="text-slate-600 hidden sm:inline">→</span>
+        <button onclick="selectStep(5)" id="step-btn-5" class="step-btn px-4 py-2.5 rounded-xl text-xs font-semibold bg-surface text-slate-300 hover:bg-surface-raised flex items-center space-x-2 transition">
+          <span class="font-mono font-bold">05</span>
+          <span>Workflow Automation</span>
+        </button>
+      </div>
+      <!-- Animated Pipeline Progress Bar -->
+      <div class="w-full h-1.5 bg-surface rounded-full overflow-hidden">
+        <div id="pipeline-progress-bar" class="h-full bg-gradient-to-r from-brand via-accent-cyan to-brand-light transition-all duration-300" style="width: 20%"></div>
+      </div>
     </div>
 
-    <!-- Dynamic Detail Box -->
-    <div class="bg-paper-subtle border border-border rounded-2xl p-6 sm:p-8">
+    <!-- Dynamic Detail Box with Visual Architecture Telemetry -->
+    <div class="bg-paper-subtle border border-border rounded-2xl p-6 sm:p-8 shadow-xl reveal-on-scroll">
       <div id="step-content">
         <!-- Rendered via JS -->
       </div>
@@ -395,9 +786,11 @@
   </section>
 
   <!-- ==================== DEMO VIDEO SECTION ==================== -->
-  <section id="demo-video" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
-    <div class="max-w-3xl mb-12">
-      <div class="text-xs font-mono text-brand uppercase tracking-wider mb-2">Video Demonstration</div>
+  <section id="demo-video" class="relative z-10 py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
+    <div class="max-w-3xl mb-12 reveal-on-scroll">
+      <div class="inline-flex items-center gap-2 text-xs font-mono text-brand uppercase tracking-wider mb-2 px-2.5 py-1 rounded bg-brand/10 border border-brand/30">
+        <span>Video Demonstration</span>
+      </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-display mb-4 leading-snug sm:leading-relaxed">
         วิดีโอสาธิตการทำงานจริงของระบบ Private Local AI ในองค์กร
       </h2>
@@ -407,13 +800,11 @@
     </div>
 
     <!-- Video Showcase Container -->
-    <div class="bg-paper-subtle border border-border rounded-2xl p-4 sm:p-6 shadow-2xl">
+    <div class="bg-paper-subtle border border-border rounded-2xl p-4 sm:p-6 shadow-2xl reveal-on-scroll">
       <!-- 16:9 Video Canvas Player -->
       <div class="relative w-full aspect-video bg-black rounded-xl overflow-hidden border border-border flex items-center justify-center group shadow-inner">
-        <!-- Interactive Video Frame / Embed -->
         <iframe id="video-frame" src="demo-video/index.html" class="w-full h-full border-0 pointer-events-auto" allow="autoplay"></iframe>
 
-        <!-- Video Overlay Header (Floating Tag) -->
         <div class="absolute top-4 left-4 z-20 pointer-events-none flex items-center space-x-2 bg-paper/80 backdrop-blur px-3 py-1.5 rounded-lg border border-border text-[11px] font-mono text-brand">
           <span class="w-2 h-2 rounded-full bg-brand animate-ping"></span>
           <span>AItoB Video Demo · HyperFrames Composition (1080p 60fps)</span>
@@ -429,25 +820,25 @@
 
       <!-- Chapter Quick Selectors -->
       <div class="mt-6 grid grid-cols-1 sm:grid-cols-4 gap-3">
-        <button onclick="seekVideoChapter(0)" class="chapter-btn p-3 rounded-xl border border-brand bg-brand/10 text-left transition text-xs">
+        <button onclick="seekVideoChapter(0)" class="chapter-btn p-3.5 rounded-xl border border-brand bg-brand/10 text-left transition text-xs card-glow">
           <span class="text-brand font-mono font-bold block mb-0.5">00:00 · ภาพรวม</span>
           <span class="text-slate-200 font-semibold block">สถาปัตยกรรม Air-Gapped</span>
           <span class="text-[11px] text-slate-400 block mt-1">Zero Data Egress 100%</span>
         </button>
 
-        <button onclick="seekVideoChapter(5)" class="chapter-btn p-3 rounded-xl border border-border bg-surface hover:bg-surface-raised text-left transition text-xs">
+        <button onclick="seekVideoChapter(5)" class="chapter-btn p-3.5 rounded-xl border border-border bg-surface hover:bg-surface-raised text-left transition text-xs card-glow">
           <span class="text-accent-cyan font-mono font-bold block mb-0.5">00:05 · แผนกบัญชี</span>
           <span class="text-slate-200 font-semibold block">กระทบยอดบิลใน 1.8 วิ</span>
           <span class="text-[11px] text-slate-400 block mt-1">ตรวจ 1,420 ใบเสร็จเทียบ ERP</span>
         </button>
 
-        <button onclick="seekVideoChapter(10)" class="chapter-btn p-3 rounded-xl border border-border bg-surface hover:bg-surface-raised text-left transition text-xs">
+        <button onclick="seekVideoChapter(10)" class="chapter-btn p-3.5 rounded-xl border border-border bg-surface hover:bg-surface-raised text-left transition text-xs card-glow">
           <span class="text-accent-amber font-mono font-bold block mb-0.5">00:10 · แผนก HR</span>
           <span class="text-slate-200 font-semibold block">ปกป้องความลับเงินเดือน</span>
           <span class="text-[11px] text-slate-400 block mt-1">RBAC Guard คุมสิทธิ์ 100%</span>
         </button>
 
-        <button onclick="seekVideoChapter(15)" class="chapter-btn p-3 rounded-xl border border-border bg-surface hover:bg-surface-raised text-left transition text-xs">
+        <button onclick="seekVideoChapter(15)" class="chapter-btn p-3.5 rounded-xl border border-border bg-surface hover:bg-surface-raised text-left transition text-xs card-glow">
           <span class="text-accent-crimson font-mono font-bold block mb-0.5">00:15 · จัดซื้อ/สัญญา</span>
           <span class="text-slate-200 font-semibold block">สแกนสัญญา 68 หน้า</span>
           <span class="text-[11px] text-slate-400 block mt-1">จับจุดเสี่ยงข้อกฎหมาย PDPA</span>
@@ -457,19 +848,21 @@
   </section>
 
   <!-- ==================== 4. PROTOTYPE & ROI SIMULATOR ==================== -->
-  <section id="prototype" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
-    <div class="max-w-3xl mb-12">
-      <div class="text-xs font-mono text-brand uppercase tracking-wider mb-2">Live Demonstration</div>
+  <section id="prototype" class="relative z-10 py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
+    <div class="max-w-3xl mb-12 reveal-on-scroll">
+      <div class="inline-flex items-center gap-2 text-xs font-mono text-brand uppercase tracking-wider mb-2 px-2.5 py-1 rounded bg-brand/10 border border-brand/30">
+        <span>04 · Live Demonstration</span>
+      </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-display mb-4 leading-snug sm:leading-relaxed">
         แสดงของจริง: AI ทำงานอย่างไร และประหยัดเวลาองค์กรได้แค่ไหน
       </h2>
       <p class="text-slate-400 text-sm sm:text-base">
-        เลือกกรณีจำลองการทำงานของโหนดในองค์กร เพื่อดู Log และผลลัพธ์การทำงานแบบ Zero Cloud Egress
+        เลือกกรณีจำลองการทำงานของโหนดในองค์กร เพื่อดู Log และกราฟเปรียบเทียบความเร็วแบบ Zero Cloud Egress
       </p>
     </div>
 
     <!-- Simulator Terminal Layout -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16 reveal-on-scroll">
       <!-- Scenario Selector Buttons -->
       <div class="lg:col-span-5 space-y-3">
         <div class="text-xs font-mono text-slate-400 mb-2 uppercase tracking-wider">Select Department Scenario:</div>
@@ -477,7 +870,7 @@
         <button onclick="runScenario('finance')" data-scenario="finance" class="scenario-btn w-full text-left p-4 rounded-xl border border-brand bg-brand/10 transition block">
           <div class="flex items-center justify-between mb-1">
             <span class="font-bold text-white text-sm">แผนกบัญชีและการเงิน</span>
-            <span class="text-[10px] font-mono bg-brand text-slate-950 font-bold px-2 py-0.5 rounded">RUNNING</span>
+            <span class="scenario-badge text-[10px] font-mono bg-brand text-slate-950 font-bold px-2 py-0.5 rounded">RUNNING</span>
           </div>
           <p class="text-xs text-slate-300">กระทบยอดบิล & สรุปตัวเลขกำไร Q3 จากไฟล์ Excel และ ERP</p>
         </button>
@@ -485,7 +878,7 @@
         <button onclick="runScenario('hr')" data-scenario="hr" class="scenario-btn w-full text-left p-4 rounded-xl border border-border bg-paper-subtle hover:bg-surface transition block">
           <div class="flex items-center justify-between mb-1">
             <span class="font-bold text-white text-sm">แผนกทรัพยากรบุคคล (HR)</span>
-            <span class="text-[10px] font-mono bg-surface text-slate-300 font-bold px-2 py-0.5 rounded">SELECT</span>
+            <span class="scenario-badge text-[10px] font-mono bg-surface text-slate-300 font-bold px-2 py-0.5 rounded">SELECT</span>
           </div>
           <p class="text-xs text-slate-400">ตรวจสิทธิ์การเข้าถึงข้อมูลฐานเงินเดือน (RBAC Protection Test)</p>
         </button>
@@ -493,7 +886,7 @@
         <button onclick="runScenario('legal')" data-scenario="legal" class="scenario-btn w-full text-left p-4 rounded-xl border border-border bg-paper-subtle hover:bg-surface transition block">
           <div class="flex items-center justify-between mb-1">
             <span class="font-bold text-white text-sm">ฝ่ายจัดซื้อและสัญญา</span>
-            <span class="text-[10px] font-mono bg-surface text-slate-300 font-bold px-2 py-0.5 rounded">SELECT</span>
+            <span class="scenario-badge text-[10px] font-mono bg-surface text-slate-300 font-bold px-2 py-0.5 rounded">SELECT</span>
           </div>
           <p class="text-xs text-slate-400">ตรวจร่างสัญญาคู่ค้า 68 หน้า พร้อมจับจุดเสี่ยงข้อกฎหมาย PDPA</p>
         </button>
@@ -504,73 +897,143 @@
         </div>
       </div>
 
-      <!-- Real Terminal View -->
-      <div class="lg:col-span-7 bg-black/60 border border-border rounded-xl p-5 font-mono text-xs">
+      <!-- Real Terminal View + Speed Comparison Graphic -->
+      <div class="lg:col-span-7 bg-black/75 border border-border rounded-2xl p-5 font-mono text-xs shadow-2xl">
         <div class="flex items-center justify-between pb-3 mb-4 border-b border-border-subtle text-slate-400">
-          <span class="text-slate-300 font-semibold">node-01@local-appliance [AIR-GAPPED]</span>
-          <span class="text-[10px] text-brand px-1.5 py-0.5 rounded bg-surface border border-border">AUDIT SECURE</span>
+          <div class="flex items-center space-x-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+            <span class="text-slate-300 font-semibold ml-1">node-01@local-appliance [AIR-GAPPED]</span>
+          </div>
+          <span class="text-[10px] text-brand px-2 py-0.5 rounded bg-brand/10 border border-brand/30">AUDIT SECURE</span>
         </div>
 
-        <div id="terminal-output" class="space-y-2.5 min-h-[160px] text-slate-300">
+        <div id="terminal-output" class="space-y-2.5 min-h-[175px] text-slate-300">
           <!-- Terminal stream populated by JS -->
         </div>
 
-        <div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-[11px] text-slate-400">
-          <span>Egress to internet: <strong class="text-brand">0 KB (Blocked)</strong></span>
-          <span>Time: <span class="line-through text-slate-500">45 นาที</span> → <strong class="text-brand">3 วินาที</strong></span>
+        <!-- Visual Speed Benchmark Bar Inside Terminal -->
+        <div class="mt-4 pt-3 border-t border-border-subtle bg-paper-subtle/90 rounded-xl p-3">
+          <div class="flex items-center justify-between text-[11px] mb-2">
+            <span class="text-slate-400">เปรียบเทียบเวลาประมวลผลงานนี้:</span>
+            <span id="sim-speedup-badge" class="text-brand font-bold">เร็วขึ้น 99.8% (Zero Cloud Egress)</span>
+          </div>
+          <div class="space-y-1.5 text-[10px]">
+            <div class="flex items-center gap-2">
+              <span class="w-24 text-slate-400">คนทำแบบเดิม:</span>
+              <div class="flex-1 h-2 bg-surface rounded-full overflow-hidden">
+                <div class="h-full bg-slate-500 w-full"></div>
+              </div>
+              <span id="sim-manual-time" class="w-16 text-right text-slate-400">45 นาที</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-24 text-brand font-bold">AItoB Node:</span>
+              <div class="flex-1 h-2 bg-surface rounded-full overflow-hidden">
+                <div class="h-full bg-brand w-[6%]"></div>
+              </div>
+              <span id="sim-ai-time" class="w-16 text-right text-brand font-bold">1.8 วินาที</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== ROI CALCULATOR ==================== -->
-    <div id="roi-calculator" class="bg-paper-subtle border border-border rounded-2xl p-6 sm:p-10 max-w-4xl mx-auto">
-      <div class="max-w-xl mb-8">
-        <div class="text-xs font-mono text-brand uppercase tracking-wider mb-1">Interactive Financial Model</div>
-        <h3 class="text-2xl font-bold text-white font-display">คำนวณความคุ้มค่าและผลตอบแทน (ROI Calculator)</h3>
-        <p class="text-xs text-slate-400 mt-1">ประเมินมูลค่าเวลาและงบประมาณที่ประหยัดได้ต่อปีจากการแทนที่งานเอกสารซ้ำซ้อน</p>
+    <!-- ==================== ROI CALCULATOR WITH VISUAL BAR COMPARISON ==================== -->
+    <div id="roi-calculator" class="bg-paper-subtle border border-border rounded-2xl p-6 sm:p-10 max-w-5xl mx-auto shadow-2xl reveal-on-scroll">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+        <div>
+          <div class="text-xs font-mono text-brand uppercase tracking-wider mb-1">Interactive Financial Model</div>
+          <h3 class="text-2xl font-bold text-white font-display">คำนวณความคุ้มค่าและผลตอบแทน (ROI Calculator)</h3>
+          <p class="text-xs text-slate-400 mt-1">ประเมินมูลค่าเวลาและงบประมาณที่ประหยัดได้ต่อปีจากการแทนที่งานเอกสารซ้ำซ้อน</p>
+        </div>
+        <div class="text-xs font-mono text-brand-light bg-brand/10 border border-brand/30 px-3 py-1.5 rounded-lg">
+          สมมติฐานลดเวลางานเอกสารซ้ำซ้อน 80%
+        </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <!-- Input Sliders -->
-        <div class="md:col-span-7 space-y-6">
-          <div>
+        <div class="lg:col-span-6 space-y-6">
+          <div class="bg-surface/60 p-4 rounded-xl border border-border-subtle">
             <div class="flex justify-between text-xs font-medium mb-2">
               <span class="text-slate-300">จำนวนพนักงานที่ทำงานเอกสาร/ข้อมูล</span>
-              <span id="label-employees" class="font-mono text-brand font-bold">20 คน</span>
+              <span id="label-employees" class="font-mono text-brand font-bold text-sm">20 คน</span>
             </div>
-            <input type="range" id="input-employees" min="5" max="200" step="5" value="20" class="w-full h-1.5 bg-surface rounded appearance-none cursor-pointer accent-brand" oninput="calculateROI()">
+            <input type="range" id="input-employees" min="5" max="200" step="5" value="20" class="w-full h-1.5 bg-paper rounded appearance-none cursor-pointer accent-brand" oninput="calculateROI()">
+            <div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
+              <span>5 คน (SME)</span>
+              <span>100 คน</span>
+              <span>200 คน (Enterprise)</span>
+            </div>
           </div>
 
-          <div>
+          <div class="bg-surface/60 p-4 rounded-xl border border-border-subtle">
             <div class="flex justify-between text-xs font-medium mb-2">
               <span class="text-slate-300">เวลาทำงานซ้ำซ้อนต่อคน / วัน (ชั่วโมง)</span>
-              <span id="label-hours" class="font-mono text-brand font-bold">3 ชั่วโมง</span>
+              <span id="label-hours" class="font-mono text-brand font-bold text-sm">3 ชั่วโมง</span>
             </div>
-            <input type="range" id="input-hours" min="1" max="6" step="0.5" value="3" class="w-full h-1.5 bg-surface rounded appearance-none cursor-pointer accent-brand" oninput="calculateROI()">
+            <input type="range" id="input-hours" min="1" max="6" step="0.5" value="3" class="w-full h-1.5 bg-paper rounded appearance-none cursor-pointer accent-brand" oninput="calculateROI()">
+            <div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
+              <span>1 ชม./วัน</span>
+              <span>3.5 ชม./วัน</span>
+              <span>6 ชม./วัน</span>
+            </div>
           </div>
 
-          <div>
+          <div class="bg-surface/60 p-4 rounded-xl border border-border-subtle">
             <div class="flex justify-between text-xs font-medium mb-2">
               <span class="text-slate-300">เงินเดือนเฉลี่ยต่อคน (บาท)</span>
-              <span id="label-salary" class="font-mono text-brand font-bold">35,000 บาท</span>
+              <span id="label-salary" class="font-mono text-brand font-bold text-sm">35,000 บาท</span>
             </div>
-            <input type="range" id="input-salary" min="20000" max="100000" step="5000" value="35000" class="w-full h-1.5 bg-surface rounded appearance-none cursor-pointer accent-brand" oninput="calculateROI()">
+            <input type="range" id="input-salary" min="20000" max="100000" step="5000" value="35000" class="w-full h-1.5 bg-paper rounded appearance-none cursor-pointer accent-brand" oninput="calculateROI()">
+            <div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
+              <span>฿20,000</span>
+              <span>฿60,000</span>
+              <span>฿100,000</span>
+            </div>
           </div>
         </div>
 
-        <!-- Calculated Summary Box -->
-        <div class="md:col-span-5 bg-surface border border-border rounded-xl p-6 text-center space-y-4">
-          <div>
-            <span class="text-xs text-slate-400 block">เวลาที่ประหยัดได้ต่อเดือน</span>
-            <div id="res-hours" class="text-2xl sm:text-3xl font-extrabold text-white font-mono mt-1 tabular-nums">960 ชั่วโมง</div>
+        <!-- Calculated Summary Box + Visual Cost vs Savings Graphic -->
+        <div class="lg:col-span-6 bg-surface border border-border rounded-2xl p-6 space-y-5">
+          <div class="grid grid-cols-2 gap-4 text-center">
+            <div class="bg-paper-subtle p-4 rounded-xl border border-border-subtle">
+              <span class="text-xs text-slate-400 block">เวลาที่ประหยัดได้ต่อเดือน</span>
+              <div id="res-hours" class="text-xl sm:text-2xl font-extrabold text-white font-mono mt-1 tabular-nums">960 ชั่วโมง</div>
+            </div>
+            <div class="bg-paper-subtle p-4 rounded-xl border border-brand/40">
+              <span class="text-xs text-slate-400 block">ระยะเวลาคืนทุน (Payback)</span>
+              <div id="res-payback" class="text-xl sm:text-2xl font-extrabold text-brand-light font-mono mt-1 tabular-nums">~ 1.5 เดือน</div>
+            </div>
           </div>
-          <div class="border-t border-border pt-3">
-            <span class="text-xs text-slate-400 block">มูลค่าที่ประหยัดได้ต่อปี</span>
+
+          <div class="bg-paper-subtle p-4 rounded-xl border border-border-subtle text-center">
+            <span class="text-xs text-slate-400 block">มูลค่าต้นทุนเวลาที่ประหยัดได้ต่อปี</span>
             <div id="res-savings" class="text-2xl sm:text-3xl font-extrabold text-brand font-mono mt-1 tabular-nums">2,016,000 บาท</div>
           </div>
-          <div class="border-t border-border pt-3 flex justify-between items-center text-xs">
-            <span class="text-slate-400">ระยะเวลาคืนทุน:</span>
-            <span id="res-payback" class="font-mono font-bold text-slate-200 tabular-nums">~ 2.1 เดือน</span>
+
+          <!-- Visual Bar Comparison: Hardware Investment vs Annual Savings -->
+          <div class="pt-2 space-y-3 text-xs">
+            <div class="text-[11px] font-mono text-slate-400 uppercase">กราฟเปรียบเทียบเงินลงทุนเริ่มต้น vs. มูลค่าที่ประหยัดได้ใน 1 ปี</div>
+            <div>
+              <div class="flex justify-between text-[11px] mb-1">
+                <span class="text-slate-300">งบลงทุนเริ่มต้น Turnkey Appliance</span>
+                <span class="font-mono text-slate-300">฿249,000</span>
+              </div>
+              <div class="w-full h-2.5 bg-paper rounded-full overflow-hidden">
+                <div id="bar-capex" class="h-full bg-accent-cyan rounded-full transition-all duration-300" style="width: 15%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-[11px] mb-1">
+                <span class="text-brand-light font-semibold">มูลค่าที่องค์กรประหยัดได้ต่อปี (Annual Savings)</span>
+                <span id="bar-savings-label" class="font-mono text-brand font-bold">฿2,016,000</span>
+              </div>
+              <div class="w-full h-2.5 bg-paper rounded-full overflow-hidden">
+                <div id="bar-savings" class="h-full bg-gradient-to-r from-brand to-brand-light rounded-full transition-all duration-300" style="width: 100%"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -591,7 +1054,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- ai-account Card -->
-          <div class="bg-surface p-4 rounded-xl border border-border flex flex-col justify-between">
+          <div class="bg-surface p-4 rounded-xl border border-border card-glow flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <span class="text-[11px] font-mono text-cyan-400 font-bold bg-cyan-500/10 border border-cyan-500/20 px-2 py-0.5 rounded">ai-account · Port 3001</span>
@@ -612,7 +1075,7 @@
           </div>
 
           <!-- ai-chat Card -->
-          <div class="bg-surface p-4 rounded-xl border border-border flex flex-col justify-between">
+          <div class="bg-surface p-4 rounded-xl border border-border card-glow flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <span class="text-[11px] font-mono text-amber-400 font-bold bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">ai-chat · Port 3000</span>
@@ -636,10 +1099,12 @@
     </div>
   </section>
 
-  <!-- ==================== DEPARTMENT HUBS (SEPARATE WEBSITES) ==================== -->
-  <section id="departments" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
-    <div class="max-w-3xl mb-12">
-      <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-2">Dedicated Department Solutions</div>
+  <!-- ==================== 5. DEPARTMENT HUBS (SEPARATE WEBSITES) ==================== -->
+  <section id="departments" class="relative z-10 py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
+    <div class="max-w-3xl mb-12 reveal-on-scroll">
+      <div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-wider mb-2 px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30">
+        <span>05 · Dedicated Department Solutions</span>
+      </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-display mb-4 leading-snug sm:leading-relaxed">
         เว็บไซต์เฉพาะทางแยกตามแต่ละแผนกในองค์กร
       </h2>
@@ -648,9 +1113,9 @@
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 reveal-on-scroll">
       <!-- Finance Hub Card -->
-      <div class="bg-paper-subtle p-5 rounded-2xl border border-border hover:border-brand transition flex flex-col justify-between">
+      <div class="bg-paper-subtle p-5 rounded-2xl border border-border card-glow flex flex-col justify-between">
         <div>
           <div class="w-10 h-10 rounded-xl bg-surface border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-3">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -674,7 +1139,7 @@
       </div>
 
       <!-- Customer Ops & Omni-Channel Hub Card -->
-      <div class="bg-paper-subtle p-5 rounded-2xl border border-border hover:border-brand transition flex flex-col justify-between">
+      <div class="bg-paper-subtle p-5 rounded-2xl border border-border card-glow flex flex-col justify-between">
         <div>
           <div class="w-10 h-10 rounded-xl bg-surface border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-3">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
@@ -694,7 +1159,7 @@
       </div>
 
       <!-- HR Hub Card -->
-      <div class="bg-paper-subtle p-5 rounded-2xl border border-border hover:border-brand transition flex flex-col justify-between">
+      <div class="bg-paper-subtle p-5 rounded-2xl border border-border card-glow flex flex-col justify-between">
         <div>
           <div class="w-10 h-10 rounded-xl bg-surface border border-amber-500/30 flex items-center justify-center text-amber-400 mb-3">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
@@ -714,7 +1179,7 @@
       </div>
 
       <!-- Legal Hub Card -->
-      <div class="bg-paper-subtle p-5 rounded-2xl border border-border hover:border-brand transition flex flex-col justify-between">
+      <div class="bg-paper-subtle p-5 rounded-2xl border border-border card-glow flex flex-col justify-between">
         <div>
           <div class="w-10 h-10 rounded-xl bg-surface border border-rose-500/30 flex items-center justify-center text-rose-400 mb-3">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -735,10 +1200,12 @@
     </div>
   </section>
 
-  <!-- ==================== 5. BUSINESS & VISION ==================== -->
-  <section id="business" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
-    <div class="max-w-3xl mb-12">
-      <div class="text-xs font-mono text-accent-amber uppercase tracking-wider mb-2">Commercial Model & Strategy</div>
+  <!-- ==================== 6. BUSINESS & VISION ==================== -->
+  <section id="business" class="relative z-10 py-20 px-4 sm:px-6 max-w-7xl mx-auto border-b border-border-subtle">
+    <div class="max-w-3xl mb-12 reveal-on-scroll">
+      <div class="inline-flex items-center gap-2 text-xs font-mono text-accent-amber uppercase tracking-wider mb-2 px-2.5 py-1 rounded bg-accent-amber/10 border border-accent-amber/30">
+        <span>06 · Commercial Model & Strategy</span>
+      </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4" style="font-family: 'IBM Plex Sans Thai', sans-serif !important; line-height: 1.6 !important; letter-spacing: 0.02em !important; font-weight: 700 !important; display: block;">
         ลูกค้าจ่ายอะไร ทำไมต้องเลือก AItoB <br class="hidden sm:inline">และก้าวต่อไปในอนาคต
       </h2>
@@ -748,8 +1215,8 @@
     </div>
 
     <!-- 3 Pricing Tiers (Clean Structural Hierarchy) -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-      <div class="bg-paper-subtle p-6 rounded-2xl border border-border flex flex-col justify-between">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 reveal-on-scroll">
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border card-glow flex flex-col justify-between">
         <div>
           <div class="text-xs font-mono text-slate-400 uppercase mb-2">Phase 1</div>
           <h3 class="text-base font-bold text-white mb-1 font-display">Audit & Architecture Blueprint</h3>
@@ -767,7 +1234,7 @@
       </div>
 
       <!-- Highlighted Core Deployment -->
-      <div class="bg-surface p-6 rounded-2xl border-2 border-brand flex flex-col justify-between shadow-md">
+      <div class="bg-surface p-6 rounded-2xl border-2 border-brand card-glow flex flex-col justify-between shadow-[0_0_30px_rgba(16,185,129,0.15)]">
         <div>
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-mono text-brand font-bold uppercase">Phase 2 · Complete Turnkey</span>
@@ -788,7 +1255,7 @@
         </a>
       </div>
 
-      <div class="bg-paper-subtle p-6 rounded-2xl border border-border flex flex-col justify-between">
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border card-glow flex flex-col justify-between">
         <div>
           <div class="text-xs font-mono text-slate-400 uppercase mb-2">Phase 3</div>
           <h3 class="text-base font-bold text-white mb-1 font-display">Enterprise Care & Tuning</h3>
@@ -807,20 +1274,20 @@
     </div>
 
     <!-- Moat & Roadmap Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start reveal-on-scroll">
       <!-- Defensibility -->
-      <div class="bg-paper-subtle p-6 rounded-xl border border-border">
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border card-glow">
         <h3 class="text-base font-bold text-white mb-4 font-display">ทำไมต้องเลือก AItoB (Competitive Moat)</h3>
         <div class="space-y-4 text-xs">
-          <div>
-            <strong class="text-white block font-sans">1. Sovereign Data Guarantee:</strong>
+          <div class="p-3 rounded-xl bg-surface/60 border border-border-subtle">
+            <strong class="text-brand-light block font-sans">1. Sovereign Data Guarantee:</strong>
             <p class="text-slate-400 mt-0.5">การันตีในสัญญานิติบุคคลและ Audit Trail ว่าไม่มีข้อมูลใดถูกส่งออกนอกเครือข่ายของบริษัท</p>
           </div>
-          <div>
-            <strong class="text-white block font-sans">2. Thai Language Enterprise Tuning:</strong>
+          <div class="p-3 rounded-xl bg-surface/60 border border-border-subtle">
+            <strong class="text-accent-cyan block font-sans">2. Thai Language Enterprise Tuning:</strong>
             <p class="text-slate-400 mt-0.5">จูนคำศัพท์เฉพาะทางด้านบัญชี นิติกรรม และข้อบังคับราชการไทยโดยเฉพาะ</p>
           </div>
-          <div>
+          <div class="p-3 rounded-xl bg-surface/60 border border-border-subtle">
             <strong class="text-white block font-sans">3. Complete Turnkey Engineering:</strong>
             <p class="text-slate-400 mt-0.5">ดูแลตั้งแต่การจัดหาฮาร์ดแวร์ ติดตั้ง RAG เชื่อมต่อระบบ ERP ไปจนถึงการอบรมพนักงาน</p>
           </div>
@@ -828,18 +1295,21 @@
       </div>
 
       <!-- Roadmap -->
-      <div class="bg-paper-subtle p-6 rounded-xl border border-border">
+      <div class="bg-paper-subtle p-6 rounded-2xl border border-border card-glow">
         <h3 class="text-base font-bold text-white mb-4 font-display">วิสัยทัศน์และการพัฒนาต่อยอด (Roadmap)</h3>
         <div class="space-y-4 text-xs font-mono">
-          <div class="border-l-2 border-brand pl-3">
+          <div class="border-l-2 border-brand pl-4 py-1 relative">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand absolute -left-[6px] top-2"></span>
             <span class="text-brand font-bold">2026: The Knowledge Appliance</span>
             <p class="text-slate-400 mt-0.5 font-sans">เปลี่ยนคลังเอกสารลับและฐานข้อมูล SQL ภายในให้กลายเป็น Local Agent ประจำแผนก</p>
           </div>
-          <div class="border-l-2 border-accent-cyan pl-3">
+          <div class="border-l-2 border-accent-cyan pl-4 py-1 relative">
+            <span class="w-2.5 h-2.5 rounded-full bg-accent-cyan absolute -left-[6px] top-2"></span>
             <span class="text-accent-cyan font-bold">2027: Autonomous Multi-Agent Mesh</span>
             <p class="text-slate-400 mt-0.5 font-sans">ขยายสู่ระบบ AI ตัวแทนประสานงานข้ามแผนก เช่น การกระทบยอดบิลสั่งซื้อใน ERP โดยคนเพียงแค่กดอนุมัติ</p>
           </div>
-          <div class="border-l-2 border-slate-600 pl-3">
+          <div class="border-l-2 border-slate-600 pl-4 py-1 relative">
+            <span class="w-2.5 h-2.5 rounded-full bg-slate-500 absolute -left-[6px] top-2"></span>
             <span class="text-slate-300 font-bold">2028: Federated Sovereign Enterprise</span>
             <p class="text-slate-400 mt-0.5 font-sans">เชื่อมโยงโหนด AI ระหว่างสาขาและสำนักงานใหญ่ด้วยเทคโนโลยี Zero-knowledge Encrypted Federation</p>
           </div>
@@ -858,7 +1328,7 @@
       </div>
       <div class="flex items-center space-x-4">
         <span id="deck-counter" class="text-xs text-slate-400 font-mono">Slide 1 / 6</span>
-        <button id="btn-close-deck" class="text-slate-400 hover:text-white px-2 py-1 rounded bg-surface text-xs font-mono border border-border">
+        <button id="btn-close-deck" class="text-slate-400 hover:text-white px-2.5 py-1 rounded bg-surface text-xs font-mono border border-border">
           ✕ ปิด (Esc)
         </button>
       </div>
@@ -987,7 +1457,7 @@
   </div>
 
   <!-- ==================== FOOTER ==================== -->
-  <footer id="contact" class="py-16 px-4 sm:px-6 max-w-7xl mx-auto">
+  <footer id="contact" class="relative z-10 py-16 px-4 sm:px-6 max-w-7xl mx-auto">
     <div class="border-t border-border-subtle pt-12 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
       <div class="flex items-center space-x-3">
         <div class="w-6 h-6 rounded-lg bg-surface border border-brand/40 flex items-center justify-center text-brand">
@@ -1009,13 +1479,100 @@
 
   <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   <script>
-    // 1. Pipeline Steps Data
+    // 0. Mobile Menu Drawer Toggle & Auto-Close
+    const btnMobileMenu = document.getElementById('btn-mobile-menu');
+    const mobileMenuDrawer = document.getElementById('mobile-menu-drawer');
+    const iconMenuOpen = document.getElementById('icon-menu-open');
+    const iconMenuClose = document.getElementById('icon-menu-close');
+    let isMobileMenuOpen = false;
+
+    function toggleMobileMenu(forceState) {
+      isMobileMenuOpen = typeof forceState === 'boolean' ? forceState : !isMobileMenuOpen;
+      btnMobileMenu.setAttribute('aria-expanded', isMobileMenuOpen);
+      if (isMobileMenuOpen) {
+        mobileMenuDrawer.classList.remove('hidden');
+        iconMenuOpen.classList.add('hidden');
+        iconMenuClose.classList.remove('hidden');
+        if (window.anime) {
+          anime({
+            targets: '#mobile-menu-drawer',
+            opacity: [0, 1],
+            translateY: [-10, 0],
+            duration: 240,
+            easing: 'easeOutCubic'
+          });
+        }
+      } else {
+        mobileMenuDrawer.classList.add('hidden');
+        iconMenuOpen.classList.remove('hidden');
+        iconMenuClose.classList.add('hidden');
+      }
+    }
+
+    if (btnMobileMenu) {
+      btnMobileMenu.addEventListener('click', () => toggleMobileMenu());
+    }
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => toggleMobileMenu(false));
+    });
+
+    // Interactive Hero Air-Gap Toggle
+    let airgapIsolated = true;
+    function toggleAirGapDemo() {
+      airgapIsolated = !airgapIsolated;
+      const label = document.getElementById('airgap-btn-label');
+      const banner = document.getElementById('airgap-status-banner');
+      const nodeStatus = document.getElementById('svg-node-status');
+
+      if (airgapIsolated) {
+        label.innerText = 'โหมด: ตัดสายอินเทอร์เน็ต (Air-Gap)';
+        banner.innerHTML = '<span class="text-brand-light">✓ สถานะ: ตัดการเชื่อมต่ออินเทอร์เน็ตภายนอก 100%</span><span class="text-white font-bold">AI ทำงานได้ปกติ</span>';
+        nodeStatus.textContent = '● AIR-GAP ACTIVE (22ms)';
+      } else {
+        label.innerText = 'โหมด: LAN Intranet Guard';
+        banner.innerHTML = '<span class="text-accent-cyan">✓ สถานะ: เชื่อมต่อเฉพาะ LAN ภายในองค์กร (Firewall Block ขาออก)</span><span class="text-white font-bold">0 KB Egress</span>';
+        nodeStatus.textContent = '● INTRANET ONLY (22ms)';
+      }
+    }
+
+    // Comparison Card Tab Switcher (Scorecard vs 3-Year Cost Chart)
+    function switchCompareTab(tab) {
+      const btnScorecard = document.getElementById('tab-btn-scorecard');
+      const btnCost = document.getElementById('tab-btn-cost');
+      const panelScorecard = document.getElementById('compare-panel-scorecard');
+      const panelCost = document.getElementById('compare-panel-cost');
+
+      if (tab === 'scorecard') {
+        btnScorecard.className = 'compare-tab-btn px-2.5 py-1 rounded-lg bg-brand text-slate-950 font-bold transition';
+        btnCost.className = 'compare-tab-btn px-2.5 py-1 rounded-lg text-slate-300 hover:text-white transition';
+        panelScorecard.classList.remove('hidden');
+        panelCost.classList.add('hidden');
+      } else {
+        btnCost.className = 'compare-tab-btn px-2.5 py-1 rounded-lg bg-brand text-slate-950 font-bold transition';
+        btnScorecard.className = 'compare-tab-btn px-2.5 py-1 rounded-lg text-slate-300 hover:text-white transition';
+        panelCost.classList.remove('hidden');
+        panelScorecard.classList.add('hidden');
+        if (window.anime) {
+          anime({
+            targets: '#compare-panel-cost',
+            opacity: [0, 1],
+            translateY: [8, 0],
+            duration: 280,
+            easing: 'easeOutQuad'
+          });
+        }
+      }
+    }
+
+    // 1. Pipeline Steps Data with Visual Telemetry Metrics
     const stepsData = {
       1: {
         title: "1. Hardware Selection & Sizing",
         subtitle: "เลือกขนาดฮาร์ดแวร์ให้เหมาะสมกับจำนวนพนักงานและขนาดโมเดล",
         desc: "ประเมินจำนวน Concurrent Users และขนาดโมเดล เพื่อเลือกฮาร์ดแวร์ที่คุ้มค่าที่สุด ตั้งแต่ GPU Workstation (Nvidia RTX 4090 / 6000 Ada) สำหรับองค์กรขนาดกลาง จนถึง Rack Server หลายโหนดสำหรับองค์กรใหญ่",
         badge: "Zero-Overprovision",
+        metricLabel: "VRAM Utilization Efficiency",
+        metricValue: "94% Optimal Sizing",
         details: [
           "คำนวณ VRAM ที่ต้องใช้ตามขนาดพารามิเตอร์ (8B, 14B, 32B, 70B)",
           "ระบบระบายความร้อนและเสียงเงียบสำหรับวางในห้องทำงานทั่วไปได้",
@@ -1027,6 +1584,8 @@
         subtitle: "รันโมเดลภาษาชั้นนำภายในเครื่องด้วยความเร็วสูงสุด",
         desc: "ติดตั้ง Inference Engine ประสิทธิภาพสูง (vLLM / Ollama) พร้อมโมเดล Open-weight ระดับโลก เช่น DeepSeek, Qwen, Llama ที่ผ่านการ Fine-tune ปรับแต่งให้เข้าใจภาษาไทยบริบทธุรกิจและการเงินอย่างแม่นยำ",
         badge: "100% Offline Capable",
+        metricLabel: "First-Token Latency",
+        metricValue: "~22 ms (Local NVMe/VRAM)",
         details: [
           "Inference Latency ต่ำกว่า 25ms ตอบสนองทันทีแบบ Real-time",
           "ตัดการเชื่อมต่ออินเทอร์เน็ตได้ 100% ข้อมูลไม่เคยถูกส่งออกไปข้างนอก",
@@ -1038,6 +1597,8 @@
         subtitle: "ระบบควบคุมสิทธิ์การเข้าถึงข้อมูลตามตำแหน่งหน้าที่",
         desc: "หัวใจสำคัญของความปลอดภัยองค์กร: เราติดตั้ง Security Layer คั่นกลาง เพื่อตรวจสอบ Role-Based Access Control (RBAC) ของผู้ใช้ก่อนส่งคำถามเข้าสู่โมเดล",
         badge: "Enterprise Security",
+        metricLabel: "Unauthorized Data Leakage",
+        metricValue: "0.0% (Strict RBAC Policy)",
         details: [
           "พนักงานทั่วไปไม่สามารถถามหรือดึงข้อมูลเงินเดือนและสัญญาระดับบริหาร",
           "บันทึก Audit Log ทุกคำถาม-คำตอบเพื่อการตรวจสอบตามมาตรฐาน ISO/PDPA",
@@ -1049,6 +1610,8 @@
         subtitle: "เชื่อมโยงเอกสารภายในและระบบฐานข้อมูลขององค์กร",
         desc: "ใช้สถาปัตยกรรม Retrieval-Augmented Generation (RAG) แปลงเอกสารลับของบริษัท (PDF, Excel, Word) ให้ AI ค้นหาและอ้างอิงได้ถูกต้อง ไม่มโน (Zero Hallucination) พร้อมต่อตรงผ่าน MCP กับระบบ ERP/SAP/SQL",
         badge: "Zero-Hallucination",
+        metricLabel: "Citation Groundedness",
+        metricValue: "100% Page-Referenced",
         details: [
           "Local Vector Database เข้ารหัสบนเครื่อง (ChromaDB / Qdrant)",
           "เชื่อมต่อ API ภายในองค์กรผ่าน Standardized Model Context Protocol",
@@ -1060,6 +1623,8 @@
         subtitle: "เปลี่ยนคำตอบเป็นการลงมือปฏิบัติงานอัตโนมัติ",
         desc: "ต่อยอดจากแค่ Chatbot ทั่วไป สู่ Autonomous Agent Pipeline ที่ทำงานวนซ้ำได้ เช่น เมื่อมีใบเสร็จใหม่เข้ามาในโฟลเดอร์ AI จะกระทบยอดใน ERP ดึงข้อผิดพลาด และร่างอีเมลขอเอกสารเพิ่มรอให้คนกดส่ง",
         badge: "Human-in-the-loop",
+        metricLabel: "Manual Task Reduction",
+        metricValue: "80% - 90% Faster Execution",
         details: [
           "ลดเวลางานเอกสารซ้ำซากลงได้ถึง 80-90%",
           "มีระบบยืนยัน (Human-in-the-loop) ก่อนทำธุรกรรมสำคัญ",
@@ -1071,25 +1636,33 @@
     function selectStep(stepNum) {
       document.querySelectorAll('.step-btn').forEach((btn, index) => {
         if (index + 1 === stepNum) {
-          btn.className = "step-btn px-4 py-2 rounded-xl text-xs font-semibold bg-brand text-slate-950 flex items-center space-x-2 transition";
+          btn.className = "step-btn px-4 py-2.5 rounded-xl text-xs font-semibold bg-brand text-slate-950 flex items-center space-x-2 transition shadow-md";
         } else {
-          btn.className = "step-btn px-4 py-2 rounded-xl text-xs font-semibold bg-surface text-slate-300 hover:bg-surface-raised flex items-center space-x-2 transition";
+          btn.className = "step-btn px-4 py-2.5 rounded-xl text-xs font-semibold bg-surface text-slate-300 hover:bg-surface-raised flex items-center space-x-2 transition";
         }
       });
+
+      const progressBar = document.getElementById('pipeline-progress-bar');
+      if (progressBar) {
+        progressBar.style.width = `${stepNum * 20}%`;
+      }
 
       const s = stepsData[stepNum];
       const contentEl = document.getElementById('step-content');
       contentEl.innerHTML = `
-        <div class="flex items-center justify-between mb-4">
-          <span class="text-xs font-mono font-bold text-brand bg-brand/10 px-2 py-0.5 rounded border border-brand/30">${s.badge}</span>
-          <span class="text-xs text-slate-400 font-mono">Architecture Layer 0${stepNum}</span>
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <span class="text-xs font-mono font-bold text-brand bg-brand/10 px-2.5 py-1 rounded border border-brand/30">${s.badge}</span>
+          <div class="flex items-center space-x-3 text-xs font-mono">
+            <span class="text-slate-400">${s.metricLabel}: <strong class="text-brand-light">${s.metricValue}</strong></span>
+            <span class="text-slate-500">| Layer 0${stepNum}/05</span>
+          </div>
         </div>
         <h3 class="text-xl sm:text-2xl font-bold text-white mb-1 font-display">${s.title}</h3>
         <p class="text-xs sm:text-sm text-slate-300 font-medium mb-4">${s.subtitle}</p>
         <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6">${s.desc}</p>
         <div class="bg-surface p-4 rounded-xl border border-border">
-          <div class="text-xs font-mono font-bold text-slate-300 mb-2 uppercase">Key Technical Capabilities:</div>
-          <ul class="text-xs text-slate-300 space-y-1.5 font-mono">
+          <div class="text-xs font-mono font-bold text-slate-300 mb-2.5 uppercase">Key Technical Capabilities:</div>
+          <ul class="text-xs text-slate-300 space-y-2 font-mono">
             ${s.details.map(d => `<li class="flex items-center space-x-2"><span class="text-brand">✓</span><span>${d}</span></li>`).join('')}
           </ul>
         </div>
@@ -1127,6 +1700,9 @@
     const scenarios = {
       finance: {
         title: "กระทบยอดบิล & สรุปกำไร Q3 (แผนกบัญชี)",
+        manualTime: "45 นาที",
+        aiTime: "1.8 วินาที",
+        speedup: "เร็วขึ้น 99.8% (Zero Cloud Egress)",
         logs: [
           { type: "info", text: "[LOCAL STORAGE] ตรวจพบไฟล์ 'Q3_Invoice_Ledger_Confidential.xlsx' (24.8 MB)..." },
           { type: "security", text: "[PERMISSION] User: Somchai (Senior Accountant) -> Role 'Finance_Admin' -> GRANTED" },
@@ -1137,6 +1713,9 @@
       },
       hr: {
         title: "ตรวจสิทธิ์การเข้าถึงฐานข้อมูลเงินเดือน (แผนก HR)",
+        manualTime: "เสี่ยงรั่วไหล",
+        aiTime: "0.02 วินาที (Blocked)",
+        speedup: "บล็อกการเข้าถึงผิดสิทธิ์ 100%",
         logs: [
           { type: "info", text: "[QUERY] 'ขอสรุปอัตราเงินเดือนเฉลี่ยของแผนกวิศวกรรมทุกคน'" },
           { type: "security", text: "[RBAC GUARD] User: Napat (Marketing Officer) -> Role 'Marketing_Staff'" },
@@ -1146,6 +1725,9 @@
       },
       legal: {
         title: "ตรวจร่างสัญญาคู่ค้า & จับจุดเสี่ยง PDPA (ฝ่ายจัดซื้อ/สัญญา)",
+        manualTime: "2 ชั่วโมง",
+        aiTime: "3.2 วินาที",
+        speedup: "สแกน 68 หน้า เร็วขึ้น 99.9%",
         logs: [
           { type: "info", text: "[LOCAL RAG] อ่านสัญญา 'Vendor_SLA_Agreement_2026.pdf' (68 หน้า)..." },
           { type: "security", text: "[ENCRYPTION] ประมวลผลบนหน่วยความจำ Local VRAM ไม่มีการบันทึกไฟล์ชั่วคราวบน Cloud" },
@@ -1159,14 +1741,28 @@
       document.querySelectorAll('.scenario-btn').forEach(btn => {
         btn.classList.remove('border-brand', 'bg-brand/10');
         btn.classList.add('border-border', 'bg-paper-subtle');
+        const badge = btn.querySelector('.scenario-badge');
+        if (badge) {
+          badge.className = "scenario-badge text-[10px] font-mono bg-surface text-slate-300 font-bold px-2 py-0.5 rounded";
+          badge.innerText = "SELECT";
+        }
       });
       const activeBtn = document.querySelector(`.scenario-btn[data-scenario="${key}"]`);
       if (activeBtn) {
         activeBtn.classList.remove('border-border', 'bg-paper-subtle');
         activeBtn.classList.add('border-brand', 'bg-brand/10');
+        const badge = activeBtn.querySelector('.scenario-badge');
+        if (badge) {
+          badge.className = "scenario-badge text-[10px] font-mono bg-brand text-slate-950 font-bold px-2 py-0.5 rounded";
+          badge.innerText = "RUNNING";
+        }
       }
 
       const sc = scenarios[key];
+      document.getElementById('sim-manual-time').innerText = sc.manualTime;
+      document.getElementById('sim-ai-time').innerText = sc.aiTime;
+      document.getElementById('sim-speedup-badge').innerText = sc.speedup;
+
       const term = document.getElementById('terminal-output');
       term.innerHTML = `<div class="text-brand font-bold mb-2">▶ กำลังจำลอง: ${sc.title}</div>`;
 
@@ -1195,13 +1791,13 @@
             });
           }
           i++;
-          setTimeout(appendLog, 300);
+          setTimeout(appendLog, 260);
         }
       }
       appendLog();
     }
 
-    // 3. ROI Calculator Logic with Animated Counter
+    // 3. ROI Calculator Logic with Animated Counter & Visual Bars
     const roiState = { hours: 0, savings: 0 };
     function calculateROI() {
       const employees = parseInt(document.getElementById('input-employees').value);
@@ -1219,6 +1815,13 @@
 
       const paybackMonths = monthlySavings > 0 ? (249000 / monthlySavings).toFixed(1) : "N/A";
       document.getElementById('res-payback').innerText = `~ ${paybackMonths} เดือน`;
+
+      // Update visual comparison bar ratio
+      const capexRatio = Math.min(90, Math.max(8, Math.round((249000 / Math.max(annualSavings, 249000)) * 100)));
+      const barCapex = document.getElementById('bar-capex');
+      const barSavingsLabel = document.getElementById('bar-savings-label');
+      if (barCapex) barCapex.style.width = `${capexRatio}%`;
+      if (barSavingsLabel) barSavingsLabel.innerText = `฿${annualSavings.toLocaleString()}`;
 
       if (window.anime) {
         anime({
@@ -1244,6 +1847,7 @@
     const totalSlides = 6;
     const deckModal = document.getElementById('deck-modal');
     const btnOpenDeck = document.getElementById('btn-open-deck');
+    const btnOpenDeckMobile = document.getElementById('btn-open-deck-mobile');
     const btnCloseDeck = document.getElementById('btn-close-deck');
     const btnPrevSlide = document.getElementById('btn-prev-slide');
     const btnNextSlide = document.getElementById('btn-next-slide');
@@ -1277,7 +1881,8 @@
       btnNextSlide.innerText = currentSlide === totalSlides ? 'สิ้นสุดสไลด์' : 'สไลด์ถัดไป →';
     }
 
-    btnOpenDeck.addEventListener('click', () => {
+    function openDeckModal() {
+      toggleMobileMenu(false);
       deckModal.classList.remove('hidden');
       deckModal.classList.add('flex');
       if (window.anime) {
@@ -1289,7 +1894,10 @@
         });
       }
       showSlide(1);
-    });
+    }
+
+    if (btnOpenDeck) btnOpenDeck.addEventListener('click', openDeckModal);
+    if (btnOpenDeckMobile) btnOpenDeckMobile.addEventListener('click', openDeckModal);
 
     btnCloseDeck.addEventListener('click', () => {
       deckModal.classList.add('hidden');
@@ -1307,6 +1915,9 @@
     });
 
     document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isMobileMenuOpen) {
+        toggleMobileMenu(false);
+      }
       if (!deckModal.classList.contains('hidden')) {
         if (e.key === 'ArrowRight' || e.key === ' ') {
           e.preventDefault();
@@ -1321,6 +1932,15 @@
       }
     });
 
+    // 5. Scroll Progress Bar, Active Section Spy & Scroll-Reveal Animations
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      const bar = document.getElementById('scroll-progress');
+      if (bar) bar.style.width = `${progress}%`;
+    }, { passive: true });
+
     document.addEventListener('DOMContentLoaded', () => {
       selectStep(1);
       runScenario('finance');
@@ -1331,11 +1951,53 @@
           targets: '.hero-fade-in',
           opacity: [0, 1],
           translateY: [20, 0],
-          delay: anime.stagger(100, {start: 150}),
+          delay: anime.stagger(100, {start: 120}),
           duration: 700,
           easing: 'easeOutCubic'
         });
       }
+
+      // Scroll-Reveal Observer
+      const revealObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (window.anime) {
+              anime({
+                targets: entry.target,
+                opacity: [0, 1],
+                translateY: [22, 0],
+                duration: 650,
+                easing: 'easeOutCubic'
+              });
+            } else {
+              entry.target.style.opacity = 1;
+              entry.target.style.transform = 'none';
+            }
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObserver.observe(el));
+
+      // Active Section Spy for Desktop Nav
+      const navLinks = document.querySelectorAll('.nav-link[data-section]');
+      const spyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              if (link.getAttribute('data-section') === id) {
+                link.classList.add('active');
+              } else {
+                link.classList.remove('active');
+              }
+            });
+          }
+        });
+      }, { rootMargin: '-25% 0px -60% 0px' });
+
+      document.querySelectorAll('section[id]').forEach(sec => spyObserver.observe(sec));
     });
   </script>
 </body>
