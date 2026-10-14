@@ -3,145 +3,1008 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AIZEN Account - ระบบจัดการบัญชีและตรวจสลิป AI</title>
+  <title>AItoB · AIZEN Account - ระบบตรวจสลิปและบัญชีภาษีอัจฉริยะ</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    body { background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    .card-stat { border-radius: 12px; border: none; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05); }
-    .badge-pending { background-color: #fef3c7; color: #92400e; }
-    .badge-verified { background-color: #d1fae5; color: #065f46; }
-    .badge-rejected { background-color: #fee2e2; color: #991b1b; }
+    :root {
+      --font-th: 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-en: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --bg-surface: #0f172a;
+      --bg-card: #ffffff;
+      --bg-subtle: #f8fafc;
+      --border-color: #e2e8f0;
+      --border-subtle: #f1f5f9;
+
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-soft: #e0f2fe;
+
+      --success: #10b981;
+      --success-soft: #d1fae5;
+      --success-text: #065f46;
+
+      --danger: #ef4444;
+      --danger-soft: #fee2e2;
+      --danger-text: #991b1b;
+
+      --warning: #f59e0b;
+      --warning-soft: #fef3c7;
+      --warning-text: #92400e;
+
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      font-family: var(--font-th);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6, .brand-title {
+      font-family: var(--font-en);
+    }
+
+    .font-mono {
+      font-family: var(--font-mono);
+    }
+
+    /* Top Navigation Bar */
+    .top-nav {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+    }
+
+    .badge-appliance {
+      background: #0f172a;
+      color: #38bdf8;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-weight: 600;
+    }
+
+    /* Cards & Stats */
+    .card-modern {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
+      transition: all 0.2s ease;
+    }
+
+    .stat-card {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .stat-label {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-value {
+      font-family: var(--font-en);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* Upload Drag & Drop Area */
+    .upload-zone {
+      border: 2px dashed #cbd5e1;
+      border-radius: 14px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      background: #ffffff;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--primary);
+      background: #f0f9ff;
+      transform: translateY(-1px);
+    }
+
+    .upload-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem auto;
+      transition: transform 0.2s ease;
+    }
+
+    .upload-zone:hover .upload-icon {
+      transform: scale(1.08);
+    }
+
+    /* Status Badges */
+    .badge-pill-status {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .badge-pill-status.pending {
+      background-color: var(--warning-soft);
+      color: var(--warning-text);
+      border: 1px solid #fde68a;
+    }
+
+    .badge-pill-status.verified {
+      background-color: var(--success-soft);
+      color: var(--success-text);
+      border: 1px solid #a7f3d0;
+    }
+
+    .badge-pill-status.rejected {
+      background-color: var(--danger-soft);
+      color: var(--danger-text);
+      border: 1px solid #fecaca;
+    }
+
+    /* Filter Pills */
+    .filter-btn {
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border: 1px solid var(--border-color);
+      background: #ffffff;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .filter-btn:hover {
+      background: #f8fafc;
+      color: var(--text-main);
+    }
+
+    .filter-btn.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    /* Table styling */
+    .table-modern {
+      margin: 0;
+      width: 100%;
+      vertical-align: middle;
+    }
+
+    .table-modern thead th {
+      background-color: #f8fafc;
+      color: var(--text-muted);
+      font-size: 0.775rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .table-modern tbody td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.875rem;
+    }
+
+    .table-modern tbody tr:hover {
+      background-color: #f8fafc;
+    }
+
+    .slip-thumb-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .slip-thumb-btn:hover {
+      transform: scale(1.08);
+      border-color: var(--primary);
+    }
+
+    .slip-thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Modal Side-by-Side */
+    .modal-dialog-split {
+      max-width: 1100px;
+    }
+
+    .preview-pane {
+      background-color: #0f172a;
+      border-radius: 12px;
+      min-height: 480px;
+      max-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .preview-pane img {
+      max-width: 100%;
+      max-height: 580px;
+      object-fit: contain;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .scan-overlay-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #38bdf8, #818cf8, #38bdf8);
+      animation: scanAnim 2s infinite linear;
+    }
+
+    @keyframes scanAnim {
+      0% { transform: translateY(0); opacity: 0.8; }
+      50% { transform: translateY(480px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0.8; }
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+    }
   </style>
 </head>
-<body class="p-4">
-  <div class="container-fluid" style="max-width: 1200px;">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <div>
-        <h3 class="fw-bold m-0">AIZEN Account 📊</h3>
-        <p class="text-muted m-0">ระบบตรวจสลิปอัตโนมัติ บันทึกรายรับ-รายจ่าย (Human-in-the-loop)</p>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav px-4 py-3 sticky-top">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-3">
+        <div class="bg-primary text-white rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+          <i data-lucide="shield-check" style="width: 22px; height: 22px;"></i>
+        </div>
+        <div>
+          <div class="d-flex align-items-center gap-2">
+            <h5 class="fw-bold m-0 brand-title">AIZEN Account</h5>
+            <span class="badge-appliance">AItoB PRIVATE APPLIANCE</span>
+          </div>
+          <p class="text-muted small m-0">ศูนย์ตรวจสลิปอัตโนมัติ กระทบยอดบัญชี และบริหารภาษี (Zero Cloud Egress)</p>
+        </div>
       </div>
-      <div>
-        <span class="badge bg-primary px-3 py-2">Port: 3001</span>
+
+      <div class="d-flex align-items-center gap-2">
+        <div id="conn-status" class="badge bg-light text-secondary border px-3 py-2 d-flex align-items-center gap-2">
+          <span class="spinner-grow spinner-grow-sm text-success" style="width: 8px; height: 8px;"></span>
+          <span class="font-mono small" id="conn-text">Port 3001</span>
+        </div>
+        <a href="index.html" class="btn btn-outline-secondary btn-sm px-3 d-flex align-items-center gap-1">
+          <i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i>
+          <span>หน้าหลัก AItoB</span>
+        </a>
       </div>
     </div>
+  </nav>
 
-    <!-- Summary Stats -->
+  <!-- Main Container -->
+  <div class="container-fluid px-4 py-4" style="max-width: 1440px;">
+
+    <!-- Summary Stats Row -->
     <div class="row g-3 mb-4">
-      <div class="col-md-3">
-        <div class="card card-stat p-3 bg-white">
-          <small class="text-muted">รายรับรวม (Verified)</small>
-          <h4 class="text-success fw-bold mt-1" id="stat-income">฿0.00</h4>
+      <div class="col-xl-3 col-md-6">
+        <div class="card-modern stat-card">
+          <div class="stat-label">
+            <i data-lucide="trending-up" class="text-success" style="width: 16px; height: 16px;"></i>
+            รายรับรวม (Verified Income)
+          </div>
+          <div class="stat-value text-success" id="stat-income">฿0.00</div>
+          <div class="text-muted small mt-2 d-flex justify-content-between">
+            <span>ภาษีขาย (Output VAT 7%):</span>
+            <strong id="stat-vat-output" class="font-mono">฿0.00</strong>
+          </div>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="card card-stat p-3 bg-white">
-          <small class="text-muted">รายจ่ายรวม (Verified)</small>
-          <h4 class="text-danger fw-bold mt-1" id="stat-expense">฿0.00</h4>
+
+      <div class="col-xl-3 col-md-6">
+        <div class="card-modern stat-card">
+          <div class="stat-label">
+            <i data-lucide="trending-down" class="text-danger" style="width: 16px; height: 16px;"></i>
+            รายจ่ายรวม (Verified Expense)
+          </div>
+          <div class="stat-value text-danger" id="stat-expense">฿0.00</div>
+          <div class="text-muted small mt-2 d-flex justify-content-between">
+            <span>ภาษีซื้อ (Input VAT 7%):</span>
+            <strong id="stat-vat-input" class="font-mono">฿0.00</strong>
+          </div>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="card card-stat p-3 bg-white">
-          <small class="text-muted">ยอดสุทธิ (Net)</small>
-          <h4 class="text-primary fw-bold mt-1" id="stat-net">฿0.00</h4>
+
+      <div class="col-xl-3 col-md-6">
+        <div class="card-modern stat-card">
+          <div class="stat-label">
+            <i data-lucide="wallet" class="text-primary" style="width: 16px; height: 16px;"></i>
+            ยอดสุทธิ (Net Balance)
+          </div>
+          <div class="stat-value text-primary" id="stat-net">฿0.00</div>
+          <div class="text-muted small mt-2 d-flex justify-content-between">
+            <span>หัก ณ ที่จ่ายรวม (WHT):</span>
+            <strong id="stat-wht-total" class="font-mono text-warning">฿0.00</strong>
+          </div>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="card card-stat p-3 bg-white border-warning">
-          <small class="text-warning fw-bold">รอตรวจสอบ (Pending)</small>
-          <h4 class="text-warning fw-bold mt-1" id="stat-pending">0 รายการ</h4>
+
+      <div class="col-xl-3 col-md-6">
+        <div class="card-modern stat-card" style="border-left: 4px solid var(--warning);">
+          <div class="stat-label">
+            <i data-lucide="clock" class="text-warning" style="width: 16px; height: 16px;"></i>
+            รอตรวจสอบ (Pending HIL)
+          </div>
+          <div class="stat-value text-warning" id="stat-pending">0 รายการ</div>
+          <div class="text-muted small mt-2 d-flex justify-content-between">
+            <span>มูลค่าที่รออนุมัติ:</span>
+            <strong id="stat-pending-val" class="font-mono">฿0.00</strong>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Main List -->
-    <div class="card card-stat bg-white p-3">
+    <!-- Drag & Drop Upload Zone -->
+    <div class="card-modern p-4 mb-4">
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="fw-bold m-0">รายการสลิปและธุรกรรมล่าสุด</h5>
-        <button class="btn btn-outline-secondary btn-sm" onclick="loadData()">รีเฟรช</button>
+        <div>
+          <h6 class="fw-bold m-0 d-flex align-items-center gap-2">
+            <i data-lucide="scan-line" class="text-primary" style="width: 18px; height: 18px;"></i>
+            ระบบอัปโหลดและวิเคราะห์สลิปอัตโนมัติ (AI Slip & Invoice Ingestion)
+          </h6>
+          <small class="text-muted">ลากสลิปโอนเงิน ธนาคารไทย หรือใบเสร็จ/ใบกำกับภาษีมาวางที่นี่ ระบบจะสกัดข้อมูลด้วย AI และคำนวณภาษีให้อัตโนมัติ</small>
+        </div>
+        <div class="d-flex gap-2">
+          <select id="engine-select" class="form-select form-select-sm" style="width: 190px;">
+            <option value="gemini" selected>AI: Gemini Vision (Auto)</option>
+            <option value="openai">AI: OpenAI GPT-4o</option>
+            <option value="slipok">Thai Bank SlipOK</option>
+            <option value="offline">Local Offline Mock</option>
+          </select>
+        </div>
       </div>
+
+      <div id="drop-zone" class="upload-zone" onclick="document.getElementById('file-input').click()">
+        <input type="file" id="file-input" accept="image/*,.pdf" style="display: none;" onchange="handleFileSelect(this.files)">
+        <div class="upload-icon">
+          <i data-lucide="upload-cloud" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div class="fw-bold mb-1">ลากไฟล์สลิปหรือใบเสร็จมาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</div>
+        <div class="text-muted small">รองรับ PNG, JPG, JPEG, WEBP · ตรวจสอบ Slip Hash ซ้ำอัตโนมัติ · Zero Data Leakage</div>
+        <div id="upload-progress" class="mt-3 d-none" style="max-width: 400px; margin: 0 auto;">
+          <div class="progress" style="height: 6px;">
+            <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-primary" style="width: 100%;"></div>
+          </div>
+          <div id="progress-text" class="small text-primary mt-2 fw-medium">AI กำลังวิเคราะห์ข้อมูลสลิปและสกัดตัวเลข...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transactions Data Card -->
+    <div class="card-modern">
+      <!-- Toolbar -->
+      <div class="p-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div class="d-flex flex-wrap align-items-center gap-2">
+          <div class="d-flex gap-1" id="status-filters">
+            <button class="filter-btn active" data-status="all" onclick="filterStatus('all')">ทั้งหมด</button>
+            <button class="filter-btn" data-status="pending" onclick="filterStatus('pending')">
+              รอตรวจทาน <span id="badge-pending-count" class="badge bg-warning text-dark ms-1">0</span>
+            </button>
+            <button class="filter-btn" data-status="verified" onclick="filterStatus('verified')">ยืนยันแล้ว</button>
+            <button class="filter-btn" data-status="rejected" onclick="filterStatus('rejected')">ปฏิเสธ</button>
+          </div>
+
+          <div style="width: 1px; height: 24px; background: var(--border-color);" class="mx-1"></div>
+
+          <select id="category-filter" class="form-select form-select-sm" style="width: 180px;" onchange="applyFilters()">
+            <option value="">ทุกหมวดหมู่บัญชี</option>
+          </select>
+
+          <input type="text" id="search-input" class="form-control form-control-sm" placeholder="ค้นหาเลขอ้างอิง, ผู้โอน..." style="width: 200px;" oninput="applyFilters()">
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-outline-success btn-sm d-flex align-items-center gap-1" onclick="exportCsv()">
+            <i data-lucide="download" style="width: 14px; height: 14px;"></i>
+            <span>Export CSV (Excel / Express)</span>
+          </button>
+          <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1" onclick="loadData()">
+            <i data-lucide="rotate-cw" style="width: 14px; height: 14px;"></i>
+            <span>รีเฟรช</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Table -->
       <div class="table-responsive">
-        <table class="table align-middle">
-          <thead class="table-light">
+        <table class="table table-modern">
+          <thead>
             <tr>
+              <th style="width: 60px;">สลิป</th>
               <th>วัน-เวลา</th>
               <th>ประเภท</th>
-              <th>จำนวนเงิน</th>
-              <th>เลขอ้างอิง</th>
-              <th>รายละเอียด / ที่มา</th>
+              <th>หมวดหมู่บัญชี</th>
+              <th>ยอดเงิน & ภาษี</th>
+              <th>เลขอ้างอิง / คู่ค้า</th>
+              <th>ที่มา</th>
               <th>สถานะ</th>
-              <th class="text-end">การจัดการ</th>
+              <th class="text-end" style="width: 150px;">การจัดการ</th>
             </tr>
           </thead>
           <tbody id="transaction-list">
-            <tr><td colspan="7" class="text-center text-muted">กำลังโหลดข้อมูล...</td></tr>
+            <tr>
+              <td colspan="9" class="text-center text-muted py-5">กำลังโหลดข้อมูลรายการบัญชี...</td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
+  <!-- Side-by-Side Review & Verification Modal -->
+  <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-split">
+      <div class="modal-content card-modern border-0 overflow-hidden">
+        <div class="modal-header bg-light border-bottom px-4 py-3">
+          <div class="d-flex align-items-center gap-2">
+            <i data-lucide="check-square" class="text-primary" style="width: 20px; height: 20px;"></i>
+            <h6 class="modal-title fw-bold" id="modal-title">ตรวจทานและยืนยันสลิปเข้าบัญชี (Human-in-the-Loop)</h6>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body p-4">
+          <div class="row g-4">
+            <!-- Left Pane: Slip Image Viewer -->
+            <div class="col-lg-6">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="small fw-bold text-muted">ภาพสลิป/เอกสารต้นฉบับ:</span>
+                <span id="modal-ai-provider-badge" class="badge bg-secondary font-mono small">AI Engine</span>
+              </div>
+              <div class="preview-pane" id="modal-preview-container">
+                <img id="modal-slip-img" src="" alt="ภาพสลิป">
+                <div class="scan-overlay-bar d-none" id="modal-scan-bar"></div>
+              </div>
+              <div class="mt-2 text-center">
+                <small class="text-muted" id="modal-bank-info">ธนาคาร: -</small>
+              </div>
+            </div>
+
+            <!-- Right Pane: Form & Tax Fields -->
+            <div class="col-lg-6">
+              <input type="hidden" id="modal-tx-id">
+
+              <div class="mb-3">
+                <label class="form-label small fw-bold text-muted">ประเภทรายการ</label>
+                <div class="d-flex gap-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="txType" id="type-income" value="income" onchange="recalcModalTax()">
+                    <label class="form-check-label fw-bold text-success" for="type-income">รายรับ (Income)</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="txType" id="type-expense" value="expense" onchange="recalcModalTax()">
+                    <label class="form-check-label fw-bold text-danger" for="type-expense">รายจ่าย (Expense)</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label small fw-bold text-muted">หมวดหมู่บัญชี (AI Auto-Suggested)</label>
+                <select id="modal-category" class="form-select form-select-sm"></select>
+              </div>
+
+              <div class="row g-2 mb-3">
+                <div class="col-md-7">
+                  <label class="form-label small fw-bold text-muted">ยอดเงินฐาน (Base Amount ฿)</label>
+                  <input type="number" step="0.01" class="form-control form-control-sm fw-bold font-mono" id="modal-amount" oninput="recalcModalTax()">
+                </div>
+                <div class="col-md-5">
+                  <label class="form-label small fw-bold text-muted">ภาษีมูลค่าเพิ่ม (VAT 7%)</label>
+                  <div class="input-group input-group-sm">
+                    <div class="input-group-text">
+                      <input class="form-check-input mt-0" type="checkbox" id="modal-vat-enable" onchange="recalcModalTax()">
+                    </div>
+                    <input type="number" step="0.01" class="form-control font-mono" id="modal-vat-amount" oninput="recalcModalNet()">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-2 mb-3">
+                <div class="col-md-5">
+                  <label class="form-label small fw-bold text-muted">หัก ณ ที่จ่าย (WHT)</label>
+                  <select id="modal-wht-rate" class="form-select form-select-sm" onchange="recalcModalTax()">
+                    <option value="0">ไม่หัก (0%)</option>
+                    <option value="1">ค่าขนส่ง (1%)</option>
+                    <option value="2">ค่าโฆษณา (2%)</option>
+                    <option value="3">ค่าบริการ/จ้างทำของ (3%)</option>
+                    <option value="5">ค่าเช่าทรัพย์สิน (5%)</option>
+                  </select>
+                </div>
+                <div class="col-md-7">
+                  <label class="form-label small fw-bold text-muted">ยอดภาษีหัก ณ ที่จ่าย (฿)</label>
+                  <input type="number" step="0.01" class="form-control form-control-sm font-mono text-danger" id="modal-wht-amount" oninput="recalcModalNet()">
+                </div>
+              </div>
+
+              <div class="card p-3 bg-light border-0 mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="small fw-bold">ยอดสุทธิที่ต้องบันทึก (Net Total):</span>
+                  <span class="h5 m-0 fw-bold font-mono text-primary" id="modal-net-display">฿0.00</span>
+                </div>
+              </div>
+
+              <div class="row g-2 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold text-muted">เลขอ้างอิงสลิป</label>
+                  <input type="text" class="form-control form-control-sm font-mono" id="modal-ref-no" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-bold text-muted">เลขผู้เสียภาษี (Tax ID)</label>
+                  <input type="text" class="form-control form-control-sm font-mono" id="modal-tax-id" placeholder="13 หลัก">
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label small fw-bold text-muted">รายละเอียด / บันทึกเพิ่มเติม</label>
+                <input type="text" class="form-control form-control-sm" id="modal-desc" placeholder="เช่น ชำระค่าบริการเซิร์ฟเวอร์">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label small fw-bold text-muted">บันทึกเจ้าหน้าที่ตรวจสอบ (Audit Notes)</label>
+                <input type="text" class="form-control form-control-sm" id="modal-notes" placeholder="เช่น ยอดเงินตรงกับ Statement, อนุมัติโดยหัวหน้างาน">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer bg-light border-top px-4 py-3 d-flex justify-content-between">
+          <button type="button" class="btn btn-outline-danger btn-sm" id="modal-btn-reject" onclick="rejectCurrentModal()">
+            <i data-lucide="x-circle" style="width: 14px; height: 14px;"></i> ปฏิเสธรายการนี้
+          </button>
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">ปิด</button>
+            <button type="button" class="btn btn-success btn-sm px-4 fw-bold" id="modal-btn-verify" onclick="verifyCurrentModal()">
+              <i data-lucide="check" style="width: 16px; height: 16px;"></i> ยืนยันเข้าบัญชีจริง
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastBox"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    async function loadData() {
+    // State management
+    let transactionsData = [];
+    let categoriesData = [];
+    let currentFilterStatus = 'all';
+    let reviewModalInstance = null;
+
+    // Detect base API endpoint
+    const API_BASE = window.location.port === '3001' ? '' : (window.location.protocol === 'file:' ? 'http://localhost:3001' : (window.location.port === '8000' ? 'http://localhost:3001' : ''));
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      reviewModalInstance = new bootstrap.Modal(document.getElementById('reviewModal'));
+      setupDragAndDrop();
+      loadCategories().then(() => loadData());
+    });
+
+    // Load Categories from API
+    async function loadCategories() {
       try {
-        const [sumRes, txRes] = await Promise.all([
-          fetch('/api/summary').then(r => r.json()),
-          fetch('/api/transactions').then(r => r.json())
-        ]);
+        const res = await fetch(`${API_BASE}/api/categories`);
+        if (res.ok) {
+          categoriesData = await res.json();
+          const filterSel = document.getElementById('category-filter');
+          const modalSel = document.getElementById('modal-category');
 
-        document.getElementById('stat-income').innerText = '฿' + (sumRes.income || 0).toLocaleString('th-TH', {minimumFractionDigits: 2});
-        document.getElementById('stat-expense').innerText = '฿' + (sumRes.expense || 0).toLocaleString('th-TH', {minimumFractionDigits: 2});
-        document.getElementById('stat-net').innerText = '฿' + (sumRes.net || 0).toLocaleString('th-TH', {minimumFractionDigits: 2});
-        document.getElementById('stat-pending').innerText = `${sumRes.pendingCount || 0} รายการ (฿${(sumRes.pendingTotal || 0).toLocaleString()})`;
+          filterSel.innerHTML = '<option value="">ทุกหมวดหมู่บัญชี</option>' +
+            categoriesData.map(c => `<option value="${c.id}">${c.name} (${c.type === 'income' ? 'รับ' : 'จ่าย'})</option>`).join('');
 
-        const tbody = document.getElementById('transaction-list');
-        if (!txRes.length) {
-          tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4">ยังไม่มีรายการ</td></tr>';
-          return;
+          modalSel.innerHTML = categoriesData.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
         }
-
-        tbody.innerHTML = txRes.map(t => `
-          <tr>
-            <td><small class="text-muted">${t.created_at}</small></td>
-            <td><span class="badge ${t.type === 'income' ? 'bg-success' : 'bg-danger'}">${t.type}</span></td>
-            <td class="fw-bold ${t.type === 'income' ? 'text-success' : 'text-danger'}">฿${Number(t.amount).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
-            <td><code>${t.reference_no || '-'}</code></td>
-            <td>
-              <div>${t.description || '-'}</div>
-              <small class="text-muted">แหล่งที่มา: ${t.source}</small>
-            </td>
-            <td>
-              <span class="badge badge-${t.status} px-2 py-1">${t.status}</span>
-            </td>
-            <td class="text-end">
-              ${t.status === 'pending' ? `
-                <button class="btn btn-sm btn-success me-1" onclick="verify(${t.id})">ยืนยัน</button>
-                <button class="btn btn-sm btn-outline-danger" onclick="reject(${t.id})">ปฏิเสธ</button>
-              ` : `<small class="text-muted">${t.status === 'verified' ? 'ตรวจสอบแล้ว' : 'ปฏิเสธแล้ว'}</small>`}
-            </td>
-          </tr>
-        `).join('');
       } catch (err) {
-        console.error(err);
+        console.warn('Cannot load categories from backend:', err);
       }
     }
 
-    async function verify(id) {
-      if (!confirm('ยืนยันความถูกต้องของรายการนี้เข้าสู่ระบบบัญชี?')) return;
-      await fetch('/api/transactions/' + id + '/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ verified_by: 'admin' })
+    // Load Summary & Transactions Data
+    async function loadData() {
+      try {
+        const [sumRes, txRes] = await Promise.all([
+          fetch(`${API_BASE}/api/summary`).then(r => r.json()),
+          fetch(`${API_BASE}/api/transactions`).then(r => r.json())
+        ]);
+
+        document.getElementById('stat-income').innerText = '฿' + Number(sumRes.income || 0).toLocaleString('th-TH', {minimumFractionDigits: 2});
+        document.getElementById('stat-expense').innerText = '฿' + Number(sumRes.expense || 0).toLocaleString('th-TH', {minimumFractionDigits: 2});
+        document.getElementById('stat-net').innerText = '฿' + Number(sumRes.net || 0).toLocaleString('th-TH', {minimumFractionDigits: 2});
+        document.getElementById('stat-pending').innerText = `${sumRes.pendingCount || 0} รายการ`;
+        document.getElementById('stat-pending-val').innerText = '฿' + Number(sumRes.pendingTotal || 0).toLocaleString('th-TH', {minimumFractionDigits: 2});
+        document.getElementById('badge-pending-count').innerText = sumRes.pendingCount || 0;
+
+        document.getElementById('stat-vat-output').innerText = '฿' + Number(sumRes.vatOutput || 0).toLocaleString('th-TH', {minimumFractionDigits: 2});
+        document.getElementById('stat-vat-input').innerText = '฿' + Number(sumRes.vatInput || 0).toLocaleString('th-TH', {minimumFractionDigits: 2});
+        document.getElementById('stat-wht-total').innerText = '฿' + Number(sumRes.whtTotal || 0).toLocaleString('th-TH', {minimumFractionDigits: 2});
+
+        document.getElementById('conn-status').className = 'badge bg-success-subtle text-success border border-success-subtle px-3 py-2 d-flex align-items-center gap-2';
+        document.getElementById('conn-text').innerText = 'Port 3001 · Online';
+
+        transactionsData = txRes || [];
+        renderTable(transactionsData);
+      } catch (err) {
+        console.error('Data fetch error:', err);
+        document.getElementById('conn-status').className = 'badge bg-warning-subtle text-warning border border-warning-subtle px-3 py-2 d-flex align-items-center gap-2';
+        document.getElementById('conn-text').innerText = 'Offline (Standalone Demo)';
+      }
+    }
+
+    // Render Table
+    function renderTable(list) {
+      const tbody = document.getElementById('transaction-list');
+      if (!list || !list.length) {
+        tbody.innerHTML = '<tr><td colspan="9" class="text-center text-muted py-5">ยังไม่มีรายการในเงื่อนไขที่เลือก</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(t => {
+        const isIncome = t.type === 'income';
+        const netAmt = Number(t.net_amount || t.amount || 0);
+        const vatAmt = Number(t.vat_amount || 0);
+        const whtAmt = Number(t.wht_amount || 0);
+
+        const imgSrc = t.image_data || (t.image_path ? `${API_BASE}${t.image_path}` : '');
+        const thumbHtml = imgSrc
+          ? `<div class="slip-thumb-btn" onclick="openReviewModal(${t.id})"><img src="${imgSrc}" class="slip-thumb-img" alt="สลิป"></div>`
+          : `<div class="slip-thumb-btn text-muted"><i data-lucide="file-text" style="width: 18px; height: 18px;"></i></div>`;
+
+        return `
+          <tr>
+            <td>${thumbHtml}</td>
+            <td>
+              <div class="fw-semibold">${t.created_at ? t.created_at.slice(0, 16) : '-'}</div>
+              <small class="text-muted font-mono">#${t.id}</small>
+            </td>
+            <td>
+              <span class="badge ${isIncome ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'} px-2 py-1">
+                ${isIncome ? 'รายรับ' : 'รายจ่าย'}
+              </span>
+            </td>
+            <td>
+              <span class="badge bg-light text-dark border">${t.category_name || 'ยังไม่ระบุ'}</span>
+            </td>
+            <td>
+              <div class="fw-bold font-mono ${isIncome ? 'text-success' : 'text-danger'}">฿${netAmt.toLocaleString('th-TH', {minimumFractionDigits: 2})}</div>
+              ${vatAmt > 0 ? `<small class="text-muted d-block font-mono">VAT: ฿${vatAmt.toFixed(2)}</small>` : ''}
+              ${whtAmt > 0 ? `<small class="text-warning d-block font-mono">WHT: -฿${whtAmt.toFixed(2)}</small>` : ''}
+            </td>
+            <td>
+              <div class="fw-medium">${t.description || '-'}</div>
+              <small class="text-muted font-mono">Ref: ${t.reference_no || '-'}</small>
+            </td>
+            <td>
+              <span class="badge bg-secondary-subtle text-secondary">${t.source || 'manual'}</span>
+            </td>
+            <td>
+              <span class="badge-pill-status ${t.status}">
+                <span class="spinner-grow spinner-grow-sm" style="width: 6px; height: 6px; ${t.status !== 'pending' ? 'display:none;' : ''}"></span>
+                ${t.status === 'pending' ? 'รอตรวจทาน' : (t.status === 'verified' ? 'ตรวจสอบแล้ว' : 'ปฏิเสธแล้ว')}
+              </span>
+            </td>
+            <td class="text-end">
+              ${t.status === 'pending' ? `
+                <button class="btn btn-sm btn-primary px-3" onclick="openReviewModal(${t.id})">
+                  <i data-lucide="eye" style="width: 14px; height: 14px;"></i> ตรวจทาน
+                </button>
+              ` : `
+                <button class="btn btn-sm btn-outline-secondary" onclick="openReviewModal(${t.id})">
+                  <i data-lucide="file-search" style="width: 14px; height: 14px;"></i> ดูข้อมูล
+                </button>
+              `}
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // Filter by Status Tab
+    function filterStatus(status) {
+      currentFilterStatus = status;
+      document.querySelectorAll('#status-filters .filter-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.status === status);
       });
-      loadData();
+      applyFilters();
     }
 
-    async function reject(id) {
-      if (!confirm('ต้องการปฏิเสธรายการนี้ใช่หรือไม่?')) return;
-      await fetch('/api/transactions/' + id + '/reject', { method: 'POST' });
-      loadData();
+    // Apply combined filters
+    function applyFilters() {
+      const catId = document.getElementById('category-filter').value;
+      const search = document.getElementById('search-input').value.toLowerCase().trim();
+
+      const filtered = transactionsData.filter(t => {
+        if (currentFilterStatus !== 'all' && t.status !== currentFilterStatus) return false;
+        if (catId && String(t.category_id) !== String(catId)) return false;
+        if (search) {
+          const content = `${t.reference_no || ''} ${t.description || ''} ${t.sender_name || ''} ${t.receiver_name || ''} ${t.tax_id || ''}`.toLowerCase();
+          if (!content.includes(search)) return false;
+        }
+        return true;
+      });
+
+      renderTable(filtered);
     }
 
-    loadData();
+    // Setup Drag and Drop
+    function setupDragAndDrop() {
+      const zone = document.getElementById('drop-zone');
+      ['dragenter', 'dragover'].forEach(name => {
+        zone.addEventListener(name, (e) => { e.preventDefault(); zone.classList.add('dragover'); }, false);
+      });
+      ['dragleave', 'drop'].forEach(name => {
+        zone.addEventListener(name, (e) => { e.preventDefault(); zone.classList.remove('dragover'); }, false);
+      });
+      zone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        if (dt.files && dt.files.length) handleFileSelect(dt.files);
+      });
+    }
+
+    // Handle Selected File Upload
+    async function handleFileSelect(files) {
+      if (!files || !files.length) return;
+      const file = files[0];
+      const provider = document.getElementById('engine-select').value;
+
+      const pBox = document.getElementById('upload-progress');
+      const pText = document.getElementById('progress-text');
+      pBox.classList.remove('d-none');
+      pText.innerText = `กำลังอัปโหลดและสแกนด้วย AI Engine (${provider})...`;
+
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const base64Data = e.target.result;
+          const res = await fetch(`${API_BASE}/api/upload`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              imageBase64: base64Data,
+              mimeType: file.type || 'image/jpeg',
+              provider,
+              source: 'web-upload'
+            })
+          });
+
+          const data = await res.json();
+          pBox.classList.add('d-none');
+
+          if (!res.ok) {
+            showToast('เกิดข้อผิดพลาด: ' + (data.error || 'Upload failed'), 'danger');
+            return;
+          }
+
+          showToast(`บันทึกสลิปสำเร็จ! พบยอด ฿${(data.parsed.amount || 0).toLocaleString()} (Ref: ${data.parsed.reference_no || '-'})`, 'success');
+          await loadData();
+
+          // Immediately open Review Modal for user to check and confirm
+          if (data.transaction_id) {
+            openReviewModal(data.transaction_id);
+          }
+        } catch (err) {
+          pBox.classList.add('d-none');
+          showToast('การเชื่อมต่อผิดพลาด: ' + err.message, 'danger');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Open Review Modal
+    function openReviewModal(txId) {
+      const item = transactionsData.find(t => t.id === txId);
+      if (!item) return;
+
+      document.getElementById('modal-tx-id').value = item.id;
+      document.getElementById('modal-title').innerText = item.status === 'pending'
+        ? `ตรวจทานสลิป #${item.id} (รออนุมัติ HIL)`
+        : `ข้อมูลสลิป #${item.id} (${item.status === 'verified' ? 'ยืนยันแล้ว' : 'ปฏิเสธแล้ว'})`;
+
+      if (item.type === 'income') {
+        document.getElementById('type-income').checked = true;
+      } else {
+        document.getElementById('type-expense').checked = true;
+      }
+
+      document.getElementById('modal-category').value = item.category_id || categoriesData[0]?.id || '';
+      document.getElementById('modal-amount').value = item.amount || 0;
+      document.getElementById('modal-vat-enable').checked = (item.vat_amount > 0);
+      document.getElementById('modal-vat-amount').value = item.vat_amount || 0;
+      document.getElementById('modal-wht-rate').value = item.wht_rate || 0;
+      document.getElementById('modal-wht-amount').value = item.wht_amount || 0;
+      document.getElementById('modal-ref-no').value = item.reference_no || '-';
+      document.getElementById('modal-tax-id').value = item.tax_id || '';
+      document.getElementById('modal-desc').value = item.description || '';
+      document.getElementById('modal-notes').value = item.verified_notes || '';
+
+      const imgSrc = item.image_data || (item.image_path ? `${API_BASE}${item.image_path}` : '');
+      const imgEl = document.getElementById('modal-slip-img');
+      imgEl.src = imgSrc || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><text x="50" y="100" fill="gray">No Image</text></svg>';
+
+      let rawAi = {};
+      try { rawAi = JSON.parse(item.raw_ai_payload || '{}'); } catch(e){}
+      document.getElementById('modal-ai-provider-badge').innerText = rawAi.provider || 'AI Extractor';
+      document.getElementById('modal-bank-info').innerText = `ธนาคารต้นทาง: ${item.sender_bank || rawAi.sender_bank || '-'} ➔ ปลายทาง: ${item.receiver_bank || rawAi.receiver_bank || '-'}`;
+
+      // Toggle action buttons based on status
+      const btnVerify = document.getElementById('modal-btn-verify');
+      const btnReject = document.getElementById('modal-btn-reject');
+      if (item.status === 'verified') {
+        btnVerify.innerText = 'อัปเดตข้อมูลบัญชี';
+        btnReject.classList.add('d-none');
+      } else if (item.status === 'rejected') {
+        btnVerify.innerText = 'เปลี่ยนสถานะเป็นยืนยัน';
+        btnReject.classList.add('d-none');
+      } else {
+        btnVerify.innerHTML = '<i data-lucide="check" style="width: 16px; height: 16px;"></i> ยืนยันเข้าบัญชีจริง';
+        btnReject.classList.remove('d-none');
+      }
+
+      recalcModalNet();
+      reviewModalInstance.show();
+      lucide.createIcons();
+    }
+
+    // Modal Tax recalculation helper
+    function recalcModalTax() {
+      const baseAmt = parseFloat(document.getElementById('modal-amount').value) || 0;
+      const vatEnabled = document.getElementById('modal-vat-enable').checked;
+      const vatAmt = vatEnabled ? Math.round(baseAmt * 0.07 * 100) / 100 : 0;
+      document.getElementById('modal-vat-amount').value = vatAmt;
+
+      const whtRate = parseFloat(document.getElementById('modal-wht-rate').value) || 0;
+      const whtAmt = whtRate > 0 ? Math.round(baseAmt * (whtRate / 100) * 100) / 100 : 0;
+      document.getElementById('modal-wht-amount').value = whtAmt;
+
+      recalcModalNet();
+    }
+
+    function recalcModalNet() {
+      const baseAmt = parseFloat(document.getElementById('modal-amount').value) || 0;
+      const vatAmt = parseFloat(document.getElementById('modal-vat-amount').value) || 0;
+      const whtAmt = parseFloat(document.getElementById('modal-wht-amount').value) || 0;
+      const isIncome = document.getElementById('type-income').checked;
+
+      // In Thailand accounting: Net Payable = Base + VAT - WHT
+      const net = Math.round((baseAmt + vatAmt - whtAmt) * 100) / 100;
+      document.getElementById('modal-net-display').innerText = '฿' + net.toLocaleString('th-TH', {minimumFractionDigits: 2});
+    }
+
+    // Verify button action
+    async function verifyCurrentModal() {
+      const txId = document.getElementById('modal-tx-id').value;
+      if (!txId) return;
+
+      const payload = {
+        amount: parseFloat(document.getElementById('modal-amount').value) || 0,
+        category_id: parseInt(document.getElementById('modal-category').value) || null,
+        vat_amount: parseFloat(document.getElementById('modal-vat-amount').value) || 0,
+        wht_rate: parseFloat(document.getElementById('modal-wht-rate').value) || 0,
+        wht_amount: parseFloat(document.getElementById('modal-wht-amount').value) || 0,
+        tax_id: document.getElementById('modal-tax-id').value.trim(),
+        description: document.getElementById('modal-desc').value.trim(),
+        verified_notes: document.getElementById('modal-notes').value.trim(),
+        verified_by: 'staff-admin'
+      };
+
+      try {
+        const res = await fetch(`${API_BASE}/api/transactions/${txId}/verify`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          showToast(`บันทึกและยืนยันรายการ #${txId} สำเร็จ`, 'success');
+          reviewModalInstance.hide();
+          loadData();
+        } else {
+          const err = await res.json();
+          showToast('ไม่สามารถบันทึกได้: ' + (err.error || 'Server error'), 'danger');
+        }
+      } catch (err) {
+        showToast('การเชื่อมต่อล้มเหลว: ' + err.message, 'danger');
+      }
+    }
+
+    // Reject button action
+    async function rejectCurrentModal() {
+      const txId = document.getElementById('modal-tx-id').value;
+      if (!txId) return;
+      if (!confirm(`ต้องการปฏิเสธรายการสลิป #${txId} ใช่หรือไม่?`)) return;
+
+      try {
+        const res = await fetch(`${API_BASE}/api/transactions/${txId}/reject`, { method: 'POST' });
+        if (res.ok) {
+          showToast(`ปฏิเสธรายการ #${txId} เรียบร้อยแล้ว`, 'warning');
+          reviewModalInstance.hide();
+          loadData();
+        }
+      } catch (err) {
+        showToast('การเชื่อมต่อล้มเหลว: ' + err.message, 'danger');
+      }
+    }
+
+    // Export CSV
+    function exportCsv() {
+      window.location.href = `${API_BASE}/api/export/csv`;
+      showToast('กำลังดาวน์โหลดไฟล์บัญชี CSV สำหรับ Excel/Express...', 'primary');
+    }
+
+    // Simple toast helper
+    function showToast(msg, type = 'primary') {
+      const toast = document.createElement('div');
+      toast.className = `alert alert-${type} shadow-lg py-2 px-3 mb-2 small fw-medium d-flex align-items-center gap-2`;
+      toast.style.borderRadius = '10px';
+      toast.innerHTML = `<i data-lucide="info" style="width: 16px; height: 16px;"></i><span>${msg}</span>`;
+      document.getElementById('toastBox').appendChild(toast);
+      lucide.createIcons();
+      setTimeout(() => { toast.remove(); }, 4000);
+    }
   </script>
 </body>
 </html>

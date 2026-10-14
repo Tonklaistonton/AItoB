@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "AI-powered accounting, slip scanner, and expense management",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "dev": "node server.js",
     "start": "NODE_ENV=production node server.js"
