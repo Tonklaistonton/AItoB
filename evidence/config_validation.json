@@ -1,0 +1,7 @@
+{
+  "fresh_config_generation": "PASS",
+  "unique_random_keys": "PASS",
+  "roles": "PASS",
+  "existing_config_refused_and_preserved": "PASS",
+  "deployment_started": false
+}

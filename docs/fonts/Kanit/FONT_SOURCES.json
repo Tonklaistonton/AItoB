@@ -1,0 +1,18 @@
+{
+  "Kanit-Regular.ttf": {
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/kanit/Kanit-Regular.ttf",
+    "sha256": "27170c049660b2f962d3ed28441fd20f4c743503ca031fec9c2b4542d6c52736"
+  },
+  "Kanit-Medium.ttf": {
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/kanit/Kanit-Medium.ttf",
+    "sha256": "50a237034244026a7c63fe55e24e0b4298babe363cde043e032075b764c545a2"
+  },
+  "Kanit-SemiBold.ttf": {
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/kanit/Kanit-SemiBold.ttf",
+    "sha256": "67e64baf1a7e6e076435518ff0e6bf25c4d74b98143cd1a2688db906c0abce11"
+  },
+  "OFL.txt": {
+    "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/kanit/OFL.txt",
+    "sha256": "eb998cc5a685b240cdb46a0b5747e70334c8c57bbd7b1f6b044d75719358df67"
+  }
+}

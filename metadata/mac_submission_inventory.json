@@ -1,0 +1,469 @@
+{
+  "scope": "read_only_inventory_no_secrets_or_user_data",
+  "checked_at_utc": "2026-10-20T15:39:20.161819+00:00",
+  "lab_root": "/Users/ai-dev-for-devtomoon/aitob-lab",
+  "hardware": {
+    "hw.model": {
+      "status": "ok",
+      "stdout": "Mac17,2"
+    },
+    "hw.memsize": {
+      "status": "ok",
+      "stdout": "25769803776"
+    },
+    "machdep.cpu.brand_string": {
+      "status": "ok",
+      "stdout": "Apple M5"
+    }
+  },
+  "os": {
+    "status": "ok",
+    "stdout": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434"
+  },
+  "architecture": {
+    "status": "ok",
+    "stdout": "arm64"
+  },
+  "disk_bytes": {
+    "total": 994610155520,
+    "free": 695328145408
+  },
+  "ollama": {
+    "status": "not_found"
+  },
+  "docker": {
+    "version": {
+      "status": "ok",
+      "stdout": "Docker version 29.7.2, build a7dcaa6"
+    },
+    "containers": [
+      {
+        "name": "open-webui-open-webui-1",
+        "image": "ghcr.io/open-webui/open-webui:main",
+        "status": "Up 50 minutes (healthy)",
+        "image_id": {
+          "status": "ok",
+          "stdout": "sha256:4860ba005ae8f19f08d1e12b0868855b7b339ea0dad9927f196820fc0de04575"
+        },
+        "mounts": {
+          "status": "ok",
+          "stdout": "[{\"Type\":\"volume\",\"Name\":\"open-webui_webui-data\",\"Source\":\"/var/lib/docker/volumes/open-webui_webui-data/_data\",\"Destination\":\"/app/backend/data\",\"Driver\":\"local\",\"Mode\":\"rw\",\"RW\":true,\"Propagation\":\"\"}]"
+        },
+        "ports": {
+          "status": "ok",
+          "stdout": "{\"8080/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"3000\"}]}"
+        },
+        "repo_digests": {
+          "status": "ok",
+          "stdout": "[\"ghcr.io/open-webui/open-webui@sha256:4860ba005ae8f19f08d1e12b0868855b7b339ea0dad9927f196820fc0de04575\"]"
+        }
+      }
+    ]
+  },
+  "source_file_inventory": [
+    {
+      "path": "AItoB-operations.md",
+      "bytes": 15967,
+      "sha256": "bd65982e101f5126c14986a8c81990bbf08ca372bcc2470b65d4fa061a5f563b"
+    },
+    {
+      "path": "backup_aitob_s2.py",
+      "bytes": 5744,
+      "sha256": "bd28f9a02cc836349e049ea47d24a2bbbed5cec6eca31b7b8e113f18ab33b07b"
+    },
+    {
+      "path": "install_u4.py",
+      "bytes": 4985,
+      "sha256": "e49d0771bd509bdec1faae22dd0fb0f54902c243da83e38668bd8759a7c6d33c"
+    },
+    {
+      "path": "prepare_launchagents_s4.py",
+      "bytes": 3849,
+      "sha256": "ee7e3edaac8bac419b427c59cbbd3608820ec4c962b01982ae4ff76151162660"
+    },
+    {
+      "path": "prepare_services_s3.py",
+      "bytes": 4025,
+      "sha256": "70a801ee22f8ad9e759ce053b2d30b99d883992df9d468a3d96a89e4175e6cb6"
+    },
+    {
+      "path": "agent-u2/aitob_agent.py",
+      "bytes": 12146,
+      "sha256": "a00d3638b892bf1d40de8b637e43dc9d55f9073ebcb0f63a1e7e0423d55a11a5"
+    },
+    {
+      "path": "agent-u2/aitob_agent_policy.py",
+      "bytes": 4812,
+      "sha256": "aa7b8a046b195148f8e9d9aff44d5bbd7c8621e056588ea6154b1b4157a8e1ed"
+    },
+    {
+      "path": "agent-u2/aitob_turn.py",
+      "bytes": 3487,
+      "sha256": "fe3e72d89ead8e66f1a224797354b10a3427903c0d24be628489534f250519ae"
+    },
+    {
+      "path": "agent-u2/check_aitob_agent.py",
+      "bytes": 2195,
+      "sha256": "174afeb40ae2ba26bdc98d4316d8df819a894c84178599ffda4b04c59ef30693"
+    },
+    {
+      "path": "agent-u2/install_u2.py",
+      "bytes": 2630,
+      "sha256": "286d4b0ee16abd8f2fdedd293a19adabb3606cc796ec1b443c296b422990813c"
+    },
+    {
+      "path": "gateway/aitob_agent_policy.py",
+      "bytes": 4812,
+      "sha256": "aa7b8a046b195148f8e9d9aff44d5bbd7c8621e056588ea6154b1b4157a8e1ed"
+    },
+    {
+      "path": "gateway/aitob_turn.py",
+      "bytes": 4093,
+      "sha256": "f4cf350f2109027f6ab5280558a99fbdf387012934f3236af54d2780b281d84c"
+    },
+    {
+      "path": "gateway/aitob_turn_before_u4_20261018_010903_088851.py",
+      "bytes": 3487,
+      "sha256": "fe3e72d89ead8e66f1a224797354b10a3427903c0d24be628489534f250519ae"
+    },
+    {
+      "path": "gateway/auth.py",
+      "bytes": 526,
+      "sha256": "f065830dd8a333a501b47e191978d7c6b92869382a8c92af8dbfabba8b6ebfa9"
+    },
+    {
+      "path": "gateway/check_tool_call.py",
+      "bytes": 2958,
+      "sha256": "68960903ff0b653ff8a8b34cbedee06ba13d35acdc8736ce613259eb722ac08d"
+    },
+    {
+      "path": "gateway/documents.py",
+      "bytes": 960,
+      "sha256": "9956781cad3b29a30af08847422f5dc8003a7f6e8aa008572c90815f0319808f"
+    },
+    {
+      "path": "gateway/email_workflow.py",
+      "bytes": 5040,
+      "sha256": "9edcf20a0d905d2d646e94a31134071e794f10e4b0316e10a0abc636ae750c56"
+    },
+    {
+      "path": "gateway/gateway.py",
+      "bytes": 5806,
+      "sha256": "03bca21ecae42ddfd42c3f50e50180ccb7ea239b288585bc6d2fff3bcd6028cd"
+    },
+    {
+      "path": "gateway/gateway_before_agent_turn.py",
+      "bytes": 5255,
+      "sha256": "bc98aae591104244d542630452d6344ba15a5aa15ff29747939bd17ba5a576e7"
+    },
+    {
+      "path": "gateway/gateway_before_email_summary.py",
+      "bytes": 4898,
+      "sha256": "c06a5a0d90c54c1700c3a367ea6ebe89fefe2bc101fe2bc08ad268fe8e095ac6"
+    },
+    {
+      "path": "gateway/gateway_before_u2_20261018_065823_292608.py",
+      "bytes": 5524,
+      "sha256": "59eb853a6a953695daaa56f1711fcc5d949dae3fe68d70208ffaa11c36c071de"
+    },
+    {
+      "path": "gateway/gateway_step1a.py",
+      "bytes": 825,
+      "sha256": "cdc25c582bd2ebfca5e281bbc0463aab804cadbefb8d80b3d54d8d011432d8dc"
+    },
+    {
+      "path": "gateway/gateway_step1b.py",
+      "bytes": 2935,
+      "sha256": "9396267f5b32e614037a2f09e7d05208fbbb660ccd4bc74cfa81a1862971f43f"
+    },
+    {
+      "path": "gateway/gateway_step2.py",
+      "bytes": 3319,
+      "sha256": "5c0829ef230cb52f488c0b3a0ca54e04774e1063a13bd4c667ac4be827afdc9e"
+    },
+    {
+      "path": "gateway/gateway_step3a.py",
+      "bytes": 4112,
+      "sha256": "682120b879783367b6b797d33eaf35e7a49f7d111cc722dc9c664e5701a08acb"
+    },
+    {
+      "path": "gateway/gateway_step3b.py",
+      "bytes": 4395,
+      "sha256": "6ae5bf54257fa46a8ba21415016d9996638eca81923978d35c1df90aa5177f16"
+    },
+    {
+      "path": "gateway/gateway_step4a.py",
+      "bytes": 4636,
+      "sha256": "47364b6e4b3a881ea0c5f01395e8a81249642a2f29f9e9c3665de9ca068e1f4b"
+    },
+    {
+      "path": "gateway/gateway_step4b.py",
+      "bytes": 4853,
+      "sha256": "20337f56a487f9f7e0f0f431ffb45a5155ea06e12b3ccfbb8e6a93e853b043da"
+    },
+    {
+      "path": "gateway/mail_agent_turn.py",
+      "bytes": 6021,
+      "sha256": "147f17dd39dcdf9ea6f1051ae9c351c4f94cfc86bc696ecf7bdc6841c84b06d0"
+    },
+    {
+      "path": "gateway/rag.py",
+      "bytes": 3332,
+      "sha256": "dbe22fb61f42abec3174041f3e7a8d2372fb3fbb3ffac006e64b0e1c04dda84e"
+    },
+    {
+      "path": "gateway/search.py",
+      "bytes": 1428,
+      "sha256": "2d39e24687d4b9310161782ea6dac157670b98d833dbc29a668454de0c5d139a"
+    },
+    {
+      "path": "gateway/summarizer.py",
+      "bytes": 2390,
+      "sha256": "4b88e019eb22caa805cd569bef609f3f79d46d4cc272a21f677252c5d298151f"
+    },
+    {
+      "path": "gateway/workflow.py",
+      "bytes": 3067,
+      "sha256": "62fcfc412f07763a6ffd8e55eb6c0a957b9c914a6ec3447996988fa00fcfd75d"
+    },
+    {
+      "path": "gateway/workflow_api.py",
+      "bytes": 1020,
+      "sha256": "6ef08fb3995988a3ec2a94dd9c2c98fa0db46c529b8d69b0203abc03754a1bbe"
+    },
+    {
+      "path": "gateway/workflow_api_step4b.py",
+      "bytes": 663,
+      "sha256": "924a3480761fc79d0256e9c94ea916e931604f517b5a0af692ff87af7e5bc324"
+    },
+    {
+      "path": "gmail-lab/Dockerfile",
+      "bytes": 151,
+      "sha256": "4ee3b9bc8ba9ed440f544bd0284b901d51b171d994d7af0314415452517ac6ca"
+    },
+    {
+      "path": "gmail-lab/authorize_gmail.py",
+      "bytes": 1251,
+      "sha256": "d0cc72066be8094bca34ea2589e74cd62748016c47c5c01abe21726bec359a9f"
+    },
+    {
+      "path": "gmail-lab/check_email_access.py",
+      "bytes": 1832,
+      "sha256": "7b14b91b8b5cf17412bac5b67354cf76fd124cada07264ac57a01c2eaf3dc8d5"
+    },
+    {
+      "path": "gmail-lab/check_email_bodies.py",
+      "bytes": 685,
+      "sha256": "12c6aa30810210e9b60504f19c5f67b09808f000f382ad22866687b8ea03d6c5"
+    },
+    {
+      "path": "gmail-lab/check_gmail.py",
+      "bytes": 889,
+      "sha256": "5007a5ab9fc064896c871a4140e02ba9ad26807497fc3723ddbde8c1836105c2"
+    },
+    {
+      "path": "gmail-lab/check_read_boundary.py",
+      "bytes": 1130,
+      "sha256": "de8b5ce5d5be22276268a265e327b30788053b8cb80f21b12d4bcd45da6f13f1"
+    },
+    {
+      "path": "gmail-lab/email_access.py",
+      "bytes": 674,
+      "sha256": "0b90bb1724cb32f55810595ace173b4a4bc62c7ae8db2aaaa72f2b0aee1caae2"
+    },
+    {
+      "path": "gmail-lab/email_reader.py",
+      "bytes": 3866,
+      "sha256": "558f1ebf81d06f6ff83c1c0298af760434269a6ca23f79d8fb9b1d54c36ce12b"
+    },
+    {
+      "path": "gmail-lab/gmail_backend.py",
+      "bytes": 2882,
+      "sha256": "69b7bea80e7cfa9f63a866cd1f0525ee443e85a1a424dfc306bb2d39d92ca2c6"
+    },
+    {
+      "path": "gmail-lab/gmail_backend_before_read.py",
+      "bytes": 2745,
+      "sha256": "9fd884240a3411cb699806157ba86c930d1ff0ac2552a3f0033edb63ebcd81f2"
+    },
+    {
+      "path": "gmail-lab/gmail_backend_before_search.py",
+      "bytes": 1775,
+      "sha256": "0bfb467b83bceefbf0de644431239a22622bba52f28eb6430cbd08f61f2dd7f0"
+    },
+    {
+      "path": "gmail-lab/gmail_client.py",
+      "bytes": 1006,
+      "sha256": "edb1f0dcfee6923d5ede6ba374cc9f05aaba4f9756c21aba9c654088e9a228ec"
+    },
+    {
+      "path": "gmail-lab/gmail_read.py",
+      "bytes": 3029,
+      "sha256": "ac7641b1a1cc50d1a6a0528a02e5c3134f95677484917e88a1b5567f7b159782"
+    },
+    {
+      "path": "gmail-lab/gmail_search.py",
+      "bytes": 2258,
+      "sha256": "add367c77a50ea0ef5ba82e9161a51a3c6a046c276f3c3fc3b2fd475995df735"
+    },
+    {
+      "path": "mcp-lab/Dockerfile",
+      "bytes": 98,
+      "sha256": "97c4004a89e500c42bfdb3946777b9f560be2305f4842ca4891deaf3d8a3716d"
+    },
+    {
+      "path": "mcp-lab/aitob_agent.py",
+      "bytes": 13309,
+      "sha256": "02a37e11c44995bb24f683c9aa0a4ba3bbc649954c83e5daaf02471ef95852e4"
+    },
+    {
+      "path": "mcp-lab/aitob_agent_before_u3_20261018_071511_944201.py",
+      "bytes": 12146,
+      "sha256": "a00d3638b892bf1d40de8b637e43dc9d55f9073ebcb0f63a1e7e0423d55a11a5"
+    },
+    {
+      "path": "mcp-lab/aitob_agent_before_u4_20261018_010903_088851.py",
+      "bytes": 12689,
+      "sha256": "79a67ae15a498c3456ec122d7ed972612e98cd8f9801602260dad2c7ac5b7d0b"
+    },
+    {
+      "path": "mcp-lab/aitob_assistant_service.py",
+      "bytes": 5864,
+      "sha256": "83007c420f175d4e3d95c2694edfadde4dd4cdaca660b3ae1fb2b9d01b1eb229"
+    },
+    {
+      "path": "mcp-lab/aitob_finance_export.py",
+      "bytes": 2333,
+      "sha256": "2f39efd54886e1775d5c88efe4d16ad853b5add07386e4e55873efbf81220cbf"
+    },
+    {
+      "path": "mcp-lab/aitob_finance_upload.py",
+      "bytes": 8302,
+      "sha256": "3b03e3bc6477fea31106ea0858a5bd1c560dedd5a6fee9cd95f9d7d019447557"
+    },
+    {
+      "path": "mcp-lab/aitob_tools_server.py",
+      "bytes": 3090,
+      "sha256": "acb71cde702e74ef9ad4b1edd4f7fea5c3c5c59090d36543475d3c3e36967e28"
+    },
+    {
+      "path": "mcp-lab/call_tool.py",
+      "bytes": 1071,
+      "sha256": "fd160ae19f38acaf54789a825438be987c197bb0e61cc330aecfcc2ae98ab107"
+    },
+    {
+      "path": "mcp-lab/check_aitob_agent.py",
+      "bytes": 2195,
+      "sha256": "174afeb40ae2ba26bdc98d4316d8df819a894c84178599ffda4b04c59ef30693"
+    },
+    {
+      "path": "mcp-lab/check_mail_chat_agent.py",
+      "bytes": 2007,
+      "sha256": "4148ae4955237a41a49b07c47fd8206adcf77f1274219a64c8cdb4eb7a4c1fd9"
+    },
+    {
+      "path": "mcp-lab/check_u3_service.py",
+      "bytes": 1891,
+      "sha256": "3d4d53aa7ca9c2083f8465ffb0e2cb8fd6b97207a8cd330fd6b89a2642f19e64"
+    },
+    {
+      "path": "mcp-lab/discover_tools.py",
+      "bytes": 853,
+      "sha256": "04f1096c7d6829bc15b1fdd26ad7837a5b778fe71ae77e414ba1e85cf3ba46c9"
+    },
+    {
+      "path": "mcp-lab/finance_server.py",
+      "bytes": 1032,
+      "sha256": "b99a968f3eed27750ab0b4477bb8067cff34a3a04e4391c2cc2dd937c4db4116"
+    },
+    {
+      "path": "mcp-lab/finance_server_before_output_fix.py",
+      "bytes": 997,
+      "sha256": "3584429c277fecf8019e9b8491d74609bb3eb78d6b9ff27250e6ca0e58982626"
+    },
+    {
+      "path": "mcp-lab/mail_chat_agent.py",
+      "bytes": 9207,
+      "sha256": "8cf0d1c7b5e870ab39f6602f4460e8c90e14531d4bbe64fdd4ca1b7c630198d7"
+    },
+    {
+      "path": "mcp-lab/mail_tools_server.py",
+      "bytes": 4667,
+      "sha256": "ceea004f9ef8ac33dd5bd4e300556a043ccd1b94c6bf115ab304d1fe895235b5"
+    },
+    {
+      "path": "mcp-lab/mail_tools_server_before_read.py",
+      "bytes": 2557,
+      "sha256": "f9b34b0a3317258f03a0b9d9d542c0113a40e619632b31b3736828b7824dcd4d"
+    },
+    {
+      "path": "mcp-lab/server.py",
+      "bytes": 319,
+      "sha256": "632be6fd58df7a3250b2f51abd4370ffa531e2c87de8e1e146e39961ac94643c"
+    },
+    {
+      "path": "mcp-lab/test_aitob_tools.py",
+      "bytes": 3806,
+      "sha256": "88381e80a71456146053bc0f087ef9e5fbe1b11cc8a98d7e8aceaf9c8f289123"
+    },
+    {
+      "path": "mcp-lab/test_finance_mcp.py",
+      "bytes": 2426,
+      "sha256": "f02df57b7ac7d09faa850e4d341abc48a6a66aaf8ed57b108009414005689365"
+    },
+    {
+      "path": "mcp-lab/test_mail_read_mcp.py",
+      "bytes": 3198,
+      "sha256": "9f727f810780f721670f286dcfbdf050a8152d77d3ca3c8bea6d243f3100ad08"
+    },
+    {
+      "path": "mcp-lab/test_mail_search_mcp.py",
+      "bytes": 2561,
+      "sha256": "77a9e320e619e92d0d6344089ece4b7c7755d7b8458b6aa7ec2fa04a6eb00bae"
+    },
+    {
+      "path": "open-webui/compose.yaml",
+      "bytes": 355,
+      "sha256": "ccd0aef0dfb4e051a651e507992ec119166566f40133b64e494924010c77d93d"
+    },
+    {
+      "path": "services/launchagents/com.aitob.lab.gateway.plist",
+      "bytes": 1203,
+      "sha256": "6bc311e5bd50155173225ada188b3b3c2e34dfa00a6f3add84a5256dc40f0cf5"
+    },
+    {
+      "path": "services/launchagents/com.aitob.lab.ollama.plist",
+      "bytes": 1240,
+      "sha256": "0a61eae38fd27200a8996995319ba0610a0923fd07b29a7837a806f70d182ec5"
+    },
+    {
+      "path": "webui-u3/aitob_assistant_service.py",
+      "bytes": 4469,
+      "sha256": "a908d8ccefaa9bd0a95c4e3b5a7d9e28f8099573840498d8a6d1797aadd97324"
+    },
+    {
+      "path": "webui-u3/aitob_openwebui_pipe.py",
+      "bytes": 6100,
+      "sha256": "a7f82030ab438737ea92a4f702b2815725eb2a1560c6535447de8fd10fd17c0d"
+    },
+    {
+      "path": "webui-u3/check_u3_service.py",
+      "bytes": 1891,
+      "sha256": "3d4d53aa7ca9c2083f8465ffb0e2cb8fd6b97207a8cd330fd6b89a2642f19e64"
+    },
+    {
+      "path": "webui-u3/install_u3.py",
+      "bytes": 2451,
+      "sha256": "33b55408734386467fe40234d2808bd5354b6118985efb06007b93714dab030c"
+    },
+    {
+      "path": "webui-u3/test_u3_http.py",
+      "bytes": 1976,
+      "sha256": "da3128b09326efeb18bf1dc6394fe032a2d0b7176568a22d9bec50193365f74a"
+    }
+  ],
+  "launchagent_filenames_only": [
+    "com.aitob.lab.gateway.plist",
+    "com.aitob.lab.ollama.plist"
+  ]
+}

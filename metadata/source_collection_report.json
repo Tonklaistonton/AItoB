@@ -1,0 +1,150 @@
+{
+  "stage": "review_snapshot_not_final_submission",
+  "checked_at_utc": "2026-10-20T15:43:27.110526+00:00",
+  "files_collected": 62,
+  "withheld": [
+    {
+      "path": "gmail-lab/email_access.py",
+      "reasons": [
+        "email_address_requires_review"
+      ]
+    }
+  ],
+  "historical_files_left_on_mac": [
+    "gateway/aitob_turn_before_u4_20261018_010903_088851.py",
+    "gateway/gateway_before_agent_turn.py",
+    "gateway/gateway_before_email_summary.py",
+    "gateway/gateway_before_u2_20261018_065823_292608.py",
+    "gateway/gateway_step1a.py",
+    "gateway/gateway_step1b.py",
+    "gateway/gateway_step2.py",
+    "gateway/gateway_step3a.py",
+    "gateway/gateway_step3b.py",
+    "gateway/gateway_step4a.py",
+    "gateway/gateway_step4b.py",
+    "gateway/workflow_api_step4b.py",
+    "gmail-lab/gmail_backend_before_read.py",
+    "gmail-lab/gmail_backend_before_search.py",
+    "mcp-lab/aitob_agent_before_u3_20261018_071511_944201.py",
+    "mcp-lab/aitob_agent_before_u4_20261018_010903_088851.py",
+    "mcp-lab/finance_server_before_output_fix.py",
+    "mcp-lab/mail_tools_server_before_read.py"
+  ],
+  "extraction": {
+    "pipe": "exported_source_only",
+    "webui_version": {
+      "/app/package.json": {
+        "name": "open-webui",
+        "version": "0.12.3"
+      }
+    },
+    "ollama_version": {
+      "version": "0.40.5"
+    },
+    "ollama_model_metadata": {
+      "details": {
+        "parent_model": "",
+        "format": "safetensors",
+        "family": "gemma4_unified",
+        "families": null,
+        "parameter_size": "12.4B",
+        "quantization_level": "nvfp4",
+        "runner": "mlx"
+      },
+      "model_info": {
+        "gemma4_unified.block_count": 48,
+        "gemma4_unified.context_length": 262144,
+        "gemma4_unified.embedding_length": 3840,
+        "general.architecture": "gemma4_unified",
+        "general.parameter_count": 12382568756
+      },
+      "capabilities": [
+        "completion",
+        "vision",
+        "audio",
+        "tools",
+        "thinking"
+      ]
+    },
+    "project_image_names": [
+      "aitob-gmail-lab:day2 4a9c3c816b52",
+      "aitob-mcp-lab:day2 2df1f2a23b0a",
+      "ghcr.io/open-webui/open-webui:main 4860ba005ae8"
+    ]
+  },
+  "excluded": [
+    "credentials and OAuth JSON",
+    ".env",
+    "databases except one function source column",
+    "user chats and files",
+    "emails",
+    "model weights",
+    "logs",
+    "backup archives"
+  ],
+  "limitations": "Pattern scanning is not proof of absence of secrets. Review locally before final packaging.",
+  "sha256": {
+    "lab/AItoB-operations.md": "bd65982e101f5126c14986a8c81990bbf08ca372bcc2470b65d4fa061a5f563b",
+    "lab/backup_aitob_s2.py": "bd28f9a02cc836349e049ea47d24a2bbbed5cec6eca31b7b8e113f18ab33b07b",
+    "lab/install_u4.py": "e49d0771bd509bdec1faae22dd0fb0f54902c243da83e38668bd8759a7c6d33c",
+    "lab/prepare_launchagents_s4.py": "ee7e3edaac8bac419b427c59cbbd3608820ec4c962b01982ae4ff76151162660",
+    "lab/prepare_services_s3.py": "70a801ee22f8ad9e759ce053b2d30b99d883992df9d468a3d96a89e4175e6cb6",
+    "lab/agent-u2/aitob_agent.py": "a00d3638b892bf1d40de8b637e43dc9d55f9073ebcb0f63a1e7e0423d55a11a5",
+    "lab/agent-u2/aitob_agent_policy.py": "aa7b8a046b195148f8e9d9aff44d5bbd7c8621e056588ea6154b1b4157a8e1ed",
+    "lab/agent-u2/aitob_turn.py": "fe3e72d89ead8e66f1a224797354b10a3427903c0d24be628489534f250519ae",
+    "lab/agent-u2/check_aitob_agent.py": "174afeb40ae2ba26bdc98d4316d8df819a894c84178599ffda4b04c59ef30693",
+    "lab/agent-u2/install_u2.py": "286d4b0ee16abd8f2fdedd293a19adabb3606cc796ec1b443c296b422990813c",
+    "lab/gateway/aitob_agent_policy.py": "aa7b8a046b195148f8e9d9aff44d5bbd7c8621e056588ea6154b1b4157a8e1ed",
+    "lab/gateway/aitob_turn.py": "f4cf350f2109027f6ab5280558a99fbdf387012934f3236af54d2780b281d84c",
+    "lab/gateway/auth.py": "f065830dd8a333a501b47e191978d7c6b92869382a8c92af8dbfabba8b6ebfa9",
+    "lab/gateway/check_tool_call.py": "68960903ff0b653ff8a8b34cbedee06ba13d35acdc8736ce613259eb722ac08d",
+    "lab/gateway/documents.py": "9956781cad3b29a30af08847422f5dc8003a7f6e8aa008572c90815f0319808f",
+    "lab/gateway/email_workflow.py": "9edcf20a0d905d2d646e94a31134071e794f10e4b0316e10a0abc636ae750c56",
+    "lab/gateway/gateway.py": "03bca21ecae42ddfd42c3f50e50180ccb7ea239b288585bc6d2fff3bcd6028cd",
+    "lab/gateway/mail_agent_turn.py": "147f17dd39dcdf9ea6f1051ae9c351c4f94cfc86bc696ecf7bdc6841c84b06d0",
+    "lab/gateway/rag.py": "dbe22fb61f42abec3174041f3e7a8d2372fb3fbb3ffac006e64b0e1c04dda84e",
+    "lab/gateway/search.py": "2d39e24687d4b9310161782ea6dac157670b98d833dbc29a668454de0c5d139a",
+    "lab/gateway/summarizer.py": "4b88e019eb22caa805cd569bef609f3f79d46d4cc272a21f677252c5d298151f",
+    "lab/gateway/workflow.py": "62fcfc412f07763a6ffd8e55eb6c0a957b9c914a6ec3447996988fa00fcfd75d",
+    "lab/gateway/workflow_api.py": "6ef08fb3995988a3ec2a94dd9c2c98fa0db46c529b8d69b0203abc03754a1bbe",
+    "lab/gmail-lab/Dockerfile": "4ee3b9bc8ba9ed440f544bd0284b901d51b171d994d7af0314415452517ac6ca",
+    "lab/gmail-lab/authorize_gmail.py": "d0cc72066be8094bca34ea2589e74cd62748016c47c5c01abe21726bec359a9f",
+    "lab/gmail-lab/check_email_access.py": "7b14b91b8b5cf17412bac5b67354cf76fd124cada07264ac57a01c2eaf3dc8d5",
+    "lab/gmail-lab/check_email_bodies.py": "12c6aa30810210e9b60504f19c5f67b09808f000f382ad22866687b8ea03d6c5",
+    "lab/gmail-lab/check_gmail.py": "5007a5ab9fc064896c871a4140e02ba9ad26807497fc3723ddbde8c1836105c2",
+    "lab/gmail-lab/check_read_boundary.py": "de8b5ce5d5be22276268a265e327b30788053b8cb80f21b12d4bcd45da6f13f1",
+    "lab/gmail-lab/email_reader.py": "558f1ebf81d06f6ff83c1c0298af760434269a6ca23f79d8fb9b1d54c36ce12b",
+    "lab/gmail-lab/gmail_backend.py": "69b7bea80e7cfa9f63a866cd1f0525ee443e85a1a424dfc306bb2d39d92ca2c6",
+    "lab/gmail-lab/gmail_client.py": "edb1f0dcfee6923d5ede6ba374cc9f05aaba4f9756c21aba9c654088e9a228ec",
+    "lab/gmail-lab/gmail_read.py": "ac7641b1a1cc50d1a6a0528a02e5c3134f95677484917e88a1b5567f7b159782",
+    "lab/gmail-lab/gmail_search.py": "add367c77a50ea0ef5ba82e9161a51a3c6a046c276f3c3fc3b2fd475995df735",
+    "lab/mcp-lab/Dockerfile": "97c4004a89e500c42bfdb3946777b9f560be2305f4842ca4891deaf3d8a3716d",
+    "lab/mcp-lab/aitob_agent.py": "02a37e11c44995bb24f683c9aa0a4ba3bbc649954c83e5daaf02471ef95852e4",
+    "lab/mcp-lab/aitob_assistant_service.py": "83007c420f175d4e3d95c2694edfadde4dd4cdaca660b3ae1fb2b9d01b1eb229",
+    "lab/mcp-lab/aitob_finance_export.py": "2f39efd54886e1775d5c88efe4d16ad853b5add07386e4e55873efbf81220cbf",
+    "lab/mcp-lab/aitob_finance_upload.py": "3b03e3bc6477fea31106ea0858a5bd1c560dedd5a6fee9cd95f9d7d019447557",
+    "lab/mcp-lab/aitob_tools_server.py": "acb71cde702e74ef9ad4b1edd4f7fea5c3c5c59090d36543475d3c3e36967e28",
+    "lab/mcp-lab/call_tool.py": "fd160ae19f38acaf54789a825438be987c197bb0e61cc330aecfcc2ae98ab107",
+    "lab/mcp-lab/check_aitob_agent.py": "174afeb40ae2ba26bdc98d4316d8df819a894c84178599ffda4b04c59ef30693",
+    "lab/mcp-lab/check_mail_chat_agent.py": "4148ae4955237a41a49b07c47fd8206adcf77f1274219a64c8cdb4eb7a4c1fd9",
+    "lab/mcp-lab/check_u3_service.py": "3d4d53aa7ca9c2083f8465ffb0e2cb8fd6b97207a8cd330fd6b89a2642f19e64",
+    "lab/mcp-lab/discover_tools.py": "04f1096c7d6829bc15b1fdd26ad7837a5b778fe71ae77e414ba1e85cf3ba46c9",
+    "lab/mcp-lab/finance_server.py": "b99a968f3eed27750ab0b4477bb8067cff34a3a04e4391c2cc2dd937c4db4116",
+    "lab/mcp-lab/mail_chat_agent.py": "8cf0d1c7b5e870ab39f6602f4460e8c90e14531d4bbe64fdd4ca1b7c630198d7",
+    "lab/mcp-lab/mail_tools_server.py": "ceea004f9ef8ac33dd5bd4e300556a043ccd1b94c6bf115ab304d1fe895235b5",
+    "lab/mcp-lab/server.py": "632be6fd58df7a3250b2f51abd4370ffa531e2c87de8e1e146e39961ac94643c",
+    "lab/mcp-lab/test_aitob_tools.py": "88381e80a71456146053bc0f087ef9e5fbe1b11cc8a98d7e8aceaf9c8f289123",
+    "lab/mcp-lab/test_finance_mcp.py": "f02df57b7ac7d09faa850e4d341abc48a6a66aaf8ed57b108009414005689365",
+    "lab/mcp-lab/test_mail_read_mcp.py": "9f727f810780f721670f286dcfbdf050a8152d77d3ca3c8bea6d243f3100ad08",
+    "lab/mcp-lab/test_mail_search_mcp.py": "77a9e320e619e92d0d6344089ece4b7c7755d7b8458b6aa7ec2fa04a6eb00bae",
+    "lab/open-webui/compose.yaml": "ccd0aef0dfb4e051a651e507992ec119166566f40133b64e494924010c77d93d",
+    "lab/services/launchagents/com.aitob.lab.gateway.plist": "6bc311e5bd50155173225ada188b3b3c2e34dfa00a6f3add84a5256dc40f0cf5",
+    "lab/services/launchagents/com.aitob.lab.ollama.plist": "0a61eae38fd27200a8996995319ba0610a0923fd07b29a7837a806f70d182ec5",
+    "lab/webui-u3/aitob_assistant_service.py": "a908d8ccefaa9bd0a95c4e3b5a7d9e28f8099573840498d8a6d1797aadd97324",
+    "lab/webui-u3/aitob_openwebui_pipe.py": "a7f82030ab438737ea92a4f702b2815725eb2a1560c6535447de8fd10fd17c0d",
+    "lab/webui-u3/check_u3_service.py": "3d4d53aa7ca9c2083f8465ffb0e2cb8fd6b97207a8cd330fd6b89a2642f19e64",
+    "lab/webui-u3/install_u3.py": "33b55408734386467fe40234d2808bd5354b6118985efb06007b93714dab030c",
+    "lab/webui-u3/test_u3_http.py": "da3128b09326efeb18bf1dc6394fe032a2d0b7176568a22d9bec50193365f74a",
+    "webui/aitob_openwebui_pipe.py": "d394fd8ca54939c8b3a28b6953f600946aa27dee8568be642f1fb4878dcd2dcf"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "revision": "concise_Kanit_manual",
+  "pages": 6,
+  "previous_pages": 9,
+  "all_visible_text_font": "Kanit",
+  "visual_review": "all six rendered pages reviewed; no clipping observed",
+  "command_review": "source paths, quoting, continuation and extracted PDF command text checked",
+  "installation_validation": "fresh Mac end-to-end installation not performed",
+  "improvements": [
+    "Separate copy guard from configuration creation",
+    "Explicit env-file for both Compose projects",
+    "Mac and Windows command blocks labeled separately",
+    "Copyable commands included in docs/installation_commands.txt"
+  ]
+}

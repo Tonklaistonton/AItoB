@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>HOME</key>
+		<string>/Users/ai-dev-for-devtomoon</string>
+		<key>OLLAMA_HOST</key>
+		<string>127.0.0.1:11434</string>
+		<key>PATH</key>
+		<string>/Users/ai-dev-for-devtomoon/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+		<key>PYTHONUNBUFFERED</key>
+		<string>1</string>
+	</dict>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>com.aitob.lab.ollama</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Users/ai-dev-for-devtomoon/Applications/Ollama.app/Contents/Resources/ollama</string>
+		<string>serve</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StandardErrorPath</key>
+	<string>/Users/ai-dev-for-devtomoon/aitob-lab/logs/com.aitob.lab.ollama.err.log</string>
+	<key>StandardOutPath</key>
+	<string>/Users/ai-dev-for-devtomoon/aitob-lab/logs/com.aitob.lab.ollama.out.log</string>
+	<key>ThrottleInterval</key>
+	<integer>15</integer>
+	<key>Umask</key>
+	<integer>63</integer>
+	<key>WorkingDirectory</key>
+	<string>/Users/ai-dev-for-devtomoon/aitob-lab</string>
+</dict>
+</plist>

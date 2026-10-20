@@ -1,0 +1,7 @@
+expense_id,vendor,amount
+EXP001, Office Shop ,1200
+EXP002,Taxi,300
+EXP002, Taxi ,300
+EXP003,Cafe,abc
+EXP004,Refund,-50
+EXP005,Internet,500

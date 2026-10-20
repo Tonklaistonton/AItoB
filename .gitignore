@@ -1,0 +1,17 @@
+**/credentials/
+**/.env
+**/runtime/
+**/logs/
+**/__pycache__/
+*.db
+*.db-*
+
+**/.env.*
+!**/.env.example
+*.key
+**/token.json
+**/client_secret*.json
+**/keys.json
+**/services/compose.json
+*.pyc
+.DS_Store

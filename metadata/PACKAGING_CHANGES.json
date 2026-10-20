@@ -1,0 +1,12 @@
+[
+  "Live Mac source retained under reference/deployed_snapshot; latest Pipe exported separately from function content only.",
+  "project is an installation layout derived from the current snapshot; no deployed service was modified.",
+  "Gmail email_access.py email literal replaced with mailbox-owner-1@example.com; configure an authorized mailbox locally.",
+  "Credential files, OAuth data, user database, uploads, email contents, logs, model weights, images and backups excluded.",
+  "Compose uses AITOB_LAB_ROOT and retains original loopback ports and mount access modes; base-image metadata env removed.",
+  "Open WebUI image pinned to observed digest; Dockerfiles pin Python 3.12.15 and package versions observed in existing images.",
+  "Dependency snapshot records versions, not wheel hashes; clean rebuild has not been verified on a new Mac.",
+  "Only synthetic three-column expenses fixture included; current operational finance files not copied.",
+  "prepare_local_config.py newly supplied for fresh installations; refuses existing credential/config files.",
+  "Finance upload isolated tests adapted to package-relative source and fixture paths; no service call required."
+]

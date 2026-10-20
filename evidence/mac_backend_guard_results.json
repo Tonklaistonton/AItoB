@@ -1,0 +1,48 @@
+{
+  "scope": "Mac_deployed_module_isolated_guard_test_with_real_auth_and_stubbed_cleaner",
+  "finance_source_sha256": "b99a968f3eed27750ab0b4477bb8067cff34a3a04e4391c2cc2dd937c4db4116",
+  "unified_tool_same_callable": true,
+  "results": [
+    {
+      "case": "missing_key",
+      "result": "PASS",
+      "cleaner_calls": 0,
+      "data_open_attempts": 0,
+      "network_attempts": 0
+    },
+    {
+      "case": "invalid_key",
+      "result": "PASS",
+      "cleaner_calls": 0,
+      "data_open_attempts": 0,
+      "network_attempts": 0
+    },
+    {
+      "case": "hr_key",
+      "result": "PASS",
+      "cleaner_calls": 0,
+      "data_open_attempts": 0,
+      "network_attempts": 0
+    },
+    {
+      "case": "hr_key_with_client_role_env",
+      "result": "PASS",
+      "cleaner_calls": 0,
+      "data_open_attempts": 0,
+      "network_attempts": 0
+    },
+    {
+      "case": "finance_allow_control_stub",
+      "result": "PASS",
+      "cleaner_calls": 1
+    }
+  ],
+  "limits": [
+    "Not an HTTP/MCP transport test or WebUI identity-binding test",
+    "Authentication file reads and module imports are outside guarded IO phase",
+    "File-open APIs and socket creation instrumented; not OS-wide syscall tracing",
+    "Finance allow path uses a stub; no real cleaner or LLM executed",
+    "HTTP live and real CSV artifacts have separate evidence"
+  ],
+  "assistant_container_id": "56ab07cce8757a7040c872ac5670d5e098a265cd4e1c26601d850a170df5ce5d"
+}

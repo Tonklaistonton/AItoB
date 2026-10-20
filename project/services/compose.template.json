@@ -1,0 +1,111 @@
+{
+  "name": "aitob-submission",
+  "services": {
+    "gmail": {
+      "image": "aitob-gmail-lab:day2",
+      "pull_policy": "never",
+      "restart": "unless-stopped",
+      "ports": [
+        "127.0.0.1:8001:8001"
+      ],
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "${AITOB_LAB_ROOT}/gmail-lab",
+          "target": "/app",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "${AITOB_LAB_ROOT}/gmail-lab/credentials",
+          "target": "/app/credentials",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "${AITOB_LAB_ROOT}/gateway",
+          "target": "/gateway",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "10m",
+          "max-file": "3"
+        }
+      },
+      "command": [
+        "python",
+        "-u",
+        "/app/gmail_backend.py"
+      ],
+      "working_dir": "/app",
+      "environment": {
+        "PYTHONUNBUFFERED": "1"
+      }
+    },
+    "assistant": {
+      "image": "aitob-mcp-lab:day2",
+      "pull_policy": "never",
+      "restart": "unless-stopped",
+      "ports": [
+        "127.0.0.1:8002:8002"
+      ],
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "${AITOB_LAB_ROOT}/mcp-lab",
+          "target": "/app",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "${AITOB_LAB_ROOT}/gateway",
+          "target": "/gateway",
+          "read_only": true,
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "${AITOB_LAB_ROOT}/gateway/runtime/finance",
+          "target": "/gateway/runtime/finance",
+          "read_only": false,
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "10m",
+          "max-file": "3"
+        }
+      },
+      "command": [
+        "python",
+        "-u",
+        "/app/aitob_assistant_service.py"
+      ],
+      "working_dir": "/app",
+      "environment": {
+        "PYTHONUNBUFFERED": "1"
+      }
+    }
+  }
+}

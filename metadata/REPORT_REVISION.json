@@ -1,0 +1,19 @@
+{
+  "revision": "concise_Kanit",
+  "report_pages": 6,
+  "previous_report_pages": 11,
+  "embedded_fonts": [
+    "Kanit-Regular",
+    "Kanit-Medium",
+    "Kanit-SemiBold"
+  ],
+  "all_visible_text_font": "Kanit",
+  "visual_check": "all six pages reviewed; tables and Thai marks readable",
+  "figures_preserved": [
+    "6 input / 3 accepted / 1 duplicate / 2 rejected / THB 2000",
+    "base monthly cost 298000 / budget 400000",
+    "annual target revenue 5100000 / budget 4800000",
+    "profit allocation 150000 / 90000 / 60000",
+    "dividends 45900 / 27000 / 8100 / 5400 / 3600"
+  ]
+}

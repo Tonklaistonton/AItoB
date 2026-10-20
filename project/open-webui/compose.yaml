@@ -1,0 +1,14 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui@sha256:4860ba005ae8f19f08d1e12b0868855b7b339ea0dad9927f196820fc0de04575
+    ports:
+      - "127.0.0.1:3000:8080"
+    environment:
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY:?Missing secret in .env}
+    volumes:
+      - webui-data:/app/backend/data
+    restart: unless-stopped
+
+volumes:
+  webui-data:

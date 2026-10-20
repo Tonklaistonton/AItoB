@@ -1,0 +1,67 @@
+{
+  "scope": "static_source_and_quote_checks_only_no_live_installation",
+  "bash_syntax_check": "unavailable_process_restriction",
+  "checks": [
+    {
+      "page": 1,
+      "quote_and_continuation_check": "PASS",
+      "command_structure_review": "PASS"
+    },
+    {
+      "page": 1,
+      "quote_and_continuation_check": "PASS",
+      "command_structure_review": "PASS"
+    },
+    {
+      "page": 1,
+      "quote_and_continuation_check": "PASS",
+      "command_structure_review": "PASS"
+    },
+    {
+      "page": 1,
+      "quote_and_continuation_check": "PASS",
+      "command_structure_review": "PASS"
+    },
+    {
+      "page": 2,
+      "quote_and_continuation_check": "PASS",
+      "command_structure_review": "PASS"
+    },
+    {
+      "page": 2,
+      "quote_and_continuation_check": "PASS",
+      "command_structure_review": "PASS"
+    },
+    {
+      "page": 2,
+      "quote_and_continuation_check": "PASS",
+      "command_structure_review": "PASS"
+    },
+    {
+      "page": 2,
+      "quote_and_continuation_check": "PASS",
+      "command_structure_review": "PASS"
+    },
+    {
+      "page": 3,
+      "quote_and_continuation_check": "PASS",
+      "command_structure_review": "PASS"
+    },
+    {
+      "page": 4,
+      "quote_and_continuation_check": "PASS",
+      "command_structure_review": "PASS"
+    },
+    {
+      "page": 4,
+      "quote_and_continuation_check": "PASS",
+      "command_structure_review": "PASS"
+    },
+    {
+      "page": 6,
+      "quote_and_continuation_check": "PASS",
+      "command_structure_review": "PASS"
+    }
+  ],
+  "source_paths": "PASS"
+}

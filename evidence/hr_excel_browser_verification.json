@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-18T19:35:42.000328+00:00",
+  "pipe_version": "0.1.3",
+  "account": "May HR",
+  "command": "ตรวจไฟล์ค่าใช้จ่าย",
+  "command_denied": true,
+  "command_test_attachment": "none; verifies authorization gate only",
+  "chat_id": "dc6ab23b-ffdb-4f46-b3aa-15bc841b9b74",
+  "ton_cleaned_file_direct_url_denied": true,
+  "ton_audit_file_direct_url_denied": true,
+  "file_response": "We could not find what you're looking for :/",
+  "http_status": "not_captured",
+  "scope": "browser command authorization and cross-user output file access; not generic native upload/extraction certification"
+}

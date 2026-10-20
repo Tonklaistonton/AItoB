@@ -1,0 +1,44 @@
+{
+  "salary_per_person": {
+    "researcher": 120000,
+    "libero": 75000,
+    "technical": 50000,
+    "server": 30000,
+    "ai_for_work": 4410,
+    "promotion": 18590
+  },
+  "stated_budget_month": 400000,
+  "stated_revenue_year": 5100000,
+  "stated_cost_year": 4800000,
+  "annual_difference": 300000,
+  "valuation_target": 20400000,
+  "stated_equity": {
+    "lead": 51,
+    "technical": 4,
+    "researcher": 9,
+    "libero": 6,
+    "investor": 30
+  },
+  "source_sha256": "80d9986d7f52dd9ce91761c6a121ef183444cf041f6ec2d422bfb6340cf2248f",
+  "base_cost_month_per_person": 298000,
+  "overhead20": 59600.0,
+  "overhead30": 89400.0,
+  "cost_with20": 357600.0,
+  "cost_with30": 387400.0,
+  "profit_allocation_if30_percent_dividend": {
+    "expansion": 150000,
+    "dividend_pool": 90000,
+    "bonus_and_reserve": 60000
+  },
+  "dividends_if_pool90000": {
+    "lead": 45900.0,
+    "technical": 3600.0,
+    "researcher": 8100.0,
+    "libero": 5400.0,
+    "investor": 27000.0
+  },
+  "salary_basis_pending": false,
+  "dividend_policy_pending": false,
+  "salary_basis_confirmed": "per_person_per_month",
+  "dividend_policy_confirmed": "30_percent_pool_90000"
+}

@@ -1,0 +1,15 @@
+{
+  "status": "PASS_live_Ton_XLSX_downloads",
+  "pipe_version": "0.1.3",
+  "chat_id": "164c9d69-fdba-47b8-9765-1e7c73934dbe",
+  "input_sha256": "6d234705c0aa75404d13f116261cd992d05c89034701ff2db765ec2bf086d672",
+  "cleaned_sha256": "7d6eade0ed2f2f1ff1c9dcfb04d1cedb9e1b8a6f651fa3346d2b825a4fd089cc",
+  "imported_rows": 6,
+  "cleaned_rows": 3,
+  "duplicates": 1,
+  "rejected": 2,
+  "total_thb": "2000.00",
+  "audit_rows": 6,
+  "hr_upload_browser_test": "command_gate_and_cross_user_output_files_PASS; no HR attachment used",
+  "timing_benchmark": "not_measured"
+}

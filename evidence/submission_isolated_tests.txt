@@ -1,0 +1,15 @@
+test_bad_archive_and_bad_header (test_finance_upload.UploadTests.test_bad_archive_and_bad_header) ... ok
+test_csv_same_records_and_totals (test_finance_upload.UploadTests.test_csv_same_records_and_totals) ... ok
+test_external_relationship_block (test_finance_upload.UploadTests.test_external_relationship_block) ... ok
+test_filename_and_size_limits (test_finance_upload.UploadTests.test_filename_and_size_limits) ... ok
+test_formula_block (test_finance_upload.UploadTests.test_formula_block) ... ok
+test_no_fixed_output_write (test_finance_upload.UploadTests.test_no_fixed_output_write) ... ok
+test_precision_conflict_and_injection (test_finance_upload.UploadTests.test_precision_conflict_and_injection) ... ok
+test_real_xlsx_fixture (test_finance_upload.UploadTests.test_real_xlsx_fixture) ... ok
+test_unauthorized_before_decode_or_parse (test_finance_upload.UploadTests.test_unauthorized_before_decode_or_parse) ... ok
+test_unknown_request_fields (test_finance_upload.UploadTests.test_unknown_request_fields) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.142s
+
+OK

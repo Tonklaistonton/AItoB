@@ -1,0 +1,70 @@
+AItoB installation commands
+Read the Thai PDF first. Run one section at a time.
+Stop on any error or STOP. This file is not an automatic installer.
+
+PAGE 1 | 1 เตรียมคำสั่งใน Terminal บน Mac | bash
+export PATH="$HOME/Applications/Ollama.app/Contents/Resources:$PATH"
+export PATH="$HOME/.local/bin:/Applications/Ollama.app/Contents/Resources:$PATH"
+export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+python3 --version
+docker compose version
+ollama --version
+
+PAGE 1 | 2 เปิดโฟลเดอร์ source และตรวจไฟล์ | bash
+python3 tools/verify_files.py
+python3 -m unittest discover -s tests -v
+
+PAGE 1 | 3 คัดลอกและสร้าง config ใหม่ | bash
+if [ -e "$HOME/aitob-lab" ]; then
+  echo "STOP: existing lab found"
+else
+  cp -R project "$HOME/aitob-lab"
+fi
+
+PAGE 1 | 3 คัดลอกและสร้าง config ใหม่ | bash
+python3 tools/prepare_local_config.py --lab "$HOME/aitob-lab"
+
+PAGE 2 | 4 เตรียมโมเดลและสร้าง images | bash
+export LAB="$HOME/aitob-lab"
+ollama pull gemma4:12b
+ollama list
+ollama show gemma4:12b --verbose
+docker build -t aitob-mcp-lab:day2 "$LAB/mcp-lab"
+docker build -t aitob-gmail-lab:day2 "$LAB/gmail-lab"
+
+PAGE 2 | 5 เปิด Gateway ใน Terminal แยก | bash
+cd "$HOME/aitob-lab/gateway"
+python3 -u gateway.py
+
+PAGE 2 | 6 เปิด Gmail และ Assistant แล้วเปิด WebUI | bash
+export LAB="$HOME/aitob-lab"
+docker compose --env-file "$LAB/services/.env" \
+  -f "$LAB/services/compose.json" config --quiet
+docker compose --env-file "$LAB/services/.env" \
+  -f "$LAB/services/compose.json" up -d
+docker compose --env-file "$LAB/open-webui/.env" \
+  -f "$LAB/open-webui/compose.yaml" up -d
+
+PAGE 2 | 7 ตรวจบริการก่อนตั้งหน้าจอ | bash
+curl --fail http://127.0.0.1:8000/health
+curl --fail http://127.0.0.1:8002/health
+
+PAGE 3 | เข้าเว็บจาก Windows | cmd
+ssh -N -L 3001:127.0.0.1:3000 mac-user@mac-host
+
+PAGE 4 | 3 เปิด callback แล้วให้เจ้าของยืนยันบัญชี | bash
+export LAB="$HOME/aitob-lab"
+docker run --rm -it -p 127.0.0.1:8765:8765 \
+  -v "$LAB/gmail-lab:/app" -w /app \
+  aitob-gmail-lab:day2 python authorize_gmail.py
+
+PAGE 4 | หากยืนยันบัญชีด้วย browser ฝั่ง Windows | cmd
+ssh -N -L 8765:127.0.0.1:8765 mac-user@mac-host
+
+PAGE 6 | ตรวจสถานะบริการบน Mac | bash
+export LAB="$HOME/aitob-lab"
+docker compose --env-file "$LAB/services/.env" \
+  -f "$LAB/services/compose.json" ps
+docker compose --env-file "$LAB/open-webui/.env" \
+  -f "$LAB/open-webui/compose.yaml" ps

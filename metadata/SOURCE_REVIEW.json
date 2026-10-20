@@ -1,0 +1,20 @@
+{
+  "result": "reviewed",
+  "excluded_files": [
+    ".env",
+    "credentials",
+    "OAuth JSON",
+    "user database",
+    "email content",
+    "logs",
+    "weights",
+    "Docker images"
+  ],
+  "pattern_findings": [
+    {
+      "file": "tools/prepare_local_config.py",
+      "review": "false positive: dynamic secrets.token_urlsafe expression; no literal credential value"
+    }
+  ],
+  "limits": "Pattern scan is a supporting check; not a security certification. Mailbox address explicitly replaced with example.com."
+}

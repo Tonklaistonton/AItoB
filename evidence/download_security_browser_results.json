@@ -1,0 +1,25 @@
+{
+  "provenance": "agent_browser_observation",
+  "file_id": "d3a5ea3d-02d1-47a5-9fa0-4e04f3810550",
+  "finance_owner_download": "PASS_actual_bytes_verified_separately",
+  "hr_account_verified_from_sidebar": true,
+  "hr_export_request": {
+    "result": "PASS_denied",
+    "visible_message": "บัญชีนี้ไม่มีสิทธิ์ดาวน์โหลด CSV ค่าใช้จ่าย"
+  },
+  "hr_direct_finance_file_url": {
+    "result": "PASS_no_csv_returned",
+    "visible_response": {"detail": "We could not find what you're looking for :/"},
+    "http_status": "not_captured"
+  },
+  "anonymous_same_file_url_after_sign_out": {
+    "result": "PASS_no_csv_returned",
+    "visible_response": {"detail": "Not authenticated"},
+    "http_status": "not_captured"
+  },
+  "limits": [
+    "One Finance owner, one HR account and one generated file tested",
+    "Does not prove identity binding or all ACL configurations",
+    "Previously generated snapshots follow WebUI file ACL, not ongoing Finance-key reauthorization"
+  ]
+}
