@@ -12,3 +12,4 @@ USER aitob
 EXPOSE 8003
 
 CMD ["python", "-u", "line_service.py"]
+
