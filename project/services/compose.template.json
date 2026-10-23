@@ -5,6 +5,18 @@
       "image": "aitob-gmail-lab:day2",
       "pull_policy": "never",
       "restart": "unless-stopped",
+      "user": "10001:10001",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "cap_drop": [
+        "ALL"
+      ],
+      "read_only": true,
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=64m",
+        "/run:rw,noexec,nosuid,size=16m"
+      ],
       "ports": [
         "127.0.0.1:8001:8001"
       ],
@@ -37,6 +49,31 @@
           }
         }
       ],
+      "deploy": {
+        "resources": {
+          "limits": {
+            "cpus": "1.0",
+            "memory": "1024M",
+            "pids": 100
+          },
+          "reservations": {
+            "cpus": "0.2",
+            "memory": "256M"
+          }
+        }
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/health')"
+        ],
+        "interval": "30s",
+        "timeout": "5s",
+        "retries": 3,
+        "start_period": "10s"
+      },
       "logging": {
         "driver": "json-file",
         "options": {
@@ -58,6 +95,18 @@
       "image": "aitob-mcp-lab:day2",
       "pull_policy": "never",
       "restart": "unless-stopped",
+      "user": "10001:10001",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "cap_drop": [
+        "ALL"
+      ],
+      "read_only": true,
+      "tmpfs": [
+        "/tmp:rw,noexec,nosuid,size=128m",
+        "/run:rw,noexec,nosuid,size=16m"
+      ],
       "ports": [
         "127.0.0.1:8002:8002"
       ],
@@ -84,12 +133,37 @@
           "type": "bind",
           "source": "${AITOB_LAB_ROOT}/gateway/runtime/finance",
           "target": "/gateway/runtime/finance",
-          "read_only": false,
+          "read_only": true,
           "bind": {
             "create_host_path": false
           }
         }
       ],
+      "deploy": {
+        "resources": {
+          "limits": {
+            "cpus": "2.0",
+            "memory": "2048M",
+            "pids": 150
+          },
+          "reservations": {
+            "cpus": "0.5",
+            "memory": "512M"
+          }
+        }
+      },
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8002/health')"
+        ],
+        "interval": "30s",
+        "timeout": "5s",
+        "retries": 3,
+        "start_period": "10s"
+      },
       "logging": {
         "driver": "json-file",
         "options": {

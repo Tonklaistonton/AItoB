@@ -43,6 +43,12 @@ class GmailBackend(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def do_GET(self):
+        if self.path == "/health":
+            self.reply(200, {"status": "ok", "service": "aitob-gmail"})
+        else:
+            self.reply(404, {"error": "not_found"})
+
     def do_POST(self):
         if self.path in ("/search", "/read"):
             authorization = self.headers.get("Authorization", "")
