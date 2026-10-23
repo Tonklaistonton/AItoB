@@ -15,7 +15,7 @@ if (-not (Test-Path $wslc)) {
 
 $repoRoot = (Resolve-Path "$PSScriptRoot\..").Path
 $networkName = "aitob-net"
-$services = @("gateway", "gmail", "assistant", "webui")
+$services = @("gateway", "gmail", "assistant", "webui", "line-bot")
 
 function Ensure-Network {
     $networks = & $wslc network list
@@ -30,6 +30,7 @@ function Build-Images {
     & $wslc build -t aitob-gateway -f "$repoRoot\project\gateway\Dockerfile" "$repoRoot\project\gateway"
     & $wslc build -t aitob-gmail -f "$repoRoot\project\gmail-lab\Dockerfile" "$repoRoot\project\gmail-lab"
     & $wslc build -t aitob-assistant -f "$repoRoot\project\mcp-lab\Dockerfile" "$repoRoot\project\mcp-lab"
+    & $wslc build -t aitob-line-bot -f "$repoRoot\project\line-bot\Dockerfile" "$repoRoot\project\line-bot"
 }
 
 function Stop-Containers {
@@ -83,11 +84,22 @@ function Start-Containers {
         -v "webui-data:/app/backend/data" `
         -e WEBUI_AUTH="false" `
         -e WEBUI_SECRET_KEY="hvmQfyKE7XTm__rVbmpOKjoZO7XXRyJPuax1D0Xg6Jo" `
-        -e OPENAI_API_BASE_URL="http://gateway:8000/v1" `
-        -e OPENAI_API_KEY="test_admin_key" `
         ghcr.io/open-webui/open-webui@sha256:4860ba005ae8f19f08d1e12b0868855b7b339ea0dad9927f196820fc0de04575 | Out-Null
 
-    Write-Host "`nStack started successfully. Access Open WebUI at http://localhost:3000"
+    Write-Host "Starting line-bot..."
+    & $wslc run -d `
+        --name line-bot `
+        --network $networkName `
+        -p 127.0.0.1:8003:8003 `
+        -e GATEWAY_URL="http://gateway:8000" `
+        -e LLM_API_BASE_URL="https://rh7669c.abc-tunnel.us/v1" `
+        -e LLM_API_KEY="sk-dec6393f10b69e7c-h0ukrj-57d33abf" `
+        -e LLM_MODEL="ag/gemini-3.8-flash" `
+        aitob-line-bot | Out-Null
+
+    Write-Host "`nStack started successfully."
+    Write-Host "Open WebUI: http://localhost:3000"
+    Write-Host "LINE Webhook: http://localhost:8003/webhook"
 }
 
 switch ($Action) {
