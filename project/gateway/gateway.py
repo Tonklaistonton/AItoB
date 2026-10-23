@@ -1,3 +1,10 @@
+import json
+import os
+import socket
+import urllib.error
+import urllib.request
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
 from aitob_turn import handle_assistant_http
 from mail_agent_turn import handle_turn_http
 from email_workflow import run_email_summary
@@ -6,14 +13,11 @@ from rag import answer_rag
 from search import handle_search
 from documents import DOCUMENTS, can_read
 from auth import authenticate
-import json
-import socket
-import urllib.error
-import urllib.request
-from http.server import BaseHTTPRequestHandler, HTTPServer
 
-OLLAMA_URL = "http://127.0.0.1:11434/api/chat"
-MODEL = "gemma4:12b"
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434/api/chat")
+MODEL = os.environ.get("OLLAMA_MODEL", "gemma4:12b")
+HOST = os.environ.get("GATEWAY_HOST", "0.0.0.0")
+PORT = int(os.environ.get("GATEWAY_PORT", "8000"))
 
 
 class Gateway(BaseHTTPRequestHandler):
@@ -159,6 +163,6 @@ class Gateway(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    server = HTTPServer(("127.0.0.1", 8000), Gateway)
-    print("AItoB Gateway: http://127.0.0.1:8000", flush=True)
+    server = HTTPServer((HOST, PORT), Gateway)
+    print(f"AItoB Gateway: http://{HOST}:{PORT}", flush=True)
     server.serve_forever()

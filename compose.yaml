@@ -1,0 +1,172 @@
+services:
+  gateway:
+    build:
+      context: ./project/gateway
+    restart: unless-stopped
+    user: "10001:10001"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+      - /run:rw,noexec,nosuid,size=16m
+    ports:
+      - "127.0.0.1:${GATEWAY_PORT:-8000}:8000"
+    environment:
+      OLLAMA_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}/api/chat
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-gemma4:12b}
+      GATEWAY_HOST: "0.0.0.0"
+      GATEWAY_PORT: 8000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1024M
+          pids: 100
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  gmail:
+    build:
+      context: ./project/gmail-lab
+    restart: unless-stopped
+    user: "10001:10001"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+      - /run:rw,noexec,nosuid,size=16m
+    ports:
+      - "127.0.0.1:${GMAIL_PORT:-8001}:8001"
+    volumes:
+      - gmail-credentials:/app/credentials
+    command: ["python", "-u", "/app/gmail_backend.py"]
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1024M
+          pids: 100
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  assistant:
+    build:
+      context: ./project/mcp-lab
+    restart: unless-stopped
+    user: "10001:10001"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=128m
+      - /run:rw,noexec,nosuid,size=16m
+    ports:
+      - "127.0.0.1:${ASSISTANT_PORT:-8002}:8002"
+    environment:
+      GATEWAY_URL: http://gateway:8000
+      GMAIL_BACKEND_URL: http://gmail:8001
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - finance-data:/gateway/runtime/finance:ro
+    command: ["python", "-u", "/app/aitob_assistant_service.py"]
+    depends_on:
+      - gateway
+      - gmail
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2048M
+          pids: 150
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8002/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  webui:
+    image: ghcr.io/open-webui/open-webui@sha256:4860ba005ae8f19f08d1e12b0868855b7b339ea0dad9927f196820fc0de04575
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${OPENWEBUI_PORT:-3000}:8080"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+    environment:
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY:-change_this_in_production}
+      WEBUI_AUTH: ${WEBUI_AUTH:-true}
+    volumes:
+      - webui-data:/app/backend/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 4096M
+          pids: 200
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Optional local Ollama (run with: docker compose --profile local-llm up)
+  ollama:
+    image: ollama/ollama:latest
+    profiles:
+      - local-llm
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+
+volumes:
+  webui-data:
+  gmail-credentials:
+  finance-data:
+  ollama-data:

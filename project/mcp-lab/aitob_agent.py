@@ -13,7 +13,9 @@ sys.path.insert(0, "/gateway")
 from auth import authenticate
 from aitob_agent_policy import TOOL_FIELDS, eligible_tool_names
 
-TURN_URL = "http://host.docker.internal:8000/assistant/turn"
+import os
+GATEWAY_BASE = os.environ.get("GATEWAY_URL", "http://host.docker.internal:8000").rstrip("/")
+TURN_URL = f"{GATEWAY_BASE}/assistant/turn"
 MAX_CALLS = 4
 MAX_READS = 2
 EXCERPT_CHARS = 1000

@@ -15,7 +15,9 @@ from mcp.server.mcpserver.exceptions import ToolError
 from pydantic import Field
 
 mcp = MCPServer("AItoB Mail Tools")
-SEARCH_URL = "http://host.docker.internal:8001/search"
+import os
+GMAIL_BASE = os.environ.get("GMAIL_BACKEND_URL", "http://host.docker.internal:8001").rstrip("/")
+SEARCH_URL = f"{GMAIL_BASE}/search"
 
 
 def call_backend(key, query, max_results):
@@ -100,7 +102,7 @@ def execute_read(message_id):
         raise ToolError("invalid_message_id")
 
     request = urllib.request.Request(
-        "http://host.docker.internal:8001/read",
+        f"{GMAIL_BASE}/read",
         data=json.dumps({"message_id": message_id}).encode("utf-8"),
         headers={
             "Content-Type": "application/json",

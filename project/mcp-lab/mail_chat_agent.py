@@ -13,7 +13,9 @@ sys.path.insert(0, "/gateway")
 from auth import authenticate
 from email_workflow import MAILBOX_OWNER
 
-TURN_URL = "http://host.docker.internal:8000/agent/turn"
+import os
+GATEWAY_BASE = os.environ.get("GATEWAY_URL", "http://host.docker.internal:8000").rstrip("/")
+TURN_URL = f"{GATEWAY_BASE}/agent/turn"
 MAX_CALLS = 4
 MAX_READS = 2
 EXCERPT_CHARS = 1000
