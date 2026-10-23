@@ -240,8 +240,21 @@ async def process_attached_file(base_url, key, user_id, files):
 class Pipe:
     class Valves(BaseModel):
         BASE_URL: str = Field(
-            default="http://host.docker.internal:8002",
-            description="AItoB Assistant service URL; configured by administrator",
+            default="http://assistant:8002",
+            description="AItoB Assistant service URL",
+        )
+        LINE_CHANNEL_SECRET: str = Field(
+            default="",
+            description="LINE Channel Secret (from LINE Developers Console)",
+            json_schema_extra={"input": {"type": "password"}},
+        )
+        LINE_CHANNEL_ACCESS_TOKEN: str = Field(
+            default="",
+            description="LINE Channel Access Token (Long-lived)",
+        )
+        LINE_BOT_URL: str = Field(
+            default="http://line-bot:8003",
+            description="AItoB LINE Bot Service URL",
         )
 
     class UserValves(BaseModel):
@@ -253,6 +266,23 @@ class Pipe:
 
     def __init__(self):
         self.valves = self.Valves()
+
+    async def sync_line_settings(self):
+        secret = (self.valves.LINE_CHANNEL_SECRET or "").strip()
+        token = (self.valves.LINE_CHANNEL_ACCESS_TOKEN or "").strip()
+        if not secret and not token:
+            return
+        try:
+            async with httpx.AsyncClient(timeout=4, trust_env=False) as client:
+                await client.post(
+                    f"{self.valves.LINE_BOT_URL.rstrip('/')}/api/settings",
+                    json={
+                        "channel_secret": secret,
+                        "channel_access_token": token,
+                    }
+                )
+        except Exception:
+            pass
 
     def pipes(self):
         return [{"id": "assistant", "name": "AItoB Assistant"}]
@@ -266,6 +296,7 @@ class Pipe:
         __files__: list = None,
         __metadata__: dict = None,
     ):
+        await self.sync_line_settings()
         # Never execute business operations for title/tag/background generation.
         if __task__ is not None:
             return ""
