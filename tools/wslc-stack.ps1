@@ -67,6 +67,9 @@ function Start-Containers {
     if ($volumes -notmatch "webui-data") {
         & $wslc volume create webui-data | Out-Null
     }
+    if ($volumes -notmatch "line-data") {
+        & $wslc volume create line-data | Out-Null
+    }
 
     Write-Host "Starting gateway..."
     & $wslc run -d `
@@ -117,6 +120,7 @@ function Start-Containers {
         --name line-bot `
         --network $networkName `
         -p 127.0.0.1:8003:8003 `
+        -v "line-data:/home/aitob/data" `
         -e GATEWAY_URL="http://gateway:8000" `
         -e LINE_CHANNEL_SECRET="$lineSecret" `
         -e LINE_CHANNEL_ACCESS_TOKEN="$lineToken" `

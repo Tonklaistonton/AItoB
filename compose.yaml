@@ -138,6 +138,8 @@ services:
       LLM_MODEL: ${LLM_MODEL:-ag/gemini-3.8-flash}
     depends_on:
       - gateway
+    volumes:
+      - line-data:/home/aitob/data
     deploy:
       resources:
         limits:
@@ -209,4 +211,5 @@ volumes:
   webui-data:
   gmail-credentials:
   finance-data:
+  line-data:
   ollama-data:
