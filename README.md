@@ -67,7 +67,9 @@ Repository นี้ใช้ source ที่ตรวจและแทนค�
 
 ---
 
-### วิธีเริ่มต้นใช้งานฉบับย่อ (Quick Start for Any OS)
+### วิธีเริ่มต้นใช้งานฉบับย่อ (Quick Start)
+
+#### ทางเลือกที่ 1: Docker Compose (สำหรับ Mac / Linux / Docker Desktop)
 
 1. **คัดลอกไฟล์ตั้งค่า Environment:**
    ```bash
@@ -79,3 +81,21 @@ Repository นี้ใช้ source ที่ตรวจและแทนค�
    docker compose up -d
    ```
 4. **เปิดใช้งาน:** เข้าหน้าเว็บ Open WebUI ที่ `http://localhost:3000`
+
+#### ทางเลือกที่ 2: รันผ่าน WSLC โดยตรง (สำหรับ Windows 11 ที่มี WSL Container CLI)
+
+หากต้องการรันด้วย `wslc.exe` โดยตรงโดยไม่ต้องติดตั้ง Docker Desktop:
+
+```powershell
+# เริ่มระบบทั้งหมด
+.\tools\wslc-stack.ps1 start
+
+# ตรวจสอบสถานะคอนเทนเนอร์
+.\tools\wslc-stack.ps1 status
+
+# ดู Logs
+.\tools\wslc-stack.ps1 logs webui
+
+# หยุดระบบ
+.\tools\wslc-stack.ps1 stop
+```
