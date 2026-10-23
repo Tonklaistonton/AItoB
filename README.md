@@ -46,36 +46,31 @@ Repository นี้ใช้ source ที่ตรวจและแทนค�
 
 ---
 
-## การพัฒนาต่อยอดสู่ระดับ Production และ GitHub (Universal & Extensible Update)
+## การรันด้วย Docker (Local AI 100% via Ollama)
 
-เพื่อให้นำระบบไปต่อยอด ใช้งานบนเครื่องอื่น (Windows, Linux, macOS) หรือนำขึ้น GitHub และ Cloud ได้อย่างปลอดภัย ได้มีการปรับปรุงสถาปัตยกรรมเพิ่มเติมดังนี้:
+Branch นี้ถูกตั้งค่าให้ทำงานแบบ **Private Local AI 100%** ผ่าน **Ollama** โดยไม่มีการเชื่อมต่อ Cloud API ภายนอก
 
-### 1. สถาปัตยกรรมแบบ Universal Docker Compose (`compose.yaml`)
-- **Containerized Gateway:** รวม Gateway Service เข้ามาเป็นคอนเทนเนอร์ ไม่ต้องพึ่งพา macOS LaunchAgent
-- **Internal Docker Network (`aitob-net`):** ทุก Service สื่อสารกันผ่าน Internal DNS (`gateway:8000`, `assistant:8002`, `gmail:8001`) ป้องกันการเปิดพอร์ต Backend สู่ภายนอก
-- **Named Volumes:** ใช้ Docker Named Volumes (`webui-data`, `gmail-credentials`, `finance-data`) เพื่อตัดการพึ่งพา Absolute Path ของเครื่องเดิม
-
-### 2. ความยืดหยุ่นของโมเดล AI (Multi-Provider Support)
-สามารถเลือกเชื่อมต่อโมเดลได้ตามความเหมาะสมผ่านไฟล์ `.env`:
-- **Anthropic Claude API:** เช่น `claude-3-5-sonnet` สำหรับคำตอบที่แม่นยำสูง
-- **OpenAI / OpenRouter API:** เช่น `gpt-4o`
-- **Local Ollama:** เช่น `gemma4:12b` สำหรับการประมวลผลภายในองค์กร (On-premise)
-
-### 3. การยกระดับความปลอดภัย (Security Hardening)
-- **CIS Docker Benchmark v1.8.0:** คอนเทนเนอร์ทั้งหมดทำงานด้วยสิทธิ์ Non-root (`UID 10001:10001`), ตัดสิทธิ์ที่ไม่จำเป็นด้วย `cap_drop: ALL`, เปิดใช้ `no-new-privileges: true`, ล็อก Root Filesystem เป็น `read_only: true` และจำกัดการใช้ CPU/RAM
-- **GitHub Secret Protection & CI/CD:** เพิ่ม GitHub Actions ([`security.yml`](.github/workflows/security.yml)) เพื่อรัน **Gitleaks** ตรวจจับ Secret รั่วไหล และ Hadolint ตรวจสอบ Dockerfile อัตโนมัติทุกครั้งที่มีการ Commit/Push
+### สถาปัตยกรรมบริการ
+- **Ollama:** ประมวลผลโมเดล Local ภายในเครื่อง (Default: `gemma4:12b`)
+- **Gateway:** ควบคุมสิทธิ์และทำหน้าที่เป็น Proxy ไปยัง Ollama ภายใน Container Network
+- **Assistant:** ให้บริการ MCP Tools, ค้นเอกสาร และประมวลผลงาน
+- **Gmail Backend:** ให้บริการค้นหาและอ่านอีเมลเฉพาะขอบเขต
+- **Open WebUI:** หน้าบ้านสำหรับแชต เชื่อมต่อกับ Ollama โดยตรง
 
 ---
 
-### วิธีเริ่มต้นใช้งานฉบับย่อ (Quick Start for Any OS)
+### วิธีเริ่มต้นใช้งาน (Quick Start)
 
-1. **คัดลอกไฟล์ตั้งค่า Environment:**
+1. **เตรียมไฟล์ Environment:**
    ```bash
    cp .env.example .env
    ```
-2. **แก้ไข `.env`:** ระบุ API Key และกำหนด `WEBUI_SECRET_KEY` ตามต้องการ
-3. **เริ่มระบบด้วยคำสั่งเดียว:**
+2. **เริ่มระบบทั้งหมดด้วย Docker:**
    ```bash
    docker compose up -d
    ```
-4. **เปิดใช้งาน:** เข้าหน้าเว็บ Open WebUI ที่ `http://localhost:3000`
+3. **ดึงโมเดล Local (ครั้งแรก):**
+   ```bash
+   docker exec -it aitob-ollama ollama pull gemma4:12b
+   ```
+4. **เข้าใช้งาน:** เปิดเบราว์เซอร์ไปที่ `http://localhost:3000`

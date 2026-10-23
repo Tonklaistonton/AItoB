@@ -1,4 +1,13 @@
 services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: aitob-ollama
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+
   gateway:
     build:
       context: ./project/gateway
@@ -15,12 +24,12 @@ services:
     ports:
       - "127.0.0.1:${GATEWAY_PORT:-8000}:8000"
     environment:
-      OLLAMA_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}/api/chat
+      OLLAMA_URL: http://ollama:11434/api/chat
       OLLAMA_MODEL: ${OLLAMA_MODEL:-gemma4:12b}
       GATEWAY_HOST: "0.0.0.0"
       GATEWAY_PORT: 8000
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    depends_on:
+      - ollama
     deploy:
       resources:
         limits:
@@ -129,13 +138,13 @@ services:
       - SETUID
       - SETGID
     environment:
-      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      OLLAMA_BASE_URL: http://ollama:11434
       WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY:-change_this_in_production}
       WEBUI_AUTH: ${WEBUI_AUTH:-true}
     volumes:
       - webui-data:/app/backend/data
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    depends_on:
+      - ollama
     deploy:
       resources:
         limits:
@@ -154,19 +163,8 @@ services:
         max-size: "10m"
         max-file: "3"
 
-  # Optional local Ollama (run with: docker compose --profile local-llm up)
-  ollama:
-    image: ollama/ollama:latest
-    profiles:
-      - local-llm
-    restart: unless-stopped
-    ports:
-      - "127.0.0.1:11434:11434"
-    volumes:
-      - ollama-data:/root/.ollama
-
 volumes:
+  ollama-data:
   webui-data:
   gmail-credentials:
   finance-data:
-  ollama-data:
