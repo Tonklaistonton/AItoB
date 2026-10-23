@@ -13,11 +13,11 @@ LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("LINE_CHANNEL_ACCESS_TOKEN", "")
 PORT = int(os.environ.get("LINE_BOT_PORT", "8003"))
 
 GATEWAY_URL = os.environ.get("GATEWAY_URL", "http://gateway:8000")
-AITOB_API_KEY = os.environ.get("AITOB_API_KEY", "ivJk7sczEm3PlNE1rsBcPdP2RTvKWzYEdDJaCEiqd4M")
+AITOB_API_KEY = os.environ.get("AITOB_API_KEY", "")
 
 # Direct LLM fallback (e.g. 9router / OpenAI / Ollama)
-LLM_API_BASE_URL = os.environ.get("LLM_API_BASE_URL", "https://rh7669c.abc-tunnel.us/v1")
-LLM_API_KEY = os.environ.get("LLM_API_KEY", "sk-dec6393f10b69e7c-h0ukrj-57d33abf")
+LLM_API_BASE_URL = os.environ.get("LLM_API_BASE_URL", "")
+LLM_API_KEY = os.environ.get("LLM_API_KEY", "")
 LLM_MODEL = os.environ.get("LLM_MODEL", "ag/gemini-3.8-flash-high")
 
 

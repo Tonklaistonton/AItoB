@@ -17,6 +17,24 @@ $repoRoot = (Resolve-Path "$PSScriptRoot\..").Path
 $networkName = "aitob-net"
 $services = @("gateway", "gmail", "assistant", "webui", "line-bot")
 
+# Helper to load .env variables
+function Get-EnvMap {
+    $map = @{}
+    $envFile = "$repoRoot\.env"
+    if (Test-Path $envFile) {
+        Get-Content $envFile | ForEach-Object {
+            $line = $_.Trim()
+            if ($line -and -not $line.StartsWith("#") -and $line.Contains("=")) {
+                $idx = $line.IndexOf("=")
+                $k = $line.Substring(0, $idx).Trim()
+                $v = $line.Substring($idx + 1).Trim()
+                $map[$k] = $v
+            }
+        }
+    }
+    return $map
+}
+
 function Ensure-Network {
     $networks = & $wslc network list
     if ($networks -notmatch $networkName) {
@@ -43,6 +61,7 @@ function Stop-Containers {
 
 function Start-Containers {
     Ensure-Network
+    $cfg = Get-EnvMap
 
     $volumes = & $wslc volume list
     if ($volumes -notmatch "webui-data") {
@@ -76,6 +95,7 @@ function Start-Containers {
         -e GMAIL_BACKEND_URL="http://gmail:8001" `
         aitob-assistant | Out-Null
 
+    $webuiSecret = if ($cfg["WEBUI_SECRET_KEY"]) { $cfg["WEBUI_SECRET_KEY"] } else { "aitob-default-secret-key-32bytes" }
     Write-Host "Starting webui..."
     & $wslc run -d `
         --name webui `
@@ -83,8 +103,14 @@ function Start-Containers {
         -p 127.0.0.1:3000:8080 `
         -v "webui-data:/app/backend/data" `
         -e WEBUI_AUTH="false" `
-        -e WEBUI_SECRET_KEY="hvmQfyKE7XTm__rVbmpOKjoZO7XXRyJPuax1D0Xg6Jo" `
+        -e WEBUI_SECRET_KEY="$webuiSecret" `
         ghcr.io/open-webui/open-webui@sha256:4860ba005ae8f19f08d1e12b0868855b7b339ea0dad9927f196820fc0de04575 | Out-Null
+
+    $lineSecret = if ($cfg["LINE_CHANNEL_SECRET"]) { $cfg["LINE_CHANNEL_SECRET"] } else { "" }
+    $lineToken = if ($cfg["LINE_CHANNEL_ACCESS_TOKEN"]) { $cfg["LINE_CHANNEL_ACCESS_TOKEN"] } else { "" }
+    $llmUrl = if ($cfg["LLM_API_BASE_URL"]) { $cfg["LLM_API_BASE_URL"] } else { "" }
+    $llmKey = if ($cfg["LLM_API_KEY"]) { $cfg["LLM_API_KEY"] } else { "" }
+    $llmModel = if ($cfg["LLM_MODEL"]) { $cfg["LLM_MODEL"] } else { "ag/gemini-3.8-flash-high" }
 
     Write-Host "Starting line-bot..."
     & $wslc run -d `
@@ -92,9 +118,11 @@ function Start-Containers {
         --network $networkName `
         -p 127.0.0.1:8003:8003 `
         -e GATEWAY_URL="http://gateway:8000" `
-        -e LLM_API_BASE_URL="https://rh7669c.abc-tunnel.us/v1" `
-        -e LLM_API_KEY="sk-dec6393f10b69e7c-h0ukrj-57d33abf" `
-        -e LLM_MODEL="ag/gemini-3.8-flash" `
+        -e LINE_CHANNEL_SECRET="$lineSecret" `
+        -e LINE_CHANNEL_ACCESS_TOKEN="$lineToken" `
+        -e LLM_API_BASE_URL="$llmUrl" `
+        -e LLM_API_KEY="$llmKey" `
+        -e LLM_MODEL="$llmModel" `
         aitob-line-bot | Out-Null
 
     Write-Host "`nStack started successfully."

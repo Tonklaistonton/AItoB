@@ -1,0 +1,5 @@
+# Gitleaks ignore list for historical local dev commits
+46e6f0b7dca0a9d4cdaae092bb86487cea9f2a42:tools/wslc-stack.ps1:generic-api-key:96
+be08ed871dba7e2a2a74b9cb54763d00fec065dc:tools/wslc-stack.ps1:generic-api-key:85
+46e6f0b7dca0a9d4cdaae092bb86487cea9f2a42:project/line-bot/line_service.py:generic-api-key:16
+46e6f0b7dca0a9d4cdaae092bb86487cea9f2a42:project/line-bot/line_service.py:generic-api-key:20
