@@ -284,6 +284,157 @@ class Pipe:
         except Exception:
             pass
 
+    async def handle_line_inbox(self):
+        try:
+            async with httpx.AsyncClient(timeout=6, trust_env=False) as client:
+                res = await client.get(f"{self.valves.LINE_BOT_URL.rstrip('/')}/api/inbox")
+                if res.status_code != 200:
+                    return "ไม่สามารถเชื่อมต่อ LINE Bot Service ได้ กรุณาตรวจบริการพอร์ต 8003"
+                items = res.json()
+        except Exception as e:
+            return f"เชื่อมต่อ LINE Bot ไม่สำเร็จ: {e}"
+
+        if not items:
+            return (
+                "### 📬 กล่องข้อความ LINE (ยังไม่มีข้อความส่งเข้ามา)\n\n"
+                "เมื่อมีลูกค้าทักเข้ามาทาง LINE ข้อความจะแสดงที่นี่แบบ Real-time\n\n"
+                "👉 [คลิกเพื่อเปิดหน้าต่างตอบแชทสด Smart Inbox](/inbox)"
+            )
+
+        pending = [x for x in items if x.get("status") != "sent"]
+        lines = [
+            f"### 📬 กล่องข้อความ LINE (รอตอบ {len(pending)} รายการ / ทั้งหมด {len(items)} รายการ)",
+            "",
+            "> 💡 **วิธีตอบกลับ:** พิมพ์คำสั่ง `ตอบไลน์ [รหัส] [ข้อความของคุณ]` หรือ [คลิกเปิด Smart Inbox แชทสดพร้อมเสียงเตือน](/inbox)",
+            ""
+        ]
+
+        for it in items[:8]:
+            icon = "🟡 [รอตอบ]" if it.get("status") != "sent" else ("🤖 [AI ตอบแล้ว]" if it.get("auto_replied") else "🟢 [ส่งแล้ว]")
+            lines.append(f"#### {icon} **รหัส `{it.get('id')}` — {it.get('sender_name', 'ลูกค้า')}** ({it.get('time', '')})")
+            lines.append(f"- **คำถาม:** {it.get('question', '')}")
+            lines.append(f"- **คำตอบที่ AI ช่วยร่าง:**")
+            ans = it.get('ai_answer', '').replace('\n', '\n  > ')
+            lines.append(f"  > {ans}")
+            if it.get("status") != "sent":
+                lines.append(f"- *พิมพ์คำสั่งเพื่อส่งตอบ:* `ตอบไลน์ {it.get('id')} {it.get('ai_answer', '')[:50]}...`")
+            lines.append("")
+
+        return "\n".join(lines)
+
+    async def handle_line_reply(self, text: str):
+        parts = text.strip().split(maxsplit=2)
+        if len(parts) < 3:
+            return "กรุณาระบุรูปแบบ: `ตอบไลน์ [รหัสข้อความ] [ข้อความที่ต้องการส่ง]`\nตัวอย่าง: `ตอบไลน์ 63edc125 สวัสดีครับ ยินดีให้บริการครับ`"
+        item_id = parts[1].strip()
+        reply_text = parts[2].strip()
+
+        try:
+            async with httpx.AsyncClient(timeout=10, trust_env=False) as client:
+                res = await client.post(
+                    f"{self.valves.LINE_BOT_URL.rstrip('/')}/api/reply",
+                    json={"id": item_id, "text": reply_text}
+                )
+                if res.status_code == 200:
+                    return f"✅ **ส่งคำตอบเข้า LINE เรียบร้อยแล้ว!**\n\n> ข้อความ: {reply_text}\n\n[ดูสถานะล่าสุดใน Smart Inbox](/inbox)"
+                err = res.json().get("message", "ส่งไม่สำเร็จ")
+                return f"❌ ไม่สามารถส่งได้: {err}"
+        except Exception as e:
+            return f"เชื่อมต่อ LINE Bot ไม่สำเร็จ: {e}"
+
+    async def handle_line_toggle(self, enable: bool):
+        try:
+            async with httpx.AsyncClient(timeout=5, trust_env=False) as client:
+                res = await client.post(
+                    f"{self.valves.LINE_BOT_URL.rstrip('/')}/api/settings",
+                    json={"auto_reply": enable}
+                )
+                if res.status_code == 200:
+                    status_text = "เปิดโหมด: AI ตอบกลับข้อความใน LINE ทันทีอัตโนมัติ" if enable else "ปิดโหมดตอบอัตโนมัติ (ให้แอดมินตรวจและกดส่งเอง)"
+                    return f"⚙️ **ตั้งค่าสำเร็จ:** {status_text}\n\n[ดูการตั้งค่าใน Smart Inbox](/inbox)"
+                return "ไม่สามารถเปลี่ยนการตั้งค่าได้"
+        except Exception as e:
+            return f"เชื่อมต่อ LINE Bot ไม่สำเร็จ: {e}"
+
+    async def handle_close_case(self, chat_id: str):
+        import sqlite3, time
+        try:
+            with sqlite3.connect('/app/backend/data/webui.db') as conn:
+                conn.execute(
+                    "UPDATE chat SET folder_id = 'folder-line-closed', pinned = 0, archived = 1, updated_at = ? WHERE id = ?",
+                    (int(time.time()), chat_id)
+                )
+                conn.commit()
+            return "📁 **ปิดเคสนี้เรียบร้อยแล้ว**\n\n- ย้ายและซ่อนห้องแชทออกจากรายการหลักเรียบร้อยครับ (จัดเก็บในประวัติ)\n- หากลูกค้าท่านนี้ทัก LINE เข้ามาใหม่ ระบบจะเปิดเป็นเคสใหม่พร้อมดึงประวัติเดิมมาต่อให้อัตโนมัติครับ"
+        except Exception as e:
+            return f"ไม่สามารถปิดเคสได้: {e}"
+
+    async def handle_direct_line_reply(self, chat_id: str, text: str):
+        import sqlite3, json
+        line_uid = ""
+        try:
+            with sqlite3.connect('/app/backend/data/webui.db') as conn:
+                row = conn.execute("SELECT meta FROM chat WHERE id = ?", (chat_id,)).fetchone()
+                if row and row[0]:
+                    meta = json.loads(row[0])
+                    line_uid = meta.get("line_user_id", "")
+        except Exception:
+            pass
+        if not line_uid:
+            parts = chat_id.replace("line-", "").split("-")
+            line_uid = parts[0]
+
+        try:
+            async with httpx.AsyncClient(timeout=10, trust_env=False) as client:
+                res = await client.post(
+                    f"{self.valves.LINE_BOT_URL.rstrip('/')}/api/reply",
+                    json={"user_id": line_uid, "text": text}
+                )
+                if res.status_code == 200:
+                    return f"✅ **ส่งเข้า LINE ของลูกค้าเรียบร้อยแล้ว!**\n\n> *\"{text}\"*\n\n*(ส่งถึงลูกค้าแล้ว • หากคุยจบเรื่องแล้ว สามารถพิมพ์ `ปิดเคส` เพื่อย้ายเก็บได้เลยครับ)*"
+                err = res.json().get("message", "ส่งไม่สำเร็จ")
+                return f"❌ ไม่สามารถส่งข้อความได้: {err}"
+        except Exception as e:
+            return f"เชื่อมต่อ LINE Bot ไม่สำเร็จ: {e}"
+
+    async def handle_send_draft(self, chat_id: str, messages: list):
+        draft = ""
+        for m in reversed(messages):
+            if isinstance(m, dict) and m.get("role") == "assistant":
+                draft = m.get("content", "").strip()
+                break
+        if not draft and chat_id:
+            import sqlite3, json
+            try:
+                with sqlite3.connect('/app/backend/data/webui.db') as conn:
+                    row = conn.execute("SELECT chat FROM chat WHERE id = ?", (chat_id,)).fetchone()
+                    if row and row[0]:
+                        c = json.loads(row[0])
+                        for m in reversed(c.get('messages', [])):
+                            if m.get('role') == 'assistant':
+                                draft = m.get('content', '').strip()
+                                break
+            except Exception:
+                pass
+        if not draft:
+            return "ไม่พบคำตอบร่างของ AI กรุณาพิมพ์ข้อความที่ต้องการส่งได้เลยครับ"
+        clean_draft = draft.split("\n\n---")[0].split("\n\n*")[0].strip()
+        return await self.handle_direct_line_reply(chat_id, clean_draft)
+
+    async def handle_ask_ai_draft(self, question: str, chat_id: str):
+        try:
+            async with httpx.AsyncClient(timeout=15, trust_env=False) as client:
+                res = await client.post(
+                    f"{self.valves.LINE_BOT_URL.rstrip('/')}/api/ask-ai",
+                    json={"question": question}
+                )
+                if res.status_code == 200:
+                    ans = res.json().get("answer", "")
+                    return f"🤖 **คำตอบที่ AI ช่วยร่าง:**\n\n{ans}\n\n---\n*(พิมพ์ `ส่งเลย` เพื่อส่งร่างนี้เข้า LINE หรือพิมพ์คำตอบที่ต้องการได้ทันที)*"
+        except Exception:
+            pass
+        return "🤖 ขออภัยครับ ไม่สามารถร่างคำตอบจาก AI ได้ในขณะนี้ กรุณาพิมพ์ข้อความที่ต้องการตอบได้โดยตรงครับ"
+
     def pipes(self):
         return [{"id": "assistant", "name": "AItoB Assistant"}]
 
@@ -302,15 +453,7 @@ class Pipe:
             return ""
         if not isinstance(__user__, dict) or not __user__.get("id"):
             return "กรุณาลงชื่อเข้าใช้ก่อนใช้งาน AItoB"
-        settings = __user__.get("valves")
-        key = (
-            settings.get("AITOB_API_KEY", "")
-            if isinstance(settings, dict)
-            else getattr(settings, "AITOB_API_KEY", "")
-        )
-        if not isinstance(key, str) or not key.strip():
-            return "กรุณาตั้งค่า AITOB_API_KEY ของคุณใน User Valves ของ AItoB Assistant ก่อนใช้งาน"
-
+        # Check question first
         messages = body.get("messages", [])
         if not isinstance(messages, list):
             return "รูปแบบข้อความไม่ถูกต้อง"
@@ -325,6 +468,44 @@ class Pipe:
         question = original_user_question(messages[index].get("content"), __metadata__)
         if not isinstance(question, str) or not 1 <= len(question.strip()) <= 1000:
             return "กรุณาส่งคำถามแบบข้อความ ความยาวไม่เกิน 1,000 ตัวอักษร"
+
+        # Direct LINE Bot operations without requiring AITOB_API_KEY
+        q_clean = question.strip()
+        q_lower = q_clean.lower()
+
+        # Seamless LINE Case Chat handling
+        chat_id = (__metadata__ or {}).get("chat_id", "") or body.get("chat_id", "")
+        if chat_id.startswith("line-") or "line" in chat_id.lower():
+            if q_lower in ("ปิดเคส", "/close", "ปิดงาน", "จบเคส", "close", "close case"):
+                return await self.handle_close_case(chat_id)
+            if q_lower in ("ส่งเลย", "ส่งอันนี้เลย", "ตกลงส่ง", "ยืนยัน", "ส่งข้อความนี้", "yes", "send"):
+                return await self.handle_send_draft(chat_id, messages)
+            if q_lower.startswith("ai:") or q_lower.startswith("ถาม ai:") or q_lower.startswith("ปรึกษา:") or q_lower.startswith("ร่างใหม่:"):
+                raw_q = re.sub(r"^(ai:|ถาม ai:|ปรึกษา:|ร่างใหม่:)\s*", "", q_clean, flags=re.I)
+                return await self.handle_ask_ai_draft(raw_q, chat_id)
+            return await self.handle_direct_line_reply(chat_id, q_clean)
+
+        if q_lower in ("เช็คไลน์", "เช็คแชทไลน์", "ดูแชทไลน์", "ดูข้อความไลน์", "มีคนทักไลน์ไหม", "มีคนทักไลน์มาไหม", "กล่องข้อความไลน์", "inbox line", "line inbox", "/line", "/line-inbox"):
+            return await self.handle_line_inbox()
+
+        if q_lower.startswith("ตอบไลน์") or q_lower.startswith("/reply-line"):
+            return await self.handle_line_reply(q_clean)
+
+        if q_lower in ("เปิดตอบอัตโนมัติ", "เปิด auto reply", "เปิด auto-reply", "/auto-reply on"):
+            return await self.handle_line_toggle(True)
+
+        if q_lower in ("ปิดตอบอัตโนมัติ", "ปิด auto reply", "ปิด auto-reply", "/auto-reply off"):
+            return await self.handle_line_toggle(False)
+
+        settings = __user__.get("valves")
+        key = (
+            settings.get("AITOB_API_KEY", "")
+            if isinstance(settings, dict)
+            else getattr(settings, "AITOB_API_KEY", "")
+        )
+        if not isinstance(key, str) or not key.strip():
+            return "กรุณาตั้งค่า AITOB_API_KEY ของคุณใน User Valves ของ AItoB Assistant ก่อนใช้งาน หรือพิมพ์ 'เช็คไลน์' เพื่อดูกล่องข้อความ LINE"
+
         attached = __files__ if __files__ is not None else body.get("files", [])
         upload_requested = question.strip().lower() in (
             "ตรวจไฟล์ค่าใช้จ่าย",

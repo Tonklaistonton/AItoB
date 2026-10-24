@@ -1,0 +1,477 @@
+/* ==========================================================================
+   AItoB Enterprise Assistant - Connect Services & Executive Onboarding
+   Visuals accurately matched to the executive onboarding concept video
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+
+body, button, input, textarea, select {
+  font-family: -apple-system, BlinkMacSystemFont, 'Kanit', sans-serif !important;
+}
+
+/* Fullscreen Backdrop Blur Overlay */
+.aitob-onboarding-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.68);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.aitob-onboarding-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Modal Card Container */
+.aitob-modal-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 660px;
+  max-height: 90vh;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.45), 0 0 25px rgba(37, 99, 235, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Kanit', sans-serif !important;
+  color: #0f172a;
+  transform: scale(0.96) translateY(10px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aitob-onboarding-overlay.active .aitob-modal-card {
+  transform: scale(1) translateY(0);
+}
+
+/* Modal Header */
+.aitob-modal-header {
+  padding: 24px 28px 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.aitob-modal-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.aitob-modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.aitob-modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.aitob-modal-badge {
+  background: rgba(37, 99, 235, 0.1);
+  color: #2563eb;
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.aitob-modal-subtitle {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0;
+}
+
+.aitob-modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.aitob-modal-close-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* 2x2 Services Grid */
+.aitob-services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 22px 28px 16px;
+  overflow-y: auto;
+}
+
+@media (max-width: 600px) {
+  .aitob-services-grid {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+}
+
+/* Service Card */
+.aitob-service-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px 16px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.aitob-service-card:hover {
+  border-color: #93c5fd;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.08);
+}
+
+.aitob-service-card.checked {
+  border-color: #2563eb;
+  background: #f8fafc;
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.12);
+}
+
+.aitob-service-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.aitob-service-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.aitob-service-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.aitob-service-icon.db-icon {
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.aitob-service-icon.n8n-icon {
+  background: rgba(234, 88, 12, 0.1);
+}
+
+.aitob-service-icon.line-icon {
+  background: rgba(6, 199, 85, 0.1);
+}
+
+.aitob-service-icon.gmail-icon {
+  background: rgba(234, 67, 53, 0.1);
+}
+
+.aitob-service-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.aitob-service-chk {
+  width: 20px;
+  height: 20px;
+  accent-color: #2563eb;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Service Expandable Drawer */
+.aitob-service-drawer {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, margin 0.2s ease;
+  margin-top: 0;
+}
+
+.aitob-service-card.checked .aitob-service-drawer {
+  max-height: 180px;
+  opacity: 1;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.aitob-field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.aitob-field-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #0f172a;
+  background: #ffffff;
+  outline: none;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
+}
+
+.aitob-field-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.aitob-input-with-btn {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.aitob-test-ping-btn {
+  padding: 8px 12px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #1e293b;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.aitob-test-ping-btn:hover {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+}
+
+.aitob-password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.aitob-pwd-toggle {
+  position: absolute;
+  right: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.6;
+  padding: 2px 4px;
+}
+
+.aitob-pwd-toggle:hover {
+  opacity: 1;
+}
+
+/* Quick Prompts Collapsible Accordion */
+.aitob-quick-prompts-toggle {
+  margin: 0 28px;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.15s;
+}
+
+.aitob-quick-prompts-toggle:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.aitob-quick-prompts-drawer {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.25s ease, opacity 0.2s ease, margin 0.2s ease;
+  margin: 0 28px;
+}
+
+.aitob-quick-prompts-drawer.open {
+  max-height: 140px;
+  opacity: 1;
+  margin-top: 8px;
+}
+
+.aitob-prompt-chip-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.aitob-chip {
+  padding: 6px 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #2563eb;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.aitob-chip:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+}
+
+/* Modal Footer */
+.aitob-modal-footer {
+  padding: 16px 28px 24px;
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.aitob-footer-subrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.aitob-skip-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #64748b;
+  cursor: pointer;
+  user-select: none;
+}
+
+.aitob-skip-label a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.aitob-btn-save-continue {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 13px 24px;
+  border-radius: 10px;
+  font-size: 15.5px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s, transform 0.1s;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+}
+
+.aitob-btn-save-continue:hover {
+  background: #1d4ed8;
+}
+
+.aitob-btn-save-continue:active {
+  transform: scale(0.99);
+}
+
+/* Floating Toast Notification */
+.aitob-toast-notification {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #3b82f6;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  z-index: 10005;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aitob-toast-notification.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* Sidebar & Header Trigger Buttons */
+#nav-get-started-btn {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 4px 6px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+#nav-get-started-btn:hover {
+  background: rgba(37, 99, 235, 0.16);
+  border-color: #60a5fa;
+}
+
+.aitob-header-btn-getstarted {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 10px;
+  background: rgba(37, 99, 235, 0.15);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  transition: all 0.2s ease;
+}
+
+.aitob-header-btn-getstarted:hover {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
