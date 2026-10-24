@@ -90,3 +90,38 @@ docker compose logs -f webui
    - Keep diffs focused and minimal.
    - Use standard library first where applicable.
    - Keep scratchpad/one-off test scripts in `tools/archive/` instead of cluttering the root or active `tools/` folder.
+
+---
+
+## สิ่งที่ดำเนินการเสร็จสิ้นแล้ว (Completed Milestones)
+
+### 1. ระบบโครงสร้างพื้นฐานและความปลอดภัยคอนเทนเนอร์ (Container & Hardening)
+- [x] ออกแบบ `compose.yaml` รองรับสถาปัตยกรรมแบบ Microservices และเชื่อมต่อผ่าน Internal Network (`aitob-net`)
+- [x] ยกระดับความปลอดภัยตาม **CIS Docker Benchmark v1.8.0**:
+  - รันทุก Service ด้วย Non-root (`UID 10001:10001`)
+  - ตัด Linux Capabilities ทั้งหมด (`cap_drop: ALL`)
+  - ล็อก Root Filesystem เป็น `read_only: true` และเปิด `no-new-privileges: true`
+  - กำหนด `tmpfs` พร้อมขนาดและ flags ที่ปลอดภัยสำหรับพื้นที่เขียนชั่วคราว
+  - ตั้งค่าจำกัดทรัพยากร CPU และ Memory
+- [x] พัฒนา `tools/wslc-stack.ps1` สำหรับบริหารจัดการ Stack บน Windows 11 ผ่าน `wslc.exe` โดยไม่ต้องพึ่ง Docker Desktop
+- [x] ติดตั้ง CI/CD Security Workflow (`.github/workflows/security.yml`) พร้อม Gitleaks และ Hadolint
+
+### 2. เซอร์วิสหลักและระบบ AI Backend (Core Services & AI Lab)
+- [x] **Gateway (`project/gateway`)**: ตรวจสอบสิทธิ์ (Token Auth), บังคับใช้นโยบายความปลอดภัย, และเชื่อมต่อ LLM/RAG
+- [x] **Gmail Lab (`project/gmail-lab`)**: ระบบ OAuth สำหรับค้นหาและอ่านอีเมลตามขอบเขตความปลอดภัย
+- [x] **Assistant MCP (`project/mcp-lab`)**: เครื่องมือตรวจสอบไฟล์ค่าใช้จ่าย (Expense CSV/XLSX) และส่งออกข้อมูล
+- [x] ชุดทดสอบ Isolated Unit Tests (`tests/test_finance_upload.py`) ผ่านสมบูรณ์ (10/10 เคส)
+
+### 3. Open WebUI Customization & Frontend Integration
+- [x] พัฒนา **AItoB Assistant Pipe Function** (`project/webui/aitob_openwebui_pipe.py`) เชื่อมต่อ Open WebUI เข้ากับ Gateway
+- [x] ปรับแต่งส่วนติดต่อผู้ใช้ด้วย Onboarding Wizard (`project/webui/loader.js` และ `project/webui/custom.css`):
+  - โมดอลตั้งค่าการเชื่อมต่อแบบ 2x2 Services (Database, n8n, LINE, Gmail)
+  - กล่องคำสั่งลัด Quick Prompts Accordion (Finance, Travel Policy, Email RAG)
+- [x] พัฒนาระบบ Deploy Asset แบบไบนารีที่รักษารหัสภาษาไทย UTF-8 (`tools/deploy_assets.py`, `tools/apply-webui-assets.ps1`)
+
+### 4. การจัดระเบียบโค้ดและการตรวจสอบความปลอดภัย (Cleanup & Security Audit)
+- [x] จัดระเบียบโฟลเดอร์ `tools/` ย้ายสคริปต์เฉพาะกิจ/ทดสอบ 17 ไฟล์ไปไว้ที่ `tools/archive/` พร้อมสารบัญ `tools/archive/README.md`
+- [x] ลบไฟล์ทดสอบซ้ำซ้อนใน root และ `tools/`
+- [x] ดำเนินการ Security Audit และปิดการทำงานของ `line-bot` service ออกจาก Running Stack ชั่วคราวเพื่อรอการ Hardening
+- [x] จัดทำเอกสารคู่มือมาตรฐานโครงการ `CLAUDE.md`
+
