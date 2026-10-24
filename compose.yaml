@@ -117,46 +117,6 @@ services:
         max-size: "10m"
         max-file: "3"
 
-  line-bot:
-    build:
-      context: ./project/line-bot
-    restart: unless-stopped
-    user: "10001:10001"
-    security_opt:
-      - no-new-privileges:true
-    cap_drop:
-      - ALL
-    ports:
-      - "127.0.0.1:${LINE_BOT_PORT:-8003}:8003"
-    environment:
-      LINE_CHANNEL_ACCESS_TOKEN: ${LINE_CHANNEL_ACCESS_TOKEN:-}
-      LINE_CHANNEL_SECRET: ${LINE_CHANNEL_SECRET:-}
-      LINE_BOT_PORT: 8003
-      GATEWAY_URL: http://gateway:8000
-      LLM_API_BASE_URL: ${LLM_API_BASE_URL:-}
-      LLM_API_KEY: ${LLM_API_KEY:-}
-      LLM_MODEL: ${LLM_MODEL:-ag/gemini-3.8-flash}
-    depends_on:
-      - gateway
-    volumes:
-      - line-data:/home/aitob/data
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 512M
-          pids: 50
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8003/health')"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-
   webui:
     image: ghcr.io/open-webui/open-webui@sha256:4860ba005ae8f19f08d1e12b0868855b7b339ea0dad9927f196820fc0de04575
     restart: unless-stopped
@@ -212,5 +172,4 @@ volumes:
   webui-data:
   gmail-credentials:
   finance-data:
-  line-data:
   ollama-data:

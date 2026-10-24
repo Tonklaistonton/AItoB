@@ -15,7 +15,7 @@ if (-not (Test-Path $wslc)) {
 
 $repoRoot = (Resolve-Path "$PSScriptRoot\..").Path
 $networkName = "aitob-net"
-$services = @("gateway", "gmail", "assistant", "webui", "line-bot")
+$services = @("gateway", "gmail", "assistant", "webui")
 
 # Helper to load .env variables
 function Get-EnvMap {
@@ -48,7 +48,6 @@ function Build-Images {
     & $wslc build -t aitob-gateway -f "$repoRoot\project\gateway\Dockerfile" "$repoRoot\project\gateway"
     & $wslc build -t aitob-gmail -f "$repoRoot\project\gmail-lab\Dockerfile" "$repoRoot\project\gmail-lab"
     & $wslc build -t aitob-assistant -f "$repoRoot\project\mcp-lab\Dockerfile" "$repoRoot\project\mcp-lab"
-    & $wslc build -t aitob-line-bot -f "$repoRoot\project\line-bot\Dockerfile" "$repoRoot\project\line-bot"
 }
 
 function Stop-Containers {
@@ -66,9 +65,6 @@ function Start-Containers {
     $volumes = & $wslc volume list
     if ($volumes -notmatch "webui-data") {
         & $wslc volume create webui-data | Out-Null
-    }
-    if ($volumes -notmatch "line-data") {
-        & $wslc volume create line-data | Out-Null
     }
 
     Write-Host "Starting gateway..."
@@ -109,26 +105,6 @@ function Start-Containers {
         -e WEBUI_SECRET_KEY="$webuiSecret" `
         ghcr.io/open-webui/open-webui@sha256:4860ba005ae8f19f08d1e12b0868855b7b339ea0dad9927f196820fc0de04575 | Out-Null
 
-    $lineSecret = if ($cfg["LINE_CHANNEL_SECRET"]) { $cfg["LINE_CHANNEL_SECRET"] } else { "" }
-    $lineToken = if ($cfg["LINE_CHANNEL_ACCESS_TOKEN"]) { $cfg["LINE_CHANNEL_ACCESS_TOKEN"] } else { "" }
-    $llmUrl = if ($cfg["LLM_API_BASE_URL"]) { $cfg["LLM_API_BASE_URL"] } else { "" }
-    $llmKey = if ($cfg["LLM_API_KEY"]) { $cfg["LLM_API_KEY"] } else { "" }
-    $llmModel = if ($cfg["LLM_MODEL"]) { $cfg["LLM_MODEL"] } else { "ag/gemini-3.8-flash" }
-
-    Write-Host "Starting line-bot..."
-    & $wslc run -d `
-        --name line-bot `
-        --network $networkName `
-        -p 127.0.0.1:8003:8003 `
-        -v "line-data:/home/aitob/data" `
-        -e GATEWAY_URL="http://gateway:8000" `
-        -e LINE_CHANNEL_SECRET="$lineSecret" `
-        -e LINE_CHANNEL_ACCESS_TOKEN="$lineToken" `
-        -e LLM_API_BASE_URL="$llmUrl" `
-        -e LLM_API_KEY="$llmKey" `
-        -e LLM_MODEL="$llmModel" `
-        aitob-line-bot | Out-Null
-
     # Apply WebUI custom assets (CSS & Get Started loader)
     Start-Sleep -Seconds 2
     if (Test-Path "$PSScriptRoot\apply-webui-assets.ps1") {
@@ -137,8 +113,6 @@ function Start-Containers {
 
     Write-Host "`nStack started successfully."
     Write-Host "Open WebUI: http://localhost:3000"
-    Write-Host "LINE Smart Inbox: http://localhost:8003"
-    Write-Host "LINE Webhook: http://localhost:8003/webhook"
 }
 
 switch ($Action) {
