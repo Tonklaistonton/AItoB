@@ -117,8 +117,43 @@ services:
         max-size: "10m"
         max-file: "3"
 
+  line-bot:
+    build:
+      context: ./project/line-bot
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${LINE_BOT_PORT:-8003}:8003"
+    environment:
+      LINE_CHANNEL_ACCESS_TOKEN: ${LINE_CHANNEL_ACCESS_TOKEN:-}
+      LINE_CHANNEL_SECRET: ${LINE_CHANNEL_SECRET:-}
+      LINE_BOT_PORT: 8003
+      ASSISTANT_URL: http://assistant:8002
+      AITOB_API_KEY: ${AITOB_API_KEY:-}
+      WEBUI_DB_PATH: /webui-data/webui.db
+    volumes:
+      - webui-data:/webui-data
+    depends_on:
+      - assistant
+      - webui
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+          pids: 50
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8003/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
   webui:
-    image: ghcr.io/open-webui/open-webui@sha256:4860ba005ae8f19f08d1e12b0868855b7b339ea0dad9927f196820fc0de04575
+    image: ghcr.io/open-webui/open-webui@sha256:096c8f3d3132016210ca87b0b4dff01d2d66d9fe4fee088fae13fc30f9ac54f3
     restart: unless-stopped
     ports:
       - "127.0.0.1:${OPENWEBUI_PORT:-3000}:8080"

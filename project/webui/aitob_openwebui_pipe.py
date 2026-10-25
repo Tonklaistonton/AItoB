@@ -418,7 +418,13 @@ class Pipe:
                 pass
         if not draft:
             return "ไม่พบคำตอบร่างของ AI กรุณาพิมพ์ข้อความที่ต้องการส่งได้เลยครับ"
-        clean_draft = draft.split("\n\n---")[0].split("\n\n*")[0].strip()
+        if "🤖 **คำตอบที่ AI ช่วยร่าง:**" in draft:
+            part = draft.split("🤖 **คำตอบที่ AI ช่วยร่าง:**", 1)[1]
+            part = part.split("\n\n---", 1)[0].split("\n\n*(", 1)[0]
+            lines = [l.lstrip("> ").strip() for l in part.strip().split("\n")]
+            clean_draft = "\n".join(lines).strip()
+        else:
+            clean_draft = draft.split("\n\n---")[0].split("\n\n*")[0].strip()
         return await self.handle_direct_line_reply(chat_id, clean_draft)
 
     async def handle_ask_ai_draft(self, question: str, chat_id: str):

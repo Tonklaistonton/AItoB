@@ -464,12 +464,125 @@
     } catch(e) {}
   }
 
-  // Throttled lifecycle loop (every 1.5s)
+  // 9. Auto-Fill LINE AI Draft into Chat Input Box ("Send a message")
+  let lastHandledChatId = "";
+
+  function extractDraftFromElement(el) {
+    if (!el) return null;
+    const blockquotes = el.querySelectorAll("blockquote");
+    if (blockquotes.length >= 2) {
+      const draft = blockquotes[1].innerText.trim();
+      if (draft && !draft.includes("พิมพ์ข้อความใหม่")) return draft;
+    }
+    const fullText = el.innerText || "";
+    const match = fullText.match(/คำตอบที่ AI ช่วยร่าง:[\s\S]*?(?:>|\n)([\s\S]*?)(?:---|\*\(\s*💡|$)/i);
+    if (match && match[1]) {
+      const lines = match[1].split("\n")
+        .map(l => l.replace(/^\s*>\s*/, "").trim())
+        .filter(l => l.length > 0);
+      return lines.join("\n").trim();
+    }
+    return null;
+  }
+
+  function fillChatTextarea(text) {
+    const el = document.querySelector("#chat-textarea") || 
+               document.querySelector("textarea#chat-input") || 
+               document.querySelector("textarea");
+    if (!el) return false;
+    el.value = text;
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 220) + "px";
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+    el.dispatchEvent(new Event("change", { bubbles: true }));
+    try {
+      el.focus();
+      el.setSelectionRange(el.value.length, el.value.length);
+    } catch(e) {}
+    return true;
+  }
+
+  function attachDraftActionButtons(msgEl, draftText) {
+    if (!msgEl || msgEl.querySelector(".aitob-draft-actions")) return;
+    const actionContainer = document.createElement("div");
+    actionContainer.className = "aitob-draft-actions";
+    actionContainer.style.cssText = "display: flex; gap: 8px; margin-top: 10px; align-items: center; flex-wrap: wrap;";
+    
+    const editBtn = document.createElement("button");
+    editBtn.className = "aitob-draft-edit-btn";
+    editBtn.style.cssText = "background: rgba(37, 99, 235, 0.12); color: #2563eb; border: 1px solid rgba(37, 99, 235, 0.3); padding: 5px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: all 0.15s;";
+    editBtn.innerHTML = "✏️ ใส่ในช่องพิมพ์เพื่อแก้ไข";
+    editBtn.onclick = () => {
+      fillChatTextarea(draftText);
+      showToast("📝 นำร่างคำตอบใส่ในช่องพิมพ์แล้ว สามารถแก้ไขแล้วกดส่งได้เลยครับ");
+    };
+    
+    const sendBtn = document.createElement("button");
+    sendBtn.className = "aitob-draft-send-btn";
+    sendBtn.style.cssText = "background: #06c755; color: #ffffff; border: none; padding: 5px 14px; border-radius: 8px; font-size: 12.5px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 2px 6px rgba(6, 199, 85, 0.3); transition: all 0.15s;";
+    sendBtn.innerHTML = "⚡ ส่งร่างนี้เข้า LINE ทันที";
+    sendBtn.onclick = () => {
+      fillChatTextarea("ส่งเลย");
+      setTimeout(() => {
+        const sendButton = document.querySelector("#send-message-button") || 
+                           document.querySelector("button[type='submit']") ||
+                           document.querySelector("button[aria-label='Send message']");
+        if (sendButton) sendButton.click();
+      }, 100);
+    };
+
+    actionContainer.appendChild(editBtn);
+    actionContainer.appendChild(sendBtn);
+    msgEl.appendChild(actionContainer);
+  }
+
+  function handleAutoFillLineDraft() {
+    const path = window.location.pathname;
+    const isLineChat = path.includes("/c/line-") || (document.title && document.title.includes("[LINE]"));
+    if (!isLineChat) return;
+
+    const currentChatId = path.split("/c/")[1] || "";
+    const messages = document.querySelectorAll("[id^='message-content-'], .chat-message, [class*='message-content']");
+    if (!messages.length) return;
+
+    let lastDraftMsg = null;
+    let draftText = null;
+
+    for (let i = messages.length - 1; i >= 0; i--) {
+      const msg = messages[i];
+      if (msg.innerText && msg.innerText.includes("คำตอบที่ AI ช่วยร่าง:")) {
+        const extracted = extractDraftFromElement(msg);
+        if (extracted) {
+          lastDraftMsg = msg;
+          draftText = extracted;
+          break;
+        }
+      }
+    }
+
+    if (draftText && lastDraftMsg) {
+      attachDraftActionButtons(lastDraftMsg, draftText);
+
+      if (currentChatId && currentChatId !== lastHandledChatId) {
+        lastHandledChatId = currentChatId;
+        const textarea = document.querySelector("#chat-textarea") || 
+                         document.querySelector("textarea#chat-input") || 
+                         document.querySelector("textarea");
+        if (textarea && (!textarea.value || textarea.value.trim() === "")) {
+          fillChatTextarea(draftText);
+          console.log("[AItoB] Auto-prefilled LINE draft into chat textarea:", draftText);
+        }
+      }
+    }
+  }
+
+  // Throttled lifecycle loop (every 800ms)
   setInterval(() => {
     updateSidebarGetStarted();
     updateHeaderGetStarted();
     checkFirstTimeUser();
-  }, 1500);
+    handleAutoFillLineDraft();
+  }, 800);
 
   // Init
   setTimeout(() => {
@@ -477,5 +590,6 @@
     updateSidebarGetStarted();
     updateHeaderGetStarted();
     checkFirstTimeUser();
+    handleAutoFillLineDraft();
   }, 800);
 })();
