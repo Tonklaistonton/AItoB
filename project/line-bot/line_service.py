@@ -32,6 +32,20 @@ def verify_signature(secret: str, body: bytes, signature: str) -> bool:
     return hmac.compare_digest(expected, signature.strip())
 
 
+def verify_admin_auth(auth_header: str) -> bool:
+    if not auth_header or not isinstance(auth_header, str):
+        return False
+    scheme, sep, token = auth_header.partition(" ")
+    if scheme.lower() != "bearer" or not sep or not token:
+        return False
+    token = token.strip()
+    valid_tokens = [t for t in (CHANNEL_SECRET, AITOB_API_KEY) if t]
+    if not valid_tokens:
+        # ponytail: allow unconfigured local dev; add strict token in production
+        return True
+    return any(hmac.compare_digest(token, vt) for vt in valid_tokens)
+
+
 def get_line_profile(user_id: str, token: str) -> str:
     if not token or not user_id:
         return "ลูกค้า LINE"
@@ -127,8 +141,8 @@ def sync_to_webui_db(line_uid: str, sender: str, question: str, ai_answer: str, 
             init_folders(conn, admin_id)
 
             row = conn.execute(
-                "SELECT id, chat FROM chat WHERE folder_id = 'folder-line' AND meta LIKE ? ORDER BY updated_at DESC LIMIT 1",
-                (f'%"line_user_id": "{line_uid}"%',)
+                "SELECT id, chat FROM chat WHERE folder_id = 'folder-line' AND json_extract(meta, '$.line_user_id') = ? ORDER BY updated_at DESC LIMIT 1",
+                (line_uid,)
             ).fetchone()
 
             msg_id = str(uuid.uuid4())
@@ -234,21 +248,34 @@ class LineWebhookHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         # 1. Admin reply from Open WebUI
         if self.path in ("/api/reply", "/reply"):
+            if not verify_admin_auth(self.headers.get("Authorization", "")):
+                self.reply_json(401, {"error": "unauthorized"})
+                return
             try:
                 length = int(self.headers.get("Content-Length", "0"))
-                data = json.loads(self.rfile.read(length).decode("utf-8"))
-                user_id = data.get("user_id") or data.get("id") or ""
-                text = data.get("text", "")
+                if not 0 < length <= 65536:
+                    self.reply_json(400, {"error": "invalid_content_length"})
+                    return
+                raw = self.rfile.read(length)
+                data = json.loads(raw.decode("utf-8"))
+                user_id = (data.get("user_id") or data.get("id") or "").strip()
+                text = (data.get("text") or "").strip()
                 if not user_id or not text:
                     self.reply_json(400, {"error": "user_id_and_text_required"})
                     return
+                if user_id.startswith("line-"):
+                    parts = user_id.split("-")
+                    if len(parts) >= 2:
+                        user_id = parts[1]
                 ok = push_line_message(user_id, text, CHANNEL_ACCESS_TOKEN)
                 if ok:
                     self.reply_json(200, {"status": "ok", "message": "sent"})
                 else:
                     self.reply_json(500, {"error": "line_push_failed"})
-            except Exception as e:
-                self.reply_json(400, {"error": str(e)})
+            except (ValueError, UnicodeDecodeError):
+                self.reply_json(400, {"error": "invalid_request_body"})
+            except Exception:
+                self.reply_json(500, {"error": "internal_error"})
             return
 
         # 2. LINE Webhook

@@ -53,6 +53,12 @@ def clean_expenses(identity):
                 rejected.append({"line": line, "reason": "invalid_fields"})
                 continue
 
+            # Block CSV/Spreadsheet formula injection
+            if any(v.lstrip().startswith(("=", "+", "-", "@")) or any(ord(c) < 32 for c in v)
+                   for v in (expense_id, vendor)):
+                rejected.append({"line": line, "reason": "unsafe_spreadsheet_text"})
+                continue
+
             record = (vendor, amount)
             if expense_id in seen:
                 if seen[expense_id] == record:

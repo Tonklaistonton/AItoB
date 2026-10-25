@@ -330,9 +330,11 @@ class Pipe:
         reply_text = parts[2].strip()
 
         try:
+            headers = {"Authorization": f"Bearer {self.valves.LINE_CHANNEL_SECRET}"} if self.valves.LINE_CHANNEL_SECRET else {}
             async with httpx.AsyncClient(timeout=10, trust_env=False) as client:
                 res = await client.post(
                     f"{self.valves.LINE_BOT_URL.rstrip('/')}/api/reply",
+                    headers=headers,
                     json={"id": item_id, "text": reply_text}
                 )
                 if res.status_code == 200:
@@ -385,9 +387,11 @@ class Pipe:
             line_uid = parts[0]
 
         try:
+            headers = {"Authorization": f"Bearer {self.valves.LINE_CHANNEL_SECRET}"} if self.valves.LINE_CHANNEL_SECRET else {}
             async with httpx.AsyncClient(timeout=10, trust_env=False) as client:
                 res = await client.post(
                     f"{self.valves.LINE_BOT_URL.rstrip('/')}/api/reply",
+                    headers=headers,
                     json={"user_id": line_uid, "text": text}
                 )
                 if res.status_code == 200:

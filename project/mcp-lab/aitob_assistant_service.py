@@ -16,6 +16,8 @@ BUSY = threading.Lock()
 
 
 def authorize(authorization):
+    if not isinstance(authorization, str):
+        return 401, None, None
     scheme, separator, key = authorization.partition(" ")
     if scheme.lower() != "bearer" or not separator or not key:
         return 401, None, None

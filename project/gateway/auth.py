@@ -7,6 +7,8 @@ KEYS = json.loads(KEY_FILE.read_text())
 
 
 def authenticate(header):
+    if not isinstance(header, str):
+        return None
     scheme, separator, token = header.partition(" ")
     if scheme.lower() != "bearer" or not separator or not token:
         return None
